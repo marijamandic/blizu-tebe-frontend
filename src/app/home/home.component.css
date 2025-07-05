@@ -1,0 +1,133 @@
+.home-container {
+  background-image: url('src/assets/pictures/background1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;  
+  text-align: center;      
+  align-items: center;
+}
+
+
+.top-right-logo {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+}
+
+.logo-icon {
+  width: 10vw;
+  height: auto;
+}
+
+.main-title {
+  font-size: 2.5vw;
+  font-weight: bold;
+  margin-bottom: 3vh;
+  margin-top: 3vh;
+}
+
+.slogan {
+  font-style: italic;
+  margin: 0 0 2vh 0;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 2vh 2vw;
+  border-radius: 1vh;
+  max-width: 40vw;
+  height: 52vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* centriranje po visini */
+  align-items: center;       /* centriranje po širini */
+  text-align: justify;
+}
+
+
+.description p {
+  margin-bottom: 2.4vh;
+  font-size: 1.4vw;
+  font-family: var(--font-primary);
+  width: 100%;
+}
+
+
+
+.buttons {
+  margin-top: 5vh;
+}
+
+.buttons button {
+  width: 20vw;
+  
+}
+
+
+.text {
+  margin: 10px 0;
+  font-size: large;
+}
+
+
+@media (max-width: 768px) {
+  .top-right-logo {
+    display: none;
+  }
+
+  .main-title {
+    font-size: 7vw;
+    margin-bottom: 2vh;
+    text-align: center;
+  }
+
+  .slogan {
+    font-size: 5vw;
+    text-align: center;
+    
+  }
+
+  .slogan-line1 {
+    display: block;
+  }
+
+  .slogan-line2 {
+    display: block;
+  }
+
+  .description {
+    max-width: 90vw;
+    height: auto;
+    padding: 4vh 5vw;
+  }
+
+  .description p {
+    font-size: 4vw;
+    margin-bottom: 2vh;
+  }
+
+  .buttons {
+    margin-top: 4vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+  }
+
+  .buttons button {
+    width: 60vw;
+    font-size: 3.8vw;
+    padding: 1.8vh 0;
+  }
+
+  .text {
+    font-size: 3.8vw;
+  }
+}
+
+

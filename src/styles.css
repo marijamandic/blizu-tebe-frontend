@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500&display=swap');
+
+:root {
+  --color-lightest: #E8D6CB;     
+  --color-light:    #D0ADA7;     
+  --color-mid:      #AD6A6C;     
+  --color-dark:     #5D2E46;     
+  --color-accent:   #B58DB6;     
+
+  --font-primary: 'Inria Serif', serif;
+  --font-normal: 'Work Sans', sans-serif;
+}
+button {
+  background-color: var(--color-dark);
+  color: white;
+  border: none;
+  border-radius: 0.9vh; 
+  padding: 1.2vh 3.0vw;      
+  font-family: var(--font-normal);
+  font-size: 1.2vw;      /* veći tekst */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #822047;
+}
+
+
+h1, h2, h3 {
+  font-family: var(--font-primary);
+  color: var(--color-dark);
+}
+
+p {
+    font-family: var(--font-normal);
+    font-size: 1.1vw;
+}
+
+
