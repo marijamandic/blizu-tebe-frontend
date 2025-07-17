@@ -1,0 +1,125 @@
+.home-container {
+  background-image: url('src/assets/pictures/background1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.home-header {
+  text-align: center;
+  padding-top: 3vh;
+  padding-bottom: 1vh;
+  
+}
+
+.home-header h1 {
+  font-size: 2.5vw;
+  font-weight: bold;
+  font-weight: 700;
+  align-items: center;
+
+}
+
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25vw, 1fr)); 
+  gap: 3vw; 
+  padding: 3vh; 
+}
+
+.card1, .card2 {
+  background-color: rgba(253, 253, 253, 0.92);
+  border-radius: 1.8vh; /* malo veći radius */
+  box-shadow: 0 0.7vh 2vh rgba(181, 141, 182, 0.3); /* malo jači shadow */
+  padding: 2.5vh; /* veći unutrašnji razmak */ 
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  
+}
+
+.card1 {
+  border: 2.5px solid #8DB6B5;
+}
+
+.card2 {
+  border: 2.5px solid var(--color-accent);
+}
+
+.card1:hover {
+  transform: translateY(-0.7vh); 
+}
+
+.card2:hover {
+  transform: translateY(-0.7vh); 
+}
+
+.card1, .card2 h3 {
+  margin-bottom: 0.5vh; 
+  font-size: 1.7vw; 
+}
+
+.card2 p {
+  color: #555;
+  margin-bottom: 0.75vh; 
+  margin-top: 1.4vh;
+  
+}
+
+.card1 p {
+  color: #555;
+  margin-bottom: 0.75vh; 
+  margin-top: 1.4vh;
+}
+
+
+mat-icon {
+  
+  vertical-align: middle;
+  margin-bottom: 0.8vh;
+  font-size: 3.5vh;
+  margin-right: 0.3vh;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+  margin-top: 1.5vh;
+  flex-wrap: wrap;
+}
+
+.card-actions button {
+  border: none;
+  padding: 1.1vh 2.2vh;
+  border-radius: 1vh;
+  font-size: 0.9vw;
+  cursor: pointer;
+  width: 12vw; /* ili neki broj koji ti odgovara */
+  display: inline-block;
+  text-align: center;
+  margin-top: 2.5vh;
+}
+
+.header-icon {
+  vertical-align: middle;
+  font-size: 4.5vh;
+  padding: 0;
+
+}
+
+
+@media (max-width: 600px) {
+  .card-actions button {
+    font-size: 3vw;
+    padding: 1vh 2.5vh;
+  }
+}
+
+
+
+
+
+
