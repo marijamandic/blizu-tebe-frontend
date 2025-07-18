@@ -18,6 +18,7 @@
   font-weight: bold;
   font-weight: 700;
   align-items: center;
+  margin-bottom: 2.0vh;
 
 }
 
@@ -25,53 +26,59 @@
 .home-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25vw, 1fr)); 
-  gap: 3vw; 
-  padding: 3vh; 
+  gap: 3.3vw; 
+  padding: 3.5vh;
+  grid-auto-rows: 1fr; /* sve kartice iste visine na osnovu najveće */
 }
 
+
 .card1, .card2 {
-  background-color: rgba(253, 253, 253, 0.92);
-  border-radius: 1.8vh; /* malo veći radius */
-  box-shadow: 0 0.7vh 2vh rgba(181, 141, 182, 0.3); /* malo jači shadow */
-  padding: 2.5vh; /* veći unutrašnji razmak */ 
+  padding: 2.5vh 2vw;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(135deg, #f9f4f9, #f1f1f6); /* svetla pozadina */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  transition: transform 0.3s ease;
   cursor: pointer;
-  
 }
 
 .card1 {
-  border: 2.5px solid #8DB6B5;
+  border-top: 5px solid var(--color-purple);
 }
 
 .card2 {
-  border: 2.5px solid var(--color-accent);
+  border-top: 5px solid var(--color-blue); /* dodatna usklađena boja */
 }
 
-.card1:hover {
-  transform: translateY(-0.7vh); 
+.card1:hover, .card2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-.card2:hover {
-  transform: translateY(-0.7vh); 
-}
 
-.card1, .card2 h3 {
-  margin-bottom: 0.5vh; 
-  font-size: 1.7vw; 
+.card1 h3, .card2 h3 {
+  font-size: 1.6vw;
+  font-weight: 600;
 }
 
 .card2 p {
   color: #555;
-  margin-bottom: 0.75vh; 
-  margin-top: 1.4vh;
+  margin: 1.5vh auto 1.2vh;
+  max-width: 90%;
+  line-height: 1.45;
+  font-size: 1.05vw;
   
 }
 
 .card1 p {
   color: #555;
-  margin-bottom: 0.75vh; 
-  margin-top: 1.4vh;
+  margin: 1.5vh auto 1.2vh;
+  max-width: 90%;
+  line-height: 1.45;
+  font-size: 1.05vw;
 }
 
 
@@ -83,40 +90,62 @@ mat-icon {
   margin-right: 0.3vh;
 }
 
-.card-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1vw;
-  margin-top: 1.5vh;
-  flex-wrap: wrap;
+.top-right-logo {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
 }
 
-.card-actions button {
-  border: none;
-  padding: 1.1vh 2.2vh;
-  border-radius: 1vh;
-  font-size: 0.9vw;
-  cursor: pointer;
-  width: 12vw; /* ili neki broj koji ti odgovara */
-  display: inline-block;
-  text-align: center;
-  margin-top: 2.5vh;
-}
-
-.header-icon {
-  vertical-align: middle;
-  font-size: 4.5vh;
-  padding: 0;
-
+.logo-icon {
+  width: 6.5vw;
+  height: auto;
 }
 
 
-@media (max-width: 600px) {
-  .card-actions button {
-    font-size: 3vw;
-    padding: 1vh 2.5vh;
+/**********************TELEFON*****************************/
+
+@media (max-width: 768px) {
+
+  .top-right-logo {
+    display: none;
+  }
+
+  .home-header h1 {
+    font-size: 7vw;
+    margin-bottom: 3.5vh;
+    margin-top: 0.7vh;
+  }
+
+  .home-cards {
+    grid-template-columns: 1fr;
+    gap: 4.5vh;
+    padding: 2.5vh 4vw;
+  }
+
+  .card1, .card2 {
+    padding: 3vh 4vw;
+    border-radius: 1rem;
+    max-width: 85vw;
+    margin: 0 auto;      
+    border-radius: 1.5rem; 
+  }
+
+  .card1 h3, .card2 h3 {
+    font-size: 4.5vw;
+  }
+
+  .card1 p, .card2 p {
+    font-size: 3.5vw;
+  }
+
+  mat-icon {
+    font-size: 4.2vh;
+    margin-bottom: 0.5vh;
   }
 }
+
+
+
 
 
 
