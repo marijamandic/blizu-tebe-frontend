@@ -7,18 +7,24 @@ import { HomeComponent } from './home/home.component';
 import { HomeLoggedComponent } from './home/home-logged/home-logged.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
      HomeComponent,
-     HomeLoggedComponent
+     HomeLoggedComponent,
+     LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    HttpClientModule,
+    FormsModule
    
   ],
   providers: [],

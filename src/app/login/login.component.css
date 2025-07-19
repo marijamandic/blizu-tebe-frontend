@@ -1,0 +1,20 @@
+.form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 20rem;
+  margin: 0 auto;
+  margin-top: 5rem;
+}
+
+.title{
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.inputArea{
+    border-radius: 7px;
+    height: 2rem;
+    padding: 1rem;
+    border: solid black 0.02rem;
+}
