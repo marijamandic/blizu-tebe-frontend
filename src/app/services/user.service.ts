@@ -4,6 +4,7 @@ import { Credentials } from '../model/credentials.model';
 import { LoginResponse } from '../model/login-response';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from '../model/user.model';
+import { environment } from 'src/env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,6 @@ export class UserService {
   }
 
   getById(id: number): Observable<User>{
-    return this.http.get<User>('http://localhost:8080/api/users/getById/' + id);
+    return this.http.get<User>(environment.apiHost + 'users/getById/' + id);
   }
 }

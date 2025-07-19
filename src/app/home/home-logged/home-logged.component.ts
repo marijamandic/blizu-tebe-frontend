@@ -5,4 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './home-logged.component.html',
   styleUrls: ['./home-logged.component.css'],
 })
-export class HomeLoggedComponent { }
+export class HomeLoggedComponent { 
+
+  //isModalOpen: boolean = true;
+}
