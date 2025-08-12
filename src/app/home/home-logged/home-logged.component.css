@@ -1,0 +1,210 @@
+.home-container {
+  background-image: url('src/assets/pictures/background1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.home-header {
+  text-align: center;
+  padding-top: 3vh;
+  padding-bottom: 1vh;
+  
+}
+
+.home-header h1 {
+  font-size: 2.5vw;
+  font-weight: bold;
+  font-weight: 700;
+  align-items: center;
+  margin-bottom: 2.0vh;
+
+}
+
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25vw, 1fr)); 
+  gap: 3.3vw; 
+  padding: 3.5vh;
+  grid-auto-rows: 1fr; /* sve kartice iste visine na osnovu najveće */
+}
+
+
+.card1, .card2 {
+  padding: 2.5vh 2vw;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(135deg, #f9f4f9, #f1f1f6); /* svetla pozadina */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.card1 {
+  border-top: 5px solid var(--color-purple);
+}
+
+.card2 {
+  border-top: 5px solid var(--color-blue); /* dodatna usklađena boja */
+}
+
+.card1:hover, .card2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+
+.card1 h3, .card2 h3 {
+  font-size: 1.6vw;
+  font-weight: 600;
+}
+
+.card2 p {
+  color: #555;
+  margin: 1.5vh auto 1.2vh;
+  max-width: 90%;
+  line-height: 1.45;
+  font-size: 1.05vw;
+  
+}
+
+.card1 p {
+  color: #555;
+  margin: 1.5vh auto 1.2vh;
+  max-width: 90%;
+  line-height: 1.45;
+  font-size: 1.05vw;
+}
+
+
+mat-icon {
+  
+  vertical-align: middle;
+  margin-bottom: 0.8vh;
+  font-size: 3.5vh;
+  margin-right: 0.3vh;
+}
+
+.top-right-logo {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+}
+
+.logo-icon {
+  width: 6.5vw;
+  height: auto;
+}
+
+
+/**********************TELEFON*****************************/
+
+@media (max-width: 768px) {
+
+  .top-right-logo {
+    display: none;
+  }
+
+  .home-header h1 {
+    font-size: 7vw;
+    margin-bottom: 3.5vh;
+    margin-top: 0.7vh;
+  }
+
+  .home-cards {
+    grid-template-columns: 1fr;
+    gap: 4.5vh;
+    padding: 2.5vh 4vw;
+  }
+
+  .card1, .card2 {
+    padding: 3vh 4vw;
+    border-radius: 1rem;
+    max-width: 85vw;
+    margin: 0 auto;      
+    border-radius: 1.5rem; 
+  }
+
+  .card1 h3, .card2 h3 {
+    font-size: 4.5vw;
+  }
+
+  .card1 p, .card2 p {
+    font-size: 3.5vw;
+  }
+
+  mat-icon {
+    font-size: 4.2vh;
+    margin-bottom: 0.5vh;
+  }
+}
+
+
+
+
+
+
+
+/* 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: absolute;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  gap: 10px;
+}
+
+.modalButton{
+    background-color: var(--color-lightest);
+    border:  2px solid var(--color-dark);
+
+    color: var(--color-dark);
+    border-radius: 30px; 
+    padding: 1.2vh 3.0vw;      
+    font-family: var(--font-normal);
+    font-size: 1.2vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+  background-color: var(--color-light);
+}
+
+.closeModal {
+  all: unset; 
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.title{
+    text-align: center;
+    margin-top: 1rem;
+} */

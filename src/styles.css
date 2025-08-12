@@ -12,7 +12,8 @@
   --color-light:    #D0ADA7;     
   --color-mid:      #AD6A6C;     
   --color-dark:     #5D2E46;     
-  --color-accent:   #B58DB6;     
+  --color-purple:   #B58DB6;   
+  --color-blue:     #7EA6B6;  
 
   --font-primary: 'Inria Serif', serif;
   --font-normal: 'Work Sans', sans-serif;
@@ -45,3 +46,6 @@ p {
 }
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
