@@ -1,4 +1,10 @@
 <div class="home-container">
+  <div class="top-left-logout">
+    <button class="logout-button" (click)="logOut()">
+      <mat-icon>logout</mat-icon>
+       <span class="logout-text">Odjavite se</span>
+    </button>
+  </div>
   <div class="top-right-logo">
     <img src="assets/pictures/logo.png" alt="Blizu tebe logo" class="logo-icon" />
   </div>
@@ -9,21 +15,21 @@
   <div class="home-cards">
     
     <!-- Kartica: Usluge -->
-    <div class="card1">
+    <div class="card1" (click)="toggleModal1()">
       <h3><mat-icon>volunteer_activism</mat-icon> Usluge</h3>
       <p>Pronađite, pratite ili ponudite korisne usluge u komšiluku.</p>
       
     </div>
 
     <!-- Kartica: Pomoći -->
-    <div class="card1" >
+    <div class="card1" (click)="toggleModal2()">
       <h3><mat-icon>group</mat-icon> Pomoći</h3>
       <p>Postavite ili pogledajte zahteve za pomoć u zajednici.</p>
       
     </div>
 
     <!-- Pokloni -->
-    <div class="card1">
+    <div class="card1" (click)="toggleModal3()">
       <h3><mat-icon>card_giftcard</mat-icon> Pokloni</h3>
       <p>Pronađite nove vlasnike za stvari koje vam više ne trebaju ili pronađite ono što vam nedostaje.</p>
     </div>
@@ -35,7 +41,7 @@
     </div>
 
     <!-- Radne akcije -->
-    <div class="card2">
+    <div class="card2" (click)="toggleModal4()">
       <h3><mat-icon>handyman</mat-icon> Radne akcije</h3>
       <p>Uključite se u komšijske razgovore, razmenjujte ideje i budite deo zajedničkih radnih akcija u kraju.</p>
     </div>
@@ -47,17 +53,52 @@
     </div>
 
   </div>
-<!-- 
-  <div class="modal-overlay" *ngIf="isModalOpen">
-    <div class="modal">
+
+  <div class="modal-overlay" *ngIf="isModal1Open" (click)="toggleModal1()">
+    <div class="modal" (click)="$event.stopPropagation()">
       <h2 class="title">Izaberite šta želite da vidite</h2>
-      <button class="closeModal">x</button>
+      <button class="closeModal" (click)="toggleModal1()">x</button>
 
       <button class="modalButton">Sve usluge</button>
       <button class="modalButton">Moje usluge</button>
-      <button class="modalButton">Dodaj uslugu</button>
+      <button class="modalButton">Dodajte uslugu</button>
 
     </div>
-  </div> -->
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModal2Open" (click)="toggleModal2()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2 class="title">Izaberite šta želite da vidite</h2>
+      <button class="closeModal" (click)="toggleModal2()">x</button>
+
+      <button class="modalButton">Svi zahtevi</button>
+      <button class="modalButton">Moji zahtevi</button>
+      <button class="modalButton">Dodajte zahtev</button>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModal3Open" (click)="toggleModal3()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2 class="title">Izaberite šta želite da vidite</h2>
+      <button class="closeModal" (click)="toggleModal3()">x</button>
+
+      <button class="modalButton">Svi pokloni</button>
+      <button class="modalButton">Moji pokloni</button>
+      <button class="modalButton">Dodajte poklon</button>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModal4Open" (click)="toggleModal4()">
+    <div class="modal4" (click)="$event.stopPropagation()">
+      <h2 class="title">Izaberite šta želite da vidite</h2>
+      <button class="closeModal" (click)="toggleModal4()">x</button>
+
+      <button class="modalButton">Sve akcije</button>
+      <button class="modalButton">Diskusije</button>
+
+    </div>
+  </div>
 
 </div>

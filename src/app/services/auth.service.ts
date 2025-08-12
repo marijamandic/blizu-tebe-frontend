@@ -4,13 +4,15 @@ import { Credentials } from '../model/credentials.model';
 import { LoginResponse } from '../model/login-response';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/env/environment';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
   login(credentials: Credentials): Observable<LoginResponse>{
     return this.http.post<LoginResponse>(environment.apiHost + `auth/login`, credentials).pipe(
@@ -21,7 +23,9 @@ export class AuthService {
   }
 
   logout() {
+    this.userService.logout();
     localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {

@@ -101,6 +101,36 @@ mat-icon {
   height: auto;
 }
 
+.top-left-logout {
+  position: absolute;
+  top: 3.7vh;
+  left: 2vw;
+}
+
+/* Stil za samo dugme "Odjavite se" */
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw; 
+  
+  background-color: var(--color-dark);
+  border: 1.5px solid rgba(0, 0, 0, 0.7);
+  border-radius: 30px;
+  padding: 0.5vh 1.2vw;
+  
+  font-size: 1vw;
+  font-weight: 500;
+  
+}
+
+/* Prilagođavanje ikonice unutar dugmeta */
+.logout-button mat-icon {
+  font-size: 1.6vw; /* Malo veća ikonica da bude u skladu sa tekstom */
+  height: auto;
+  width: auto;
+  color: #fff;
+}
+
 
 /**********************TELEFON*****************************/
 
@@ -138,10 +168,52 @@ mat-icon {
     font-size: 3.5vw;
   }
 
-  mat-icon {
-    font-size: 4.2vh;
-    margin-bottom: 0.5vh;
+  .card1 mat-icon, 
+.card2 mat-icon {
+  font-size: 3.6vh;    /* Malo smanjena i prilagođena veličina */
+  margin-bottom: 1.5vh; /* Povećan razmak do naslova za bolji izgled */
+  color: var(--color-dark); /* Osigurava konzistentnu boju ikonice */
+
+  /* Resetujemo ostale margine koje možda smetaju */
+  margin-right: 0;
+  margin-left: 0;
+}
+
+  /* Prikazujemo kontejner za odjavu */
+  .top-left-logout {
+    display: block; 
+    top: 3.5vh;    
+    left: 4vw;
   }
+
+  /* Potpuno novi stil za dugme na telefonu (samo ikonica) */
+  .logout-button {
+    background-color: transparent; 
+    border: none;
+    border-radius: 50%; 
+    padding: 1.5vh;     
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 7vh;  
+    height: 7vh;
+  }
+
+  
+  .logout-button mat-icon {
+    font-size: 3.5vh; 
+    color: var(--color-dark); 
+    margin: 0;
+    height: auto;
+    width: auto;
+  }
+
+  /* Ključni deo: sakrivamo tekst na telefonu */
+  .logout-button .logout-text {
+    display: none;
+  }
+
+ 
 }
 
 
@@ -149,62 +221,162 @@ mat-icon {
 
 
 
-
-/* 
+/*MODAL*/
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.55); 
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+
 }
 
 .modal {
-  position: absolute;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  width: 90%;
-  max-width: 400px;
+  position: relative; 
+  background: linear-gradient(135deg, #f9f4f9, #f1f1f6); 
+  font-family: var(--font-normal);
+  
+
+  width: 30vw;       
+  min-height: 55vh;  
+  padding: 0;
+  
+  border-radius: 2vw;
+  border-top: 0.8vh solid var(--color-purple);
+  box-shadow: 0 0.6vh 2.5vh rgba(0, 0, 0, 0.2); 
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 2vh; 
 }
 
-.modalButton{
+.modal4 {
+  position: relative; 
+  background: linear-gradient(135deg, #f9f4f9, #f1f1f6); 
+  font-family: var(--font-normal);
+  
+
+  width: 30vw;       
+  min-height: 55vh;  
+  padding: 0;
+  
+  border-radius: 2vw;
+  border-top: 0.8vh solid var(--color-blue);
+  box-shadow: 0 0.6vh 2.5vh rgba(0, 0, 0, 0.2); 
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2vh; 
+}
+
+
+.title {
+    font-size: 1.8vw; /* Prilagođeno užoj širini */
+    font-weight: 600;
+    color: #333;
+    padding: 0vh 2vw 4vh;
+    margin-top: 0;
+} 
+
+.modalButton {
     background-color: var(--color-lightest);
-    border:  2px solid var(--color-dark);
-
+    border: 0.3vh solid var(--color-dark);
     color: var(--color-dark);
-    border-radius: 30px; 
-    padding: 1.2vh 3.0vw;      
+    border-radius: 5vh; 
+    padding: 1.2vh 2.5vw; 
     font-family: var(--font-normal);
-    font-size: 1.2vw;
+    font-size: 1.3vw;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
+    transition: all 0.3s ease;
+    width: 25vw; 
+    max-width: 20vw;
+    margin-top: 0;
 }
 
-button:hover {
+.modalButton:hover {
   background-color: var(--color-light);
+  transform: translateY(-0.4vh);
+  box-shadow: 0 0.4vh 1.2vh rgba(0, 0, 0, 0.15);
 }
 
 .closeModal {
-  all: unset; 
+  all: unset;
+  box-sizing: border-box;
+  
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.5rem;
-  color: #888;
+  top: 2vh;
+  right: 1.5vw;
+  
+  width: 4vh;
+  height: 4vh;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  color: #555;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 2vh;
+  font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.title{
-    text-align: center;
-    margin-top: 1rem;
-} */
+.closeModal:hover {
+  background-color: #d3d3d3;
+  color: #000;
+}
+
+/* === CSS ZA RESPONSIVE DIZAJN (TELEFON) === */
+@media (max-width: 768px) {
+  .modal {
+    width: 85vw; 
+    min-height: 55vh; 
+    gap: 3vh; 
+    padding: 2vh 0; 
+    border-radius: 5vw;
+    
+  }
+  
+  .title {
+    font-size: 5.5vw !important; 
+    padding: 2vh 4vw 0.5vh !important; 
+  }
+
+  .modalButton {
+    min-width: 70vw; 
+    min-height: 7vh; 
+    font-size: 4vw !important;
+    
+    /* Osigurava vertikalno centriranje teksta u dugmetu */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5vw !important; 
+    
+  } 
+
+  /* Ključno poboljšanje: 'X' dugme mora biti veće na dodir */
+  .closeModal {
+    top: 1.5vh;
+    right: 3vw;
+    width: 5vh; 
+    height: 5vh;
+    font-size: 2.5vh; 
+    
+     border-radius: 50%;
+  }
+  
+}

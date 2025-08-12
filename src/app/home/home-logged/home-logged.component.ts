@@ -1,11 +1,40 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-home-logged',
   templateUrl: './home-logged.component.html',
   styleUrls: ['./home-logged.component.css'],
 })
-export class HomeLoggedComponent { 
+export class HomeLoggedComponent {
 
-  //isModalOpen: boolean = true;
+
+  isModal1Open: boolean = false;
+  isModal2Open: boolean = false;
+  isModal3Open: boolean = false;
+  isModal4Open: boolean = false;
+
+  constructor(private authService: AuthService) {}
+
+  toggleModal1() {
+this.isModal1Open = !this.isModal1Open;
+} 
+
+toggleModal2() {
+this.isModal2Open = !this.isModal2Open;
+} 
+
+toggleModal3() {
+this.isModal3Open = !this.isModal3Open;
+} 
+
+toggleModal4() {
+this.isModal4Open = !this.isModal4Open;
+} 
+
+logOut() {
+ this.authService.logout();
+}
+
+  
 }

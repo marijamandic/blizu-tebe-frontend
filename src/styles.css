@@ -27,11 +27,11 @@ button {
   font-family: var(--font-normal);
   font-size: 1.2vw;      /* veći tekst */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
 button:hover {
-  background-color: #822047;
+  filter: brightness(125%);
 }
 
 
