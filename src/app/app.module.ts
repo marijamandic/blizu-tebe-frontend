@@ -10,13 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
+import { AnnouncementComponent } from './announcement/announcement.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
      HomeComponent,
      HomeLoggedComponent,
-     LoginComponent
+     LoginComponent,
+     AnnouncementComponent,
+     SidebarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,12 +10,13 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HomeLoggedComponent {
 
 
+
   isModal1Open: boolean = false;
   isModal2Open: boolean = false;
   isModal3Open: boolean = false;
   isModal4Open: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   toggleModal1() {
 this.isModal1Open = !this.isModal1Open;
@@ -34,6 +36,10 @@ this.isModal4Open = !this.isModal4Open;
 
 logOut() {
  this.authService.logout();
+}
+
+goToAnnouncement() {
+this.router.navigate(['/announcement']);
 }
 
   

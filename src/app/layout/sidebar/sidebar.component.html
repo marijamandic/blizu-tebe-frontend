@@ -1,0 +1,149 @@
+<div class="layout-container">
+  <!-- Sidebar (Levi Meni) -->
+  <aside class="sidebar">
+    <header class="sidebar__header">
+      <button class="sidebar__close-btn" aria-label="Zatvori meni">×</button>
+      <img src="assets/pictures/logo.png" alt="Blizu tebe logo" (click)="goToHomePage()" class="sidebar__logo" />
+    </header>
+     <div class="sidebar__separator"></div>
+
+<nav class="sidebar__nav">
+  <ul>
+    <!-- Usluge -->
+    <li>
+      <h4 (click)="toggleUsluge()">
+        <mat-icon>volunteer_activism</mat-icon>
+        <span>Usluge</span>
+        <mat-icon class="arrow" [class.open]="usluge">chevron_right</mat-icon>
+      </h4>
+      <ul *ngIf="usluge">
+  <li>
+    <a routerLink="/usluge/moje">
+      <mat-icon class="bullet-icon">circle</mat-icon>
+      <span>Moje usluge</span>
+    </a>
+  </li>
+  <li>
+    <a routerLink="/usluge/sve">
+      <mat-icon class="bullet-icon">circle</mat-icon>
+      <span>Sve usluge</span>
+    </a>
+  </li>
+  <li>
+    <a routerLink="/usluge/dodaj">
+      <mat-icon class="bullet-icon">circle</mat-icon>
+      <span>Dodajte uslugu</span>
+    </a>
+  </li>
+</ul>
+    </li>
+    
+   <!-- Pomoći -->
+    <li>
+      <h4 (click)="togglePomoci()">
+        <mat-icon>group</mat-icon>
+        <span>Pomoći</span>
+        <mat-icon class="arrow" [class.open]="pomoci">chevron_right</mat-icon>
+      </h4>
+      <ul *ngIf="pomoci">
+        <li>
+          <a routerLink="/pomoci/moji">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Moji zahtevi</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pomoci/svi">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Svi zahtevi</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pomoci/dodaj">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Dodajte zahtev</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Pokloni -->
+    <li>
+      <h4 (click)="togglePoklone()">
+        <mat-icon>card_giftcard</mat-icon>
+        <span>Pokloni</span>
+        <mat-icon class="arrow" [class.open]="pokloni">chevron_right</mat-icon>
+      </h4>
+      <ul *ngIf="pokloni">
+        <li>
+          <a routerLink="/pokloni/moji">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Moji zahtevi</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pokloni/svi">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Svi zahtevi</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/pokloni/dodaj">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Dodajte zahtev</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Radne akcije -->
+    <li>
+      <h4 (click)="toggleAkcije()">
+        <mat-icon>handyman</mat-icon>
+        <span>Radne akcije</span>
+        <mat-icon class="arrow" [class.open]="radneAkcije">chevron_right</mat-icon>
+      </h4>
+      <ul *ngIf="radneAkcije">
+        <li>
+          <a routerLink="/akcije/sve">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Sve akcije</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/akcije/diskusije">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Diskusije</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Obaveštenja -->
+    <li>
+      <h4>
+        <a href="announcement">
+          <mat-icon>campaign</mat-icon>
+          <span>Obaveštenja</span>
+        </a>
+      </h4>
+    </li>
+
+    
+    
+    <!-- Moj nalog -->
+    <li>
+      <h4>
+        <a href="#">
+          <mat-icon>person</mat-icon>
+          <span>Moj nalog</span>
+        </a>
+      </h4>
+    </li>
+  </ul>
+
+  <button class="logout-button" (click)="logOut()">
+      <mat-icon>logout</mat-icon>
+       <span class="logout-text">Odjavite se</span>
+    </button>
+</nav>

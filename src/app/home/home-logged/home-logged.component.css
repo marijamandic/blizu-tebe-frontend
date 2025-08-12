@@ -115,7 +115,7 @@ mat-icon {
   
   background-color: var(--color-dark);
   border: 1.5px solid rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
+  border-radius: 15px;
   padding: 0.5vh 1.2vw;
   
   font-size: 1vw;
