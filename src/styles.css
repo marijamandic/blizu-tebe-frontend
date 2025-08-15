@@ -25,8 +25,8 @@ button {
   border-radius: 0.9vh; 
   padding: 1.2vh 3.0vw;      
   font-family: var(--font-normal);
-  font-size: 1.2vw;      /* veći tekst */
-  /* font-size: 16px; */
+  /* font-size: 1.2vw;      veći tekst */
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
 }

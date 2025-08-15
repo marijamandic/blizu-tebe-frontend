@@ -11,6 +11,7 @@ export class AnnouncementService {
   private apiUrl = environment.apiHost + 'announcement';
 
   constructor(private http: HttpClient) { }
+  token = localStorage.getItem('jwt');
 
   getAllAnnouncements(): Observable<Announcement[]> {
     return this.http.get<Announcement[]>(this.apiUrl);

@@ -3,4 +3,22 @@
       <header class="announcement-header">
         <h1>Obaveštenja</h1>
       </header>      
+
+      <div class="announcement-grid">
+        <div *ngFor="let ann of announcements" class="announcement-card">
+          <!-- Slika obaveštenja -->
+           <img [src]="'https://localhost:44375/images/announcements/' + ann.picture" alt="Announcement image" class="announcement-image">
+
+
+          <!-- Informacije -->
+          <div class="announcement-info">
+            <h3 class="announcement-title">{{ ann.title }}</h3>
+            <p class="announcement-meta">
+              <span class="time"><mat-icon>schedule</mat-icon> {{ ann.expirationDate | date:'short' }}</span>
+            </p>
+            <button>Prikaži više</button>
+          </div>
+        </div>
+      </div>
+
     </div>
