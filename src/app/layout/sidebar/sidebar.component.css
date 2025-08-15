@@ -1,96 +1,38 @@
-/* --- Ažurirani stilovi za Sidebar --- */
-.layout-container {
-  display: flex;
-  height: 100vh; 
-}
-
-.main-content {
-  flex-grow: 1; 
-  background-color: var(--color-lightest);
-  padding: 3rem;
+/* Base sidebar styles */
+.sidebar {
+  width: 250px;
+  height: 100%;
+  background-color: #fcfaff;
+  border-right: 1.7px solid var(--color-dark);
   overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 
-@media (max-width: 768px){
+@media (min-width: 769px) {
+  .sidebar {
+    position: static;
+    flex-shrink: 0;
+    transform: none; 
+  }
+  
+  .sidebar.open {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
   .sidebar {
     position: fixed;
     top: 60px;
     left: 0;
-    height: 100%;
     transform: translateX(-100%);
     z-index: 1000;
   }
 
-  .sidebar.open{
+  .sidebar.open {
     transform: translateX(0);
   }
-
-  .menu-btn{
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    z-index: 1100;
-  }
 }
-
-@media (min-width: 769px) {
-  .menu-btn {
-    display: none;
-  }
-}
-
-.sidebar {
-  width: 20vw;
-  min-width: 300px;
-  background-color: #fcfaff;
-  border-right: 1.7px solid var(--color-dark);
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.04);
-  padding: 1.5rem 2rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  transition: transform 0.3s ease;
-}
-
-.sidebar__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 1.5rem;
-}
-
-.sidebar__separator {
-  width: 20vw;
-min-width: 300px; 
-  height: 1.7px; 
-  background-color: var(--color-dark); 
-  margin-left: -2rem;  
-  margin-right: -2rem;
-  margin-bottom: 2rem; 
-}
-
-.sidebar__close-btn {
-  background: none;
-  border: none;
-  font-size: 2.5rem; 
-  color: #777; 
-  cursor: pointer;
-  margin-right: 1rem; 
-  padding: 0; 
-}
-
-.sidebar__logo {
-  height: 70px; 
-  cursor: pointer;
-}
-
-/* --- GLAVNI DEO --- */
 
 .sidebar__nav ul {
   list-style: none;
@@ -105,8 +47,6 @@ min-width: 300px;
 .sidebar__nav ul ul {
   padding-left: 0.4rem;
   margin-top: 0.8rem;
-  
-  
 }
 
 .sidebar__nav h4 {
@@ -120,9 +60,7 @@ min-width: 300px;
   font-size: 1.2rem;
   font-weight: 500;
   transition: background-color 0.2s ease, color 0.2s ease;
-
 }
-
 
 .sidebar__nav h4 a {
   display: flex; 
@@ -132,9 +70,8 @@ min-width: 300px;
   width: 100%;
 }
 
-
 .sidebar__nav ul ul a {
-    display: flex;         /* Ključno za poravnanje */
+  display: flex;
   align-items: center;
   font-size: 1rem;
   color: #444;
@@ -143,7 +80,6 @@ min-width: 300px;
   text-decoration: none;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
-
 
 .sidebar__nav h4:hover,
 .sidebar__nav ul ul a:hover {
@@ -162,63 +98,40 @@ min-width: 300px;
   transform: rotate(90deg);
 }
 
-
 .sidebar__nav h4:has(+ ul) {
   cursor: pointer;
 }
 
 .sidebar__nav mat-icon {
-    margin-right: 0.8rem; 
+  margin-right: 0.8rem; 
 }
 
 .bullet-icon {
-  font-size: 8px; /* Veoma mala veličina da izgleda kao tačkica */
-  width: 8px;     /* Fiksiramo dimenzije */
+  font-size: 8px;
+  width: 8px;
   height: 8px;
-  
-  color: var(--color-dark); /* Vaša ljubičasta boja */
-  
-  margin-right: 0.8rem; /* Razmak između tačkice i teksta */
+  color: var(--color-dark);
+  margin-right: 0.8rem;
 }
 
 .logout-button {
   display: flex;
   align-items: center;
-  justify-content: center; /* Centrira sadržaj (ikonicu i tekst) unutar dugmeta */
+  justify-content: center;
   margin: 2rem auto;
   width: 85%;
-  
   background-color: var(--color-dark);
   border: 1.5px solid rgba(0, 0, 0, 0.7);
   border-radius: 15px;
   padding: 1vh 1.9vw;
-  
   font-size: 16px;
   font-weight: 500;
   margin-top: 5vh;
-  
 }
 
-/* Prilagođavanje ikonice unutar dugmeta */
 .logout-button mat-icon {
   font-size: 16px; 
   height: auto;
   width: auto;
   color: #fff;
 }
-
-.menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 28px;
-  padding: 0.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1100;
-}
-
