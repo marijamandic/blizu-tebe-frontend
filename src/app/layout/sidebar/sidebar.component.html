@@ -1,12 +1,7 @@
 <div class="layout-container">
   <!-- Sidebar (Levi Meni) -->
-  <aside class="sidebar">
-    <header class="sidebar__header">
-      <button class="sidebar__close-btn" aria-label="Zatvori meni">×</button>
-      <img src="assets/pictures/logo.png" alt="Blizu tebe logo" (click)="goToHomePage()" class="sidebar__logo" />
-    </header>
-     <div class="sidebar__separator"></div>
-
+  <aside class="sidebar" [class.open]="isOpen">
+    
 <nav class="sidebar__nav">
   <ul>
     <!-- Usluge -->

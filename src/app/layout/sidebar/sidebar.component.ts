@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -13,6 +13,8 @@ export class SidebarComponent {
     pomoci: boolean =  false;
     pokloni: boolean =  false;
     radneAkcije: boolean =  false;
+
+    @Input() isOpen: boolean = false;
 
     constructor(private router: Router, private authService: AuthService) {}
   
@@ -40,5 +42,6 @@ this.router.navigate(['/home']);
 logOut() {
  this.authService.logout();
 }
+
 
 }

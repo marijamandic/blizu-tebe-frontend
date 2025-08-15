@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+<app-navbar
+    [isSidebarOpen]="isSidebarOpen" 
+    (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<app-sidebar [isOpen]="isSidebarOpen"></app-sidebar>
+
+<main>
+    <router-outlet></router-outlet>
+</main>

@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AnnouncementComponent } from './announcement/announcement.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { NavbarComponent } from './layout/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
      HomeLoggedComponent,
      LoginComponent,
      AnnouncementComponent,
-     SidebarComponent
+     SidebarComponent,
+     NavbarComponent
   ],
   imports: [
     BrowserModule,

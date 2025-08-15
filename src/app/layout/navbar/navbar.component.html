@@ -1,0 +1,10 @@
+<nav class="navbar">
+  <button class="menu-toggle" (click)="menuClick.emit()" aria-label="Meni">
+    <mat-icon *ngIf="!isSidebarOpen">menu</mat-icon>
+    <mat-icon *ngIf="isSidebarOpen">close</mat-icon>
+
+  </button>
+
+    <img src="assets/pictures/logo.png" alt="Blizu tebe logo" (click)="goToHomePage()" class="logo" />
+
+</nav>

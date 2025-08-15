@@ -7,6 +7,6 @@
         <label for="password">Password: </label>
         <input class="inputArea" type="password" id="password" name="password" [(ngModel)]="credentials.password" required/>
 
-        <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button class="loginButton" type="submit" [disabled]="loginForm.invalid">Login</button>
     </form>
 </div>
