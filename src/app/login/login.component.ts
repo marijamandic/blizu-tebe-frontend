@@ -10,42 +10,53 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  credentials: Credentials = {
-    username: '',
-    password: ''
-  };
+  credentials: Credentials = { username: '', password: '' };
+  loading = false;
+  errorMessage: string | null = null;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private userService: UserService
-  ){}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService
+  ) {}
 
-  ngOnInit(){
+  onLogin() {
+    this.errorMessage = null;
+    this.loading = true;
 
-  }
-
-  onLogin(){
     this.authService.login(this.credentials).subscribe({
       next: result => {
-        console.log("token: ", result.accessToken);
+        console.log('token: ', result.accessToken);
 
         this.userService.getById(result.id).subscribe({
           next: res => {
-            res.dateOfBirth = new Date(res.dateOfBirth); 
+            res.dateOfBirth = new Date(res.dateOfBirth);
             this.userService.setCurrentUser(res);
-            console.log("logged user: ", res);
+            console.log('logged user: ', res);
+            this.router.navigate(['/home']);
           },
           error: err => {
-            console.error("Error fetching user: ", err);
+            console.error('Error fetching user: ', err);
+            this.errorMessage = 'Greška pri učitavanju korisnika.';
+          },
+          complete: () => {
+            this.loading = false;
           }
         });
-
-        this.router.navigate(['/home']);
       },
       error: err => {
         console.error('Login failed', err);
+        this.errorMessage = 'Neispravno korisničko ime ili lozinka.';
+        this.loading = false;
       }
-    })
+    });
   }
 
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
+  goToHomePage(){
+    this.router.navigate(['/']);
+  }
 }

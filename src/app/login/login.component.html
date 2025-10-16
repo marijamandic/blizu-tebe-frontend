@@ -1,12 +1,40 @@
-<h1 class="title">Login</h1>
-<div class="form">
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm" id="loginForm">
-        <label for="username">Username: </label>
-        <input class="inputArea" type="text" id="username" name="username" [(ngModel)]="credentials.username" required/>
+<div class="login-container">
+  <div class="login-card">
+    <img src="assets/pictures/logo.png" alt="Blizu tebe logo" class="login-logo" (click)="goToHomePage()" />
 
-        <label for="password">Password: </label>
-        <input class="inputArea" type="password" id="password" name="password" [(ngModel)]="credentials.password" required/>
+    <h1 class="title">Prijava</h1>
 
-        <button class="loginButton" type="submit" [disabled]="loginForm.invalid">Login</button>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" class="login-form">
+      <label for="username">Korisničko ime:</label>
+      <input
+        class="inputArea"
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="credentials.username"
+        required
+      />
+
+      <label for="password">Lozinka:</label>
+      <input
+        class="inputArea"
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="credentials.password"
+        required
+      />
+
+      <button class="loginButton" type="submit" [disabled]="loginForm.invalid">
+        Prijavi se
+      </button>
     </form>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+    <p class="register-link">
+      Nemate nalog?
+      <a (click)="goToRegister()">Registrujte se</a>
+    </p>
+    
+  </div>
 </div>

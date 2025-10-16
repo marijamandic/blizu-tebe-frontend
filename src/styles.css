@@ -46,6 +46,11 @@ p {
     font-size: 1.1vw;
 }
 
+label {
+    font-family: var(--font-normal);
+    font-size: 1.1vw;
+}
+
 
 
 html, body { height: 100%; }
