@@ -26,4 +26,6 @@ export class NavbarComponent {
     this.isSidebarOpen = false;
   }
 
+  
+
 }

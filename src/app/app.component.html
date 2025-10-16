@@ -1,12 +1,5 @@
-<app-navbar
-    [isSidebarOpen]="isSidebarOpen" 
-    (menuClick)="toggleSidebar()">
-</app-navbar>
 
-<div class="layout-container">
-  <app-sidebar [isOpen]="isSidebarOpen"></app-sidebar>
 
   <main class="main-content">
       <router-outlet></router-outlet>
   </main>
-</div>

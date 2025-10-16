@@ -1,24 +1,43 @@
+<!-- Navbar koji se vidi samo na mobilnom -->
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
 
-    <div class="announcement-container">
-      <header class="announcement-header">
-        <h1>Obaveštenja</h1>
-      </header>      
+<div class="layout-container">
+  <!-- Sidebar: desktop i mobilni -->
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
 
-      <div class="announcement-grid">
-        <div *ngFor="let ann of announcements" class="announcement-card">
-          <!-- Slika obaveštenja -->
-           <img [src]="'https://localhost:44375/images/announcements/' + ann.picture" alt="Announcement image" class="announcement-image">
+  <!-- Glavni sadržaj -->
+  <main class="main-content">
+    <header class="announcement-header">
+      <h1>Obaveštenja</h1>
+    </header>
+
+    <div class="announcement-grid">
+      <div *ngFor="let ann of announcements" class="announcement-card">
+        <img [src]="'https://localhost:44375/images/announcements/' + ann.picture"
+     alt="Announcement image"
+     class="announcement-image"
+     (error)="onImageError($event)">
 
 
-          <!-- Informacije -->
-          <div class="announcement-info">
-            <h3 class="announcement-title">{{ ann.title }}</h3>
-            <p class="announcement-meta">
-              <span class="time"><mat-icon>schedule</mat-icon> {{ ann.expirationDate | date:'short' }}</span>
-            </p>
-            <button>Prikaži više</button>
-          </div>
+        <div class="announcement-info">
+          <h3 class="announcement-title">{{ ann.title }}</h3>
+          <p class="announcement-meta">
+            <span class="time">
+              <mat-icon>schedule</mat-icon>
+              {{ ann.expirationDate | date:'short' }}
+            </span>
+          </p>
+          <button class="btn-more">Prikaži više</button>
         </div>
       </div>
-
     </div>
+  </main>
+</div>

@@ -1,15 +1,26 @@
 .layout-container {
   display: flex;
   height: 100vh;
-
 }
 
+/* Sidebar za desktop */
+.desktop-sidebar {
+  display: block;
+  flex-shrink: 0;
+  width: 20vw;
+  min-width: 250px;
+  height: 100vh;
+  background-color: #fcfaff;
+  border-right: 1.7px solid var(--color-dark);
+  transition: all 0.3s ease;
+}
+
+/* Glavni sadržaj */
 .main-content {
   flex-grow: 1;
   background-color: var(--color-lightest);
   padding: 3rem;
   overflow-y: auto;
-  
 }
 
 .announcement-header {
@@ -21,20 +32,20 @@
   font-size: 2.5vw;
 }
 
-/* Grid za prikaz kartica */
+/* Grid za kartice */
 .announcement-grid {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
 
-/* Kartica obaveštenja */
+/* Kartice */
 .announcement-card {
   border: 1px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: #fff;
+  background-color: #fcfaff;
   display: flex;
   flex-direction: column;
 }
@@ -83,31 +94,69 @@
   cursor: pointer;
 }
 
-.btn-more:hover {
-  background-color: #555;
+/* Navbar - mobilni */
+.mobile-navbar {
+  display: none;
 }
 
 /* --- Responsive --- */
-
-/* Desktop: 3 kartice po redu */
-@media (min-width: 992px) {
-  .announcement-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Tablet: 2 kartice po redu */
-@media (min-width: 600px) and (max-width: 991px) {
-  .announcement-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Mobilni: 1 kartica po redu */
 @media (max-width: 599px) {
+  .mobile-navbar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #fcfaff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .layout-container {
+    flex-direction: column;
+  }
+
+  .desktop-sidebar {
+    position: fixed;
+    top: 60px; /* ispod navbar-a */
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: calc(100vh - 60px);
+    background-color: #fcfaff;
+    border-right: 1.7px solid var(--color-dark);
+    transform: translateX(-200%);
+    transition: transform 0.3s ease;
+    z-index: 1200;
+  }
+
+  /* Sidebar otvoren */
+  .desktop-sidebar.mobile-open {
+    display: block;
+    transform: translateX(0);
+  }
+
+  /* Sadržaj sakriven kada je sidebar otvoren */
+  .main-content.sidebar-open {
+    display: none;
+  }
+
+  .announcement-header h1 {
+    font-size: 8vw; 
+    margin-bottom: 2rem;
+  }
+
   .announcement-grid {
     grid-template-columns: 1fr;
   }
-}
 
+  .main-content {
+    padding: 1.5rem;
+    padding-top: 70px; /* da ne ide ispod navbar-a */
+  }
+}
 
