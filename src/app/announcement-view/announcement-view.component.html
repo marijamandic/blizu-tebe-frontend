@@ -1,0 +1,42 @@
+<!-- Navbar koji se vidi samo na mobilnom -->
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="announcement-details" *ngIf="announcement">
+      <h1 class="announcement-title">{{ announcement.title }}</h1>
+
+      <img
+        [src]="'https://localhost:44375/images/announcements/' + announcement.picture"
+        alt="Announcement image"
+        class="announcement-image"
+        (error)="onImageError($event)"
+      />
+
+      <div class="announcement-info">
+        <p class="announcement-dates">
+          <mat-icon>event</mat-icon>
+          Pocetak: {{ announcement.publishedAt | date:'shortDate' }} |
+          Ističe: {{ announcement.expirationDate | date:'shortDate' }}
+        </p>
+
+        <p class="announcement-description">{{ announcement.description }}</p>
+
+        <div *ngIf="isAdmin" class="admin-buttons">
+    <button class="btn-edit" (click)="editAnnouncement(announcement.id)">Izmeni</button>
+    <button class="btn-delete" (click)="deleteAnnouncement()">Obriši</button>
+  </div>
+      </div>
+    </div>
+  </main>
+</div>

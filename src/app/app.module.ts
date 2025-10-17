@@ -9,11 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AnnouncementComponent } from './announcement/announcement.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { AnnouncementAddComponent } from './announcement-add/announcement-add.component';
+import { AnnouncementViewComponent } from './announcement-view/announcement-view.component';
+import { AnnouncementUpdateComponent } from './announcement-update/announcement-update.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { AuthInterceptor } from './services/auth.interceptor';
      LoginComponent,
      AnnouncementComponent,
      SidebarComponent,
-     NavbarComponent
+     NavbarComponent,
+     AnnouncementAddComponent,
+     AnnouncementViewComponent,
+     AnnouncementUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +37,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     BrowserAnimationsModule,
     MatIconModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
    
   ],
   providers: [

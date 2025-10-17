@@ -1,0 +1,44 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="form-header">
+      <h1>{{ 'Dodajte novo obaveštenje' }}</h1>
+    </header>
+
+    <form [formGroup]="announcementForm"  class="announcement-form" (ngSubmit)="submit()">
+      <label for="title">Naslov</label>
+      <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
+
+      <label for="description">Opis</label>
+      <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
+
+      <label for="publishedAt">Datum objave</label>
+      <input id="publishedAt" formControlName="publishedAt" type="date">
+
+      <label for="expirationDate">Datum isteka</label>
+      <input id="expirationDate" formControlName="expirationDate" type="date">
+
+      <label for="picture">Slika</label>
+      <input id="picture" type="file" (change)="onFileSelected($event)">
+      <div *ngIf="previewUrl" class="image-preview">
+        <img [src]="previewUrl" alt="Preview slike">
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn-submit">{{ 'Dodajte' }}</button>
+        <button type="button" class="btn-cancel" (click)="cancel()">Otkaži</button>
+      </div>
+    </form>
+  </main>
+</div>

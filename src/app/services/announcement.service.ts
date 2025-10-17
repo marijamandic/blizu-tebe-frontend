@@ -17,4 +17,20 @@ export class AnnouncementService {
     return this.http.get<Announcement[]>(this.apiUrl);
   }
 
+ getAnnouncementById(id: number): Observable<Announcement> {
+  return this.http.get<Announcement>(`${this.apiUrl}/getById/${id}`);
+}
+
+createAnnouncement(formData: FormData): Observable<Announcement> {
+    return this.http.post<Announcement>(this.apiUrl, formData);
+  }
+
+  updateAnnouncement(id: number, formData: FormData): Observable<Announcement> {
+    return this.http.put<Announcement>(`${this.apiUrl}/${id}`, formData);
+  }
+
+  deleteAnnouncement(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
 }

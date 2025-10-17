@@ -1,4 +1,3 @@
-<!-- Navbar koji se vidi samo na mobilnom -->
 <app-navbar
   class="mobile-navbar"
   [isSidebarOpen]="isSidebarOpen"
@@ -6,17 +5,18 @@
 </app-navbar>
 
 <div class="layout-container">
-  <!-- Sidebar: desktop i mobilni -->
   <app-sidebar
     [isOpen]="isSidebarOpen"
     class="desktop-sidebar"
     [class.mobile-open]="isSidebarOpen">
   </app-sidebar>
 
-  <!-- Glavni sadržaj -->
   <main class="main-content">
     <header class="announcement-header">
       <h1>Obaveštenja</h1>
+      <button *ngIf="isAdmin" class="btn-add" (click)="goToAddAnnouncement()">
+    Dodajte obaveštenje
+  </button>
     </header>
 
     <div class="announcement-grid">
@@ -35,7 +35,7 @@
               {{ ann.expirationDate | date:'short' }}
             </span>
           </p>
-          <button class="btn-more">Prikaži više</button>
+          <button (click)="goToAnnouncement(ann.id)" class="btn-more" >Prikažite više</button>
         </div>
       </div>
     </div>

@@ -13,7 +13,9 @@
   --color-mid:      #AD6A6C;     
   --color-dark:     #5D2E46;     
   --color-purple:   #B58DB6;   
-  --color-blue:     #7EA6B6;  
+  --color-blue:     #398fb2;  
+  --color-hover-blue: #0b526f;
+  --color-delete:   #852e2e;
 
   --font-primary: 'Inria Serif', serif;
   --font-normal: 'Work Sans', sans-serif;

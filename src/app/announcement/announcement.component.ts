@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Announcement } from '../model/announcement.model';
 import { AnnouncementService } from '../services/announcement.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-announcement',
@@ -12,7 +14,7 @@ export class AnnouncementComponent {
   announcements: Announcement[] = [];
   isSidebarOpen = false;
 
-  constructor(private announcementService: AnnouncementService) { }
+  constructor(private announcementService: AnnouncementService, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchAllAnnouncements();
@@ -32,12 +34,22 @@ export class AnnouncementComponent {
   onImageError(event: Event) {
   const element = event.target as HTMLImageElement;
 
-  // spreči ponovno pokretanje ako i fallback ne uspe
   element.onerror = null;
 
-  // postavi provereni fallback URL
   element.src = 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
 }
+
+goToAnnouncement(id: number): void {
+  this.router.navigate(['/announcement', id]);
+}
+
+get isAdmin(): boolean {
+    return this.authService.getRole() === 'Admin';
+  }
+
+  goToAddAnnouncement() : void {
+    this.router.navigate(['/announcement/add']);
+  }
 
   
 
