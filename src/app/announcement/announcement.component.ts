@@ -23,6 +23,7 @@ export class AnnouncementComponent {
   fetchAllAnnouncements(): void {
     this.announcementService.getAllAnnouncements().subscribe({
       next: (data) => {
+        console.log(data)
         this.announcements = data;
       },
       error: (err) => console.error('Error fetching announcements', err)
@@ -31,13 +32,18 @@ export class AnnouncementComponent {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-  onImageError(event: Event) {
-  const element = event.target as HTMLImageElement;
-
-  element.onerror = null;
-
-  element.src = 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
+  getImageUrl(fileName: string): string {
+  if (fileName) {
+    return `https://localhost:44375/images/announcements/${fileName}`;
+  }
+  return 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
 }
+
+setDefaultImage(event: Event) {
+  const img = event.target as HTMLImageElement;
+  img.src = 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
+}
+
 
 goToAnnouncement(id: number): void {
   this.router.navigate(['/announcement', id]);

@@ -21,10 +21,10 @@
 
     <div class="announcement-grid">
       <div *ngFor="let ann of announcements" class="announcement-card">
-        <img [src]="'https://localhost:44375/images/announcements/' + ann.picture"
-     alt="Announcement image"
-     class="announcement-image"
-     (error)="onImageError($event)">
+        <img [src]="getImageUrl(ann.existingPicture)" class="announcement-image"
+     alt="{{ann.title}}" 
+     (error)="setDefaultImage($event)">
+
 
 
         <div class="announcement-info">

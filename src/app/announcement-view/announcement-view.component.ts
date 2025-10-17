@@ -3,6 +3,7 @@ import { Announcement } from '../model/announcement.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnnouncementService } from '../services/announcement.service';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-announcement-view',
@@ -10,9 +11,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./announcement-view.component.css'],
 })
 export class AnnouncementViewComponent implements OnInit {
-deleteAnnouncement() {
-throw new Error('Method not implemented.');
-}
+
 
   announcement!: Announcement;
   isSidebarOpen = false;
@@ -50,5 +49,41 @@ throw new Error('Method not implemented.');
   editAnnouncement(id: number) {
     this.router.navigate(['/announcement/edit', id]);
   }
+
+ deleteAnnouncement(id: number) {
+  Swal.fire({
+    title: 'Da li ste sigurni?',
+    text: 'Ova akcija je nepovratna!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#852e2e',
+    cancelButtonColor: '#398fb2',
+    confirmButtonText: 'Obrišite',
+    cancelButtonText: 'Otkažite'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.announcementService.deleteAnnouncement(id).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Obrisano!',
+            text: 'Objava je uspešno obrisana.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+          // osveži listu objava
+          this.router.navigate(['/announcement']);
+        },
+        error: () => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Greška!',
+            text: 'Došlo je do greške prilikom brisanja objave.'
+          });
+        }
+      });
+    }
+  });
+}
 
 }

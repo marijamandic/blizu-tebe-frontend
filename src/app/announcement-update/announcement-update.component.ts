@@ -59,10 +59,10 @@ export class AnnouncementUpdateComponent implements OnInit {
         });
         
         // Sačuvaj postojeće ime slike
-        this.existingPictureName = data.picture;
+        this.existingPictureName = data.existingPicture;
         
-        if (data.picture) {
-          this.previewUrl = 'https://localhost:44375/images/announcements/' + data.picture;
+        if (data.existingPicture) {
+          this.previewUrl = 'https://localhost:44375/images/announcements/' + data.existingPicture;
         }
       },
       error: err => console.error('Greška pri učitavanju obaveštenja:', err)

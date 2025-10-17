@@ -17,7 +17,7 @@
       <h1 class="announcement-title">{{ announcement.title }}</h1>
 
       <img
-        [src]="'https://localhost:44375/images/announcements/' + announcement.picture"
+        [src]="'https://localhost:44375/images/announcements/' + announcement.existingPicture"
         alt="Announcement image"
         class="announcement-image"
         (error)="onImageError($event)"
@@ -33,8 +33,8 @@
         <p class="announcement-description">{{ announcement.description }}</p>
 
         <div *ngIf="isAdmin" class="admin-buttons">
-    <button class="btn-edit" (click)="editAnnouncement(announcement.id)">Izmeni</button>
-    <button class="btn-delete" (click)="deleteAnnouncement()">Obriši</button>
+    <button class="btn-edit" (click)="editAnnouncement(announcement.id)">Izmenite</button>
+    <button class="btn-delete" (click)="deleteAnnouncement(announcement.id)">Obrišite</button>
   </div>
       </div>
     </div>
