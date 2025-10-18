@@ -5,4 +5,7 @@ export interface Announcement{
     existingPicture: string;
     publishedAt: Date;
     expirationDate: Date;
+    isImportant: boolean;
+    adminId?: number;
+    localCommunityId?: number;
 }

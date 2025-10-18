@@ -10,13 +10,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AnnouncementComponent } from './announcement/announcement.component';
+import { AnnouncementComponent } from './announcements/announcement/announcement.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import { AnnouncementAddComponent } from './announcement-add/announcement-add.component';
-import { AnnouncementViewComponent } from './announcement-view/announcement-view.component';
-import { AnnouncementUpdateComponent } from './announcement-update/announcement-update.component';
+import { AnnouncementAddComponent } from './announcements/announcement-add/announcement-add.component';
+import { AnnouncementViewComponent } from './announcements/announcement-view/announcement-view.component';
+import { AnnouncementUpdateComponent } from './announcements/announcement-update/announcement-update.component';
+import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AnnouncementUpdateComponent } from './announcement-update/announcement-
      NavbarComponent,
      AnnouncementAddComponent,
      AnnouncementViewComponent,
-     AnnouncementUpdateComponent
+     AnnouncementUpdateComponent,
+     LocalCommunityAdminComponent
   ],
   imports: [
     BrowserModule,

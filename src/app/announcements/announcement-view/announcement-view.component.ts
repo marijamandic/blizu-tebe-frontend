@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Announcement } from '../model/announcement.model';
+import { Announcement } from '../../model/announcement.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AnnouncementService } from '../services/announcement.service';
-import { AuthService } from '../services/auth.service';
+import { AnnouncementService } from '../../services/announcement.service';
+import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
