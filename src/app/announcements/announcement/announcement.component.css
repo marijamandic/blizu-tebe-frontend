@@ -43,7 +43,13 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   background-color: #fcfaff;
   display: flex;
+  transition: all 0.3s ease;
   flex-direction: column;
+}
+
+.announcement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .announcement-image {
@@ -101,6 +107,8 @@
   border-radius: 8px;
   font-weight: 500;
 }
+
+
 
 
 

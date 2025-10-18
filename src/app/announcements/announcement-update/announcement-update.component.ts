@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AnnouncementService } from '../../services/announcement.service';
+import { LocalCommunityService } from '../../services/localcommunity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { LocalCommunity } from 'src/app/model/localcommunity.model';
 
 @Component({
   selector: 'app-announcement-update',
@@ -11,17 +13,18 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AnnouncementUpdateComponent implements OnInit {
   announcementForm!: FormGroup;
-  isEditMode: boolean = false;
-  announcementId?: number;
+  announcementId!: number;
   selectedFile?: File;
   previewUrl?: string;
-  existingPictureName?: string; // Čuvamo ime postojeće slike
+  existingPictureName?: string;
 
   isSidebarOpen: boolean = false;
+  localCommunities: LocalCommunity[] = [];
 
   constructor(
     private fb: FormBuilder,
     private announcementService: AnnouncementService,
+    private localCommunityService: LocalCommunityService,
     private route: ActivatedRoute,
     private router: Router,
     public authService: AuthService
@@ -31,14 +34,17 @@ export class AnnouncementUpdateComponent implements OnInit {
     this.announcementForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      publishedAt: [new Date().toISOString().split('T')[0], Validators.required],
+      publishedAt: ['', Validators.required],
       expirationDate: ['', Validators.required],
-      picture: [null] // Slika NIJE obavezna - može se dodati validation po potrebi
+      isImportant: [false],
+      localCommunityId: [null],
+      picture: [null]
     });
+
+    this.loadLocalCommunities();
 
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
-      this.isEditMode = true;
       this.announcementId = Number(idParam);
       this.loadAnnouncement(this.announcementId);
     }
@@ -48,6 +54,15 @@ export class AnnouncementUpdateComponent implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  loadLocalCommunities() {
+    this.localCommunityService.getAll().subscribe({
+      next: (communities) => {
+        this.localCommunities = communities;
+      },
+      error: (err) => console.error('Greška pri učitavanju mesnih zajednica:', err)
+    });
+  }
+
   loadAnnouncement(id: number) {
     this.announcementService.getAnnouncementById(id).subscribe({
       next: data => {
@@ -55,14 +70,15 @@ export class AnnouncementUpdateComponent implements OnInit {
           title: data.title,
           description: data.description,
           publishedAt: new Date(data.publishedAt).toISOString().split('T')[0],
-          expirationDate: new Date(data.expirationDate).toISOString().split('T')[0]
+          expirationDate: new Date(data.expirationDate).toISOString().split('T')[0],
+          isImportant: data.isImportant || false,
+          localCommunityId: data.localCommuntyId || null
         });
-        
-        // Sačuvaj postojeće ime slike
+
         this.existingPictureName = data.existingPicture;
-        
+
         if (data.existingPicture) {
-          this.previewUrl = 'https://localhost:44375/images/announcements/' + data.existingPicture;
+          this.previewUrl = `https://localhost:44375/images/announcements/${data.existingPicture}`;
         }
       },
       error: err => console.error('Greška pri učitavanju obaveštenja:', err)
@@ -70,13 +86,14 @@ export class AnnouncementUpdateComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    if (event.target.files && event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-
-      // Preview slike
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
       const reader = new FileReader();
-      reader.onload = e => this.previewUrl = reader.result as string;
-      reader.readAsDataURL(this.selectedFile!);
+      reader.onload = () => {
+        this.previewUrl = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
@@ -91,32 +108,25 @@ export class AnnouncementUpdateComponent implements OnInit {
     formData.append('description', this.announcementForm.value.description);
     formData.append('publishedAt', this.announcementForm.value.publishedAt);
     formData.append('expirationDate', this.announcementForm.value.expirationDate);
+    formData.append('isImportant', this.announcementForm.value.isImportant);
 
-    // Dodaj sliku samo ako je selektovana nova
+    if (this.announcementForm.value.localCommunityId) {
+      formData.append('localCommunityId', this.announcementForm.value.localCommunityId);
+    }
+
     if (this.selectedFile) {
       formData.append('picture', this.selectedFile);
-    } else if (this.isEditMode && this.existingPictureName) {
-      // Ako edit mode i nema nove slike, pošalji staro ime slike
+    } else if (this.existingPictureName) {
       formData.append('existingPicture', this.existingPictureName);
     }
 
-    if (this.isEditMode && this.announcementId) {
-      this.announcementService.updateAnnouncement(this.announcementId, formData).subscribe({
-        next: () => {
-          console.log('Obaveštenje uspešno izmenjeno');
-          this.router.navigate(['/announcement']);
-        },
-        error: err => console.error('Greška pri izmeni:', err)
-      });
-    } else {
-      this.announcementService.createAnnouncement(formData).subscribe({
-        next: () => {
-          console.log('Obaveštenje uspešno dodato');
-          this.router.navigate(['/announcement']);
-        },
-        error: err => console.error('Greška pri dodavanju:', err)
-      });
-    }
+    this.announcementService.updateAnnouncement(this.announcementId, formData).subscribe({
+      next: () => {
+        console.log('Obaveštenje uspešno izmenjeno');
+        this.router.navigate(['/announcement']);
+      },
+      error: err => console.error('Greška pri izmeni:', err)
+    });
   }
 
   cancel() {

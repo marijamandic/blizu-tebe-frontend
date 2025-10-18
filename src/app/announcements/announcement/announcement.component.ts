@@ -12,9 +12,15 @@ import { AuthService } from '../../services/auth.service';
 export class AnnouncementComponent { 
 
   announcements: Announcement[] = [];
+  importantAnnouncements: Announcement[] = [];
+  regularAnnouncements: Announcement[] = [];
   isSidebarOpen = false;
 
-  constructor(private announcementService: AnnouncementService, private router: Router, private authService: AuthService) { }
+  constructor(
+    private announcementService: AnnouncementService, 
+    private router: Router, 
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.fetchAllAnnouncements();
@@ -23,41 +29,41 @@ export class AnnouncementComponent {
   fetchAllAnnouncements(): void {
     this.announcementService.getAllAnnouncements().subscribe({
       next: (data) => {
-        console.log(data)
-        this.announcements = data;
+        console.log(data);
+        // Podeli na važne i obične
+        this.importantAnnouncements = data.filter(a => a.isImportant);
+        this.regularAnnouncements = data.filter(a => !a.isImportant);
+        this.announcements = data.sort((a, b) => Number(b.isImportant) - Number(a.isImportant));
       },
       error: (err) => console.error('Error fetching announcements', err)
     });
   }
+
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+
   getImageUrl(fileName: string): string {
-  if (fileName) {
-    return `https://localhost:44375/images/announcements/${fileName}`;
+    if (fileName) {
+      return `https://localhost:44375/images/announcements/${fileName}`;
+    }
+    return 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
   }
-  return 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
-}
 
-setDefaultImage(event: Event) {
-  const img = event.target as HTMLImageElement;
-  img.src = 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
-}
+  setDefaultImage(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://blogs.nottingham.ac.uk/learningtechnology/files/2023/04/announcement.jpg';
+  }
 
+  goToAnnouncement(id: number): void {
+    this.router.navigate(['/announcement', id]);
+  }
 
-goToAnnouncement(id: number): void {
-  this.router.navigate(['/announcement', id]);
-}
-
-get isAdmin(): boolean {
+  get isAdmin(): boolean {
     return this.authService.getRole() === 'Admin';
   }
 
-  goToAddAnnouncement() : void {
+  goToAddAnnouncement(): void {
     this.router.navigate(['/announcement/add']);
   }
-
-  
-
-
 }

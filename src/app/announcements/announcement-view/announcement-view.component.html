@@ -1,4 +1,3 @@
-<!-- Navbar koji se vidi samo na mobilnom -->
 <app-navbar
   class="mobile-navbar"
   [isSidebarOpen]="isSidebarOpen"
@@ -29,6 +28,11 @@
           Pocetak: {{ announcement.publishedAt | date:'shortDate' }} |
           Ističe: {{ announcement.expirationDate | date:'shortDate' }}
         </p>
+        <p *ngIf="localCommunityName" class="announcement-dates">
+          <mat-icon>location_city</mat-icon>
+          Mesna zajednica: {{ localCommunityName }}
+        </p>
+
 
         <p class="announcement-description">{{ announcement.description }}</p>
 

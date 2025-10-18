@@ -19,6 +19,11 @@ export class LocalCommunityService {
     return this.http.post<LocalCommunity>(this.apiUrl, community);
   }
 
+  getById(id: number): Observable<LocalCommunity> {
+  return this.http.get<LocalCommunity>(`${this.apiUrl}/${id}`);
+}
+
+
   getByLocation(lat: number, lng: number): Observable<LocalCommunity> {
     return this.http.get<LocalCommunity>(`${this.apiUrl}/by-location?lat=${lat}&lng=${lng}`);
   }

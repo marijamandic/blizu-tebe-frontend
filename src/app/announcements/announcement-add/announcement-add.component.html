@@ -16,29 +16,40 @@
       <h1>{{ 'Dodajte novo obaveštenje' }}</h1>
     </header>
 
-    <form [formGroup]="announcementForm"  class="announcement-form" (ngSubmit)="submit()">
-      <label for="title">Naslov</label>
-      <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
+    <form [formGroup]="announcementForm" class="announcement-form" (ngSubmit)="submit()">
+  <label for="title">Naslov</label>
+  <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
 
-      <label for="description">Opis</label>
-      <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
+  <label for="description">Opis</label>
+  <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
 
-      <label for="publishedAt">Datum objave</label>
-      <input id="publishedAt" formControlName="publishedAt" type="date">
+  <label for="publishedAt">Datum objave</label>
+  <input id="publishedAt" formControlName="publishedAt" type="date">
 
-      <label for="expirationDate">Datum isteka</label>
-      <input id="expirationDate" formControlName="expirationDate" type="date">
+  <label for="expirationDate">Datum isteka</label>
+  <input id="expirationDate" formControlName="expirationDate" type="date">
 
-      <label for="picture">Slika</label>
-      <input id="picture" type="file" (change)="onFileSelected($event)">
-      <div *ngIf="previewUrl" class="image-preview">
-        <img [src]="previewUrl" alt="Preview slike">
-      </div>
+<div class="form-group-checkbox">
+  <input type="checkbox" id="isImportant" formControlName="isImportant">
+  <label for="isImportant">Označi kao važno</label>
+</div>
 
-      <div class="form-buttons">
-        <button type="submit" class="btn-submit">{{ 'Dodajte' }}</button>
-        <button type="button" class="btn-cancel" (click)="cancel()">Otkaži</button>
-      </div>
-    </form>
+<label class="select-label" for="localCommunityId">Mesna zajednica</label>
+<select id="localCommunityId" formControlName="localCommunityId">
+  <option value="">-- Izaberite mesnu zajednicu --</option>
+  <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}</option>
+</select>
+
+  <label for="picture">Slika</label>
+  <input id="picture" type="file" (change)="onFileSelected($event)">
+  <div *ngIf="previewUrl" class="image-preview">
+    <img [src]="previewUrl" alt="Preview slike">
+  </div>
+
+  <div class="form-buttons">
+    <button type="submit" class="btn-submit">Dodajte</button>
+    <button type="button" class="btn-cancel" (click)="cancel()">Otkaži</button>
+  </div>
+</form>
   </main>
 </div>

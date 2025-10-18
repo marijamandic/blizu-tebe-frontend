@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AnnouncementService } from '../../services/announcement.service';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
+import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 
 @Component({
   selector: 'app-announcement-view',
@@ -15,22 +16,37 @@ export class AnnouncementViewComponent implements OnInit {
 
   announcement!: Announcement;
   isSidebarOpen = false;
+  localCommunityName: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private announcementService: AnnouncementService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private localCommunityService: LocalCommunityService
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
-      this.announcementService.getAnnouncementById(id).subscribe({
-        next: (data) => (this.announcement = data),
-        error: (err) => console.error('Greška prilikom učitavanja obaveštenja:', err)
-      });
+      this.loadAnnouncement(id);
     }
+  }
+
+  loadAnnouncement(id: number) {
+    this.announcementService.getAnnouncementById(id).subscribe({
+      next: (ann) => {
+        this.announcement = ann;
+
+        if (ann.localCommuntyId) {
+          this.localCommunityService.getById(ann.localCommuntyId).subscribe({
+            next: (lc) => this.localCommunityName = lc.name,
+            error: (err) => console.error('Greška pri učitavanju mesne zajednice', err)
+          });
+        }
+      },
+      error: (err) => console.error('Greška pri učitavanju obaveštenja', err)
+    });
   }
 
   toggleSidebar(): void {

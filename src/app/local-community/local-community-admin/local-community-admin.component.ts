@@ -30,7 +30,6 @@ export class LocalCommunityAdminComponent implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  // 🔹 metoda da preuzmemo id iz JWT tokena
   private getId(): number | null {
     const token = localStorage.getItem('jwt');
     if (!token) return null;
@@ -46,45 +45,58 @@ export class LocalCommunityAdminComponent implements OnInit {
     }
   }
 
-  initMap(): void {
-    this.map = L.map('map').setView([45.2671, 19.8335], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(this.map);
+ initMap(): void {
+  this.map = L.map('map').setView([45.2671, 19.8335], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(this.map);
 
-    this.drawnItems = new L.FeatureGroup();
-    this.map.addLayer(this.drawnItems);
+  this.drawnItems = new L.FeatureGroup();
+  this.map.addLayer(this.drawnItems);
 
-    const drawControl = new L.Control.Draw({
-      draw: {
-        polygon: {
-          allowIntersection: false,
-          showArea: true
-        },
-        polyline: false,
-        rectangle: false,
-        circle: false,
-        marker: false,
-        circlemarker: false
+  const drawControl = new L.Control.Draw({
+    draw: {
+      polygon: {
+        allowIntersection: false,
+        showArea: true
       },
-      edit: {
-        featureGroup: this.drawnItems,
-        remove: true
-      }
-    });
-    this.map.addControl(drawControl);
+      polyline: false,
+      rectangle: false,
+      circle: false,
+      marker: false,
+      circlemarker: false
+    },
+    edit: {
+      featureGroup: this.drawnItems,
+      remove: true
+    }
+  });
+  this.map.addControl(drawControl);
 
-    this.map.on(L.Draw.Event.CREATED, (event: any) => {
-      const layer = event.layer;
-      this.drawnItems.clearLayers();
-      this.drawnItems.addLayer(layer);
+  this.map.on(L.Draw.Event.CREATED, (event: any) => {
+    const layer = event.layer;
+    this.drawnItems.clearLayers();
+    this.drawnItems.addLayer(layer);
+    this.drawnPolygon = layer.toGeoJSON();
+    console.log('Nacrtani polygon:', this.drawnPolygon);
+  });
+
+  this.map.on(L.Draw.Event.EDITED, (event: any) => {
+    const layers = event.layers;
+    layers.eachLayer((layer: any) => {
       this.drawnPolygon = layer.toGeoJSON();
-      console.log('Nacrtani polygon:', this.drawnPolygon);
+      console.log('Izmenjen polygon:', this.drawnPolygon);
     });
+  });
 
-    this.loadExistingCommunities();
-  }
+  this.map.on(L.Draw.Event.DELETED, (event: any) => {
+    this.drawnPolygon = null;
+    console.log('Polygon obrisan');
+  });
+
+  this.loadExistingCommunities();
+}
 
   loadExistingCommunities(): void {
     this.service.getAll().subscribe({

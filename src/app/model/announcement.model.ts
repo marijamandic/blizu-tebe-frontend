@@ -7,5 +7,5 @@ export interface Announcement{
     expirationDate: Date;
     isImportant: boolean;
     adminId?: number;
-    localCommunityId?: number;
+    localCommuntyId?: number;
 }
