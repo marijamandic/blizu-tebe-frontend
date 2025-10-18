@@ -1,20 +1,47 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
 
-<div class="container">
-    <h2>Dodaj Mesnu Zajednicu</h2>
-      
-    <div class="form-group">
-        <label>Naziv:</label>
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1>Dodajte Mesnu Zajednicu</h1>
+      <p class="subtitle">Crtanjem odredite granice i unesite osnovne podatke.</p>
+    </header>
+
+    <div class="form-container">
+      <div class="form-group">
+        <label>Naziv mesne zajednice:</label>
         <input type="text" [(ngModel)]="communityName" placeholder="Npr. Detelinara">
-    </div>
+      </div>
 
-    <div class="form-group">
+      <div class="form-group">
         <label>Grad:</label>
         <input type="text" [(ngModel)]="communityCity" placeholder="Npr. Novi Sad">
+      </div>
+      <div class="form-group">
+        <label>Broj telefona (neobavezno):</label>
+        <input type="text" [(ngModel)]="phoneNumber" placeholder="Npr. +381641234567">
+        </div>
+
+        <div class="form-group">
+        <label>Facebook stranica (neobavezno):</label>
+        <input type="text" [(ngModel)]="facebook" placeholder="Npr. https://facebook.com/detelinara">
+        </div>
+
+      <div id="map"></div>
+
+      <button class="btn-save" (click)="saveCommunity()" [disabled]="!drawnPolygon">
+        Sačuvaj Mesnu Zajednicu
+      </button>
     </div>
-
-    <div id="map" style="height: 600px; margin: 20px 0;"></div>
-
-    <button (click)="saveCommunity()" [disabled]="!drawnPolygon">
-         Sačuvaj Mesnu Zajednicu
-    </button>
+  </main>
 </div>

@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import 'leaflet-draw';
-
 
 @Component({
   selector: 'app-local-community-admin',
@@ -14,8 +13,12 @@ export class LocalCommunityAdminComponent implements OnInit {
   private map!: L.Map;
   private drawnItems!: L.FeatureGroup;
   drawnPolygon: any = null;
+
   communityName = '';
   communityCity = '';
+  phoneNumber = '';
+  facebook = '';
+  isSidebarOpen = false;
 
   constructor(private service: LocalCommunityService) {}
 
@@ -23,21 +26,36 @@ export class LocalCommunityAdminComponent implements OnInit {
     this.initMap();
   }
 
-  initMap(): void {
-    // Inicijalizuj mapu centriranu na Novi Sad
-    this.map = L.map('map').setView([45.2671, 19.8335], 13);
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
 
-    // OpenStreetMap tile layer
+  // 🔹 metoda da preuzmemo id iz JWT tokena
+  private getId(): number | null {
+    const token = localStorage.getItem('jwt');
+    if (!token) return null;
+
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) return null;
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload['id'] ? parseInt(decodedPayload['id'], 10) : null;
+    } catch (e) {
+      console.error('Greška pri dekodiranju tokena', e);
+      return null;
+    }
+  }
+
+  initMap(): void {
+    this.map = L.map('map').setView([45.2671, 19.8335], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    // Layer za crtanje
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
 
-    // Alati za crtanje
     const drawControl = new L.Control.Draw({
       draw: {
         polygon: {
@@ -57,40 +75,35 @@ export class LocalCommunityAdminComponent implements OnInit {
     });
     this.map.addControl(drawControl);
 
-    // Event kada se nacrta polygon
     this.map.on(L.Draw.Event.CREATED, (event: any) => {
       const layer = event.layer;
       this.drawnItems.clearLayers();
       this.drawnItems.addLayer(layer);
-      
-      // Konvertuj u GeoJSON
       this.drawnPolygon = layer.toGeoJSON();
       console.log('Nacrtani polygon:', this.drawnPolygon);
     });
 
-    // Učitaj postojeće mesne zajednice
     this.loadExistingCommunities();
   }
 
   loadExistingCommunities(): void {
-  this.service.getAll().subscribe({
-    next: (communities) => {
-      communities.forEach(c => {
-        if (c.boundary) {
-          const boundaryJson = JSON.parse(c.boundary);
-          
-          L.geoJSON(boundaryJson, {
-            style: { color: 'blue', fillOpacity: 0.2 }
-          }).bindPopup(c.name).addTo(this.map);
-        }
-      });
-    }
-  });
-}
+    this.service.getAll().subscribe({
+      next: (communities) => {
+        communities.forEach(c => {
+          if (c.boundary) {
+            const boundaryJson = JSON.parse(c.boundary);
+            L.geoJSON(boundaryJson, {
+              style: { color: 'blue', fillOpacity: 0.2 }
+            }).bindPopup(c.name).addTo(this.map);
+          }
+        });
+      }
+    });
+  }
 
   saveCommunity(): void {
     if (!this.drawnPolygon || !this.communityName || !this.communityCity) {
-      alert('Popunite sva polja i nacrtajte granicu!');
+      alert('Popunite obavezna polja i nacrtajte granicu!');
       return;
     }
 
@@ -99,7 +112,9 @@ export class LocalCommunityAdminComponent implements OnInit {
       city: this.communityCity,
       boundary: JSON.stringify(this.drawnPolygon.geometry),
       centerPoint: this.calculateCenter(this.drawnPolygon),
-      presidentId: 1001,
+      presidentId: this.getId() ?? undefined,
+      phoneNumber: this.phoneNumber || undefined,
+      facebook: this.facebook || undefined
     };
 
     this.service.create(community).subscribe({
@@ -109,12 +124,13 @@ export class LocalCommunityAdminComponent implements OnInit {
         this.drawnPolygon = null;
         this.communityName = '';
         this.communityCity = '';
+        this.phoneNumber = '';
+        this.facebook = '';
         this.loadExistingCommunities();
       },
       error: (err) => {
-      console.error('Greška:', err);
-      console.error('Detalji:', err.error); 
-    }
+        console.error('Greška:', err);
+      }
     });
   }
 

@@ -57,6 +57,41 @@ export class AuthService {
     return null;
   }
 }
+
+getId(): string | null {
+  const token = localStorage.getItem('jwt');
+  if (!token) return null;
+
+  try {
+    const payload = token.split('.')[1];
+    if (!payload) return null;
+
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload["id"] || null;
+
+  } catch (e) {
+    console.error('Greška pri dekodiranju tokena', e);
+    return null;
+  }
+}
+
+getUsername(): string | null {
+  const token = localStorage.getItem('jwt');
+  if (!token) return null;
+
+  try {
+    const payload = token.split('.')[1];
+    if (!payload) return null;
+
+    const decodedPayload = JSON.parse(atob(payload));
+    return decodedPayload["username"] || null;
+
+  } catch (e) {
+    console.error('Greška pri dekodiranju tokena', e);
+    return null;
+  }
+}
+
 }
 
 function jwt_decode(token: string): any {

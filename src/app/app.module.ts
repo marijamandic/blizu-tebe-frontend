@@ -18,6 +18,7 @@ import { AnnouncementAddComponent } from './announcements/announcement-add/annou
 import { AnnouncementViewComponent } from './announcements/announcement-view/announcement-view.component';
 import { AnnouncementUpdateComponent } from './announcements/announcement-update/announcement-update.component';
 import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
+import { ViewAllLocalCommunityComponent } from './local-community/view-all-local-community/view-all-local-community.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LocalCommunityAdminComponent } from './local-community/local-community-
      AnnouncementAddComponent,
      AnnouncementViewComponent,
      AnnouncementUpdateComponent,
-     LocalCommunityAdminComponent
+     LocalCommunityAdminComponent,
+     ViewAllLocalCommunityComponent
   ],
   imports: [
     BrowserModule,

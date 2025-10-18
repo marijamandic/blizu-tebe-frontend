@@ -8,6 +8,7 @@ import { AnnouncementViewComponent } from './announcements/announcement-view/ann
 import { AnnouncementAddComponent } from './announcements/announcement-add/announcement-add.component';
 import { AnnouncementUpdateComponent } from './announcements/announcement-update/announcement-update.component';
 import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
+import { ViewAllLocalCommunityComponent } from './local-community/view-all-local-community/view-all-local-community.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'announcement/add', component: AnnouncementAddComponent },
   { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent },
   { path: 'announcement/:id', component: AnnouncementViewComponent },
-  { path: 'community/add', component: LocalCommunityAdminComponent}
+  { path: 'community/add', component: LocalCommunityAdminComponent},
+  {path: 'community/all', component:ViewAllLocalCommunityComponent}
 ];
 
 @NgModule({

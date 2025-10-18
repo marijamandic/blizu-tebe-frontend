@@ -49,19 +49,19 @@
         <li>
           <a routerLink="/pomoci/moji">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Moji zahtevi</span>
+            <span>Moje pomoći</span>
           </a>
         </li>
         <li>
           <a routerLink="/pomoci/svi">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Svi zahtevi</span>
+            <span>Sve pomoći</span>
           </a>
         </li>
         <li>
           <a routerLink="/pomoci/dodaj">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Dodajte zahtev</span>
+            <span>Dodajte pomoć</span>
           </a>
         </li>
       </ul>
@@ -78,19 +78,19 @@
         <li>
           <a routerLink="/pokloni/moji">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Moji zahtevi</span>
+            <span>Moji pokloni</span>
           </a>
         </li>
         <li>
           <a routerLink="/pokloni/svi">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Svi zahtevi</span>
+            <span>Svi pokloni</span>
           </a>
         </li>
         <li>
           <a routerLink="/pokloni/dodaj">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Dodajte zahtev</span>
+            <span>Dodajte poklon</span>
           </a>
         </li>
       </ul>
@@ -140,8 +140,30 @@
         </a>
       </h4>
     </li>
-  </ul>
 
+     <!-- Admin: Mesne zajednice -->
+    <li *ngIf="isAdmin">
+      <h4 (click)="toggleCommunities()">
+        <mat-icon>location_city</mat-icon>
+        <span>Mesne zajednice</span>
+        <mat-icon class="arrow" [class.open]="mesneZajednice">chevron_right</mat-icon>
+      </h4>
+      <ul *ngIf="mesneZajednice">
+        <li>
+          <a routerLink="/community/add">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Dodajte zajednicu</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/community/all">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Sve zajednice</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
   <button class="logout-button" (click)="logOut()">
       <mat-icon>logout</mat-icon>
        <span class="logout-text">Odjavite se</span>

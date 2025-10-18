@@ -22,4 +22,8 @@ export class LocalCommunityService {
   getByLocation(lat: number, lng: number): Observable<LocalCommunity> {
     return this.http.get<LocalCommunity>(`${this.apiUrl}/by-location?lat=${lat}&lng=${lng}`);
   }
+
+  deleteLocalCommunity(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
 }

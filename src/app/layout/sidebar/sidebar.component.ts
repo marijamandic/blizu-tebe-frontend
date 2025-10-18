@@ -13,10 +13,14 @@ export class SidebarComponent {
     pomoci: boolean =  false;
     pokloni: boolean =  false;
     radneAkcije: boolean =  false;
+    mesneZajednice: boolean = false;
 
     @Input() isOpen: boolean = false;
+    isAdmin: boolean = false;
 
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(private router: Router, private authService: AuthService) {
+      this.isAdmin = this.authService.getRole() === 'Admin';
+    }
   
 
   toggleUsluge(): void {
@@ -35,9 +39,12 @@ export class SidebarComponent {
     this.radneAkcije = !this.radneAkcije;
   }
 
+  toggleCommunities(): void { this.mesneZajednice = !this.mesneZajednice; }
+
   goToHomePage() {
 this.router.navigate(['/home']);
 }
+
 
 logOut() {
  this.authService.logout();

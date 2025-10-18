@@ -1,0 +1,29 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="community-header">
+      <h1>Mesne zajednice</h1>
+    </header>
+
+    <div class="community-grid">
+      <div *ngFor="let community of communities" class="community-card">
+        <h3>{{ community.name }}</h3>
+        <p><strong>Grad:</strong> {{ community.city }}</p>
+        <p *ngIf="community.phoneNumber"><strong>Telefon:</strong> {{ community.phoneNumber }}</p>
+        <p *ngIf="community.facebook"><strong>Facebook: </strong> <a href="{{community.facebook}}" target="_blank">{{community.facebook}}</a></p>
+        <button class="btn-delete" (click)="removeCommunity(community.id)">Obriši</button>
+      </div>
+    </div>
+  </main>
+</div>
