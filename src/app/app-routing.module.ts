@@ -9,11 +9,13 @@ import { AnnouncementAddComponent } from './announcements/announcement-add/annou
 import { AnnouncementUpdateComponent } from './announcements/announcement-update/announcement-update.component';
 import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
 import { ViewAllLocalCommunityComponent } from './local-community/view-all-local-community/view-all-local-community.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component:HomeLoggedComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
   {path: 'announcement', component: AnnouncementComponent},
   { path: 'announcement/add', component: AnnouncementAddComponent },
   { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent },

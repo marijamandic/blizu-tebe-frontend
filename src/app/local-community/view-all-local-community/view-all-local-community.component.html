@@ -21,8 +21,21 @@
         <h3>{{ community.name }}</h3>
         <p><strong>Grad:</strong> {{ community.city }}</p>
         <p *ngIf="community.phoneNumber"><strong>Telefon:</strong> {{ community.phoneNumber }}</p>
+        <p *ngIf="currentUser?.localCommunityId === community.id">
+      <strong>Vaša mesna zajednica</strong>
+    </p>
+    <p *ngIf="currentUser?.localCommunityId !== community.id">
+      <strong>Pridružite se zajednici</strong>
+    </p>
         <p *ngIf="community.facebook"><strong>Facebook: </strong> <a href="{{community.facebook}}" target="_blank">{{community.facebook}}</a></p>
-        <button class="btn-delete" (click)="removeCommunity(community.id)">Obriši</button>
+        <div class="button-group">
+        <button *ngIf="currentUser?.role === 0" class="btn-join" (click)="joinCommunity(community.id)">
+          Pridružite se
+        </button>
+
+        <button class="btn-delete" (click)="removeCommunity(community.id)">Obrišite</button>
+      </div>
+
       </div>
     </div>
   </main>

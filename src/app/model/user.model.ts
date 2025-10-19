@@ -7,12 +7,12 @@ export interface User{
     role: UserRole;
     dateOfBirth: Date;
     isVerified: boolean;
-    localCommunity: number;
+    localCommunityId: number;
     profilePicture: string;
     rating: number;
 }
 
 export enum UserRole {
-  Admin = 1,
-  Member = 2
+  Admin = 0,
+  Member = 1
 }

@@ -11,7 +11,10 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   goToLogin(){
-    console.log("usao sam u metodu");
     this.router.navigate(['/login']);
+  }
+
+  goToRegister() {
+  this.router.navigate(['/register']);
   }
  }

@@ -1,0 +1,62 @@
+<div class="register-container">
+  <div class="register-card">
+
+    <h1 class="title">Registracija</h1>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+      
+      <label for="username">Korisničko ime *</label>
+      <input class="inputArea" type="text" id="username" formControlName="username" placeholder="Unesite korisničko ime">
+
+      <label for="password">Lozinka *</label>
+      <input class="inputArea" type="password" id="password" formControlName="password" placeholder="Minimum 6 karaktera">
+
+      <label for="name">Ime *</label>
+      <input class="inputArea" type="text" id="name" formControlName="name" placeholder="Vaše ime">
+
+      <label for="surname">Prezime *</label>
+      <input class="inputArea" type="text" id="surname" formControlName="surname" placeholder="Vaše prezime">
+
+      <label for="dateOfBirth">Datum rođenja *</label>
+      <input class="inputArea" type="date" id="dateOfBirth" formControlName="dateOfBirth">
+
+      <label for="localCommunityId">Mesna zajednica</label>
+      <select class="inputArea" id="localCommunityId" formControlName="localCommunityId">
+        <option [value]="null" disabled>-- Izaberite mesnu zajednicu * --</option>
+        <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}, {{ mc.city }}</option>
+        </select>
+
+      <button type="button" class="mapButton" (click)="toggleMap()">
+         {{ showMap ? 'Zatvorite mapu' : 'Saznajte kojoj mesnoj zajednici pripadate' }}
+      </button>
+
+      <!-- Mapa -->
+      <div *ngIf="showMap" class="map-container">
+        <p class="map-instruction">Kliknite na mapu ili na mesnu zajednicu da je odaberete</p>
+        <div id="registerMap" class="map"></div>
+      </div>
+
+      <div *ngIf="selectedCommunityFromMap" class="selected-community">
+         Odabrana: <strong>{{ selectedCommunityFromMap.name }}, {{ selectedCommunityFromMap.city }}</strong>
+      </div>
+
+      <label for="picture">Profilna slika</label>
+      <input class="inputArea" type="file" id="picture" (change)="onFileSelected($event)" accept="image/*">
+      
+      <div *ngIf="previewUrl" class="image-preview">
+        <img [src]="previewUrl" alt="Preview profilne slike">
+      </div>
+
+      <button class="registerButton" type="submit" [disabled]="registerForm.invalid">
+        Registrujte se
+      </button>
+    </form>
+
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+    <p class="login-link">
+      Već imate nalog?
+      <a (click)="goToLogin()">Prijavite se</a>
+    </p>
+  </div>
+</div>

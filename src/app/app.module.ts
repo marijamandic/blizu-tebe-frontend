@@ -19,6 +19,7 @@ import { AnnouncementViewComponent } from './announcements/announcement-view/ann
 import { AnnouncementUpdateComponent } from './announcements/announcement-update/announcement-update.component';
 import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
 import { ViewAllLocalCommunityComponent } from './local-community/view-all-local-community/view-all-local-community.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ViewAllLocalCommunityComponent } from './local-community/view-all-local
      AnnouncementViewComponent,
      AnnouncementUpdateComponent,
      LocalCommunityAdminComponent,
-     ViewAllLocalCommunityComponent
+     ViewAllLocalCommunityComponent,
+     RegisterComponent
   ],
   imports: [
     BrowserModule,

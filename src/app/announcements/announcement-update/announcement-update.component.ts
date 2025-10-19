@@ -5,6 +5,7 @@ import { LocalCommunityService } from '../../services/localcommunity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-announcement-update',
@@ -122,7 +123,13 @@ export class AnnouncementUpdateComponent implements OnInit {
 
     this.announcementService.updateAnnouncement(this.announcementId, formData).subscribe({
       next: () => {
-        console.log('Obaveštenje uspešno izmenjeno');
+        Swal.fire({
+      icon: 'success',
+      title: 'Uspešno!',
+      text: 'Obaveštenje uspešno izmenjeno.',
+      timer: 3000,
+      showConfirmButton: false
+    });
         this.router.navigate(['/announcement']);
       },
       error: err => console.error('Greška pri izmeni:', err)

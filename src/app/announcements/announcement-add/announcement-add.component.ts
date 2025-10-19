@@ -5,6 +5,7 @@ import { LocalCommunityService } from '../../services/localcommunity.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-announcement-add',
@@ -94,7 +95,13 @@ export class AnnouncementAddComponent implements OnInit {
 
     this.announcementService.createAnnouncement(formData).subscribe({
       next: () => {
-        console.log('Obaveštenje uspešno dodato');
+        Swal.fire({
+      icon: 'success',
+      title: 'Uspešno!',
+      text: 'Obaveštenje uspesno dodato.',
+      timer: 3000,
+      showConfirmButton: false
+    });
         this.router.navigate(['/announcement']);
       },
       error: (err) => console.error('Greška pri dodavanju:', err)

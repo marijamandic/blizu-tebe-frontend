@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import 'leaflet-draw';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-local-community-admin',
@@ -59,7 +60,13 @@ export class LocalCommunityAdminComponent implements OnInit {
     draw: {
       polygon: {
         allowIntersection: false,
-        showArea: true
+        showArea: true,
+        shapeOptions: {
+        color: 'red',       // boja linije
+        fillColor: 'orange', // boja popunjenog poligona
+        fillOpacity: 0.3,    // providnost popune
+        weight: 3            // debljina linije
+      }
       },
       polyline: false,
       rectangle: false,
@@ -105,7 +112,7 @@ export class LocalCommunityAdminComponent implements OnInit {
           if (c.boundary) {
             const boundaryJson = JSON.parse(c.boundary);
             L.geoJSON(boundaryJson, {
-              style: { color: 'blue', fillOpacity: 0.2 }
+              style: { color: '#4db1d9ff', fillOpacity: 0.2 }
             }).bindPopup(c.name).addTo(this.map);
           }
         });
@@ -131,7 +138,13 @@ export class LocalCommunityAdminComponent implements OnInit {
 
     this.service.create(community).subscribe({
       next: () => {
-        alert('Mesna zajednica uspešno dodata!');
+        Swal.fire({
+      icon: 'success',
+      title: 'Uspešno!',
+      text: 'Mesna zajednica je uspešno dodata.',
+      timer: 3000,
+      showConfirmButton: false
+    });
         this.drawnItems.clearLayers();
         this.drawnPolygon = null;
         this.communityName = '';
