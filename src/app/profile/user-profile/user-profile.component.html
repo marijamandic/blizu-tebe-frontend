@@ -1,0 +1,47 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="profile-details" *ngIf="user">
+      <img
+        [src]="'https://localhost:44375/images/users/' + user.profilePicture"
+        alt="Profile picture"
+        class="profile-image"
+        (error)="onImageError($event)"
+      />
+
+      <h1 class="profile-name">{{ user.name }} {{ user.surname }}</h1>
+      <p class="profile-username">@{{ user.username }}</p>
+
+      <div class="profile-info">
+        <p><mat-icon>cake</mat-icon> Datum rođenja: {{ user.dateOfBirth | date:'shortDate' }}</p>
+        <p>
+        <mat-icon>star</mat-icon>
+        <ng-container *ngIf="user.rating === 0; else hasRating">
+            Nema još ocena
+        </ng-container>
+        <ng-template #hasRating>
+            Ocena: {{ user.rating }}/5
+        </ng-template>
+        </p>
+        <p *ngIf="localCommunityName"><mat-icon>location_city</mat-icon> Mesna zajednica: {{ localCommunityName }}</p>
+        <p><mat-icon>verified</mat-icon> Status: {{ user.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}</p>
+        <p><mat-icon>person</mat-icon> Uloga: {{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
+      </div>
+
+      <div *ngIf="isOwnProfile" class="admin-buttons">
+        <button class="btn-edit" (click)="editProfile(user.id)">Izmenite profil</button>
+      </div>
+    </div>
+  </main>
+</div>

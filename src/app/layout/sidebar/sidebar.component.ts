@@ -45,6 +45,31 @@ export class SidebarComponent {
 this.router.navigate(['/home']);
 }
 
+getId(): string | null {
+    const token = localStorage.getItem('jwt');
+    if (!token) return null;
+
+    try {
+      const payload = token.split('.')[1];
+      if (!payload) return null;
+
+      const decodedPayload = JSON.parse(atob(payload));
+      return decodedPayload["id"] || null;
+    } catch (e) {
+      console.error('Greška pri dekodiranju tokena', e);
+      return null;
+    }
+  }
+
+  goToMyProfile(): void {
+    const id = this.getId();
+    if (id) {
+      this.router.navigate([`/view-user/${id}`]);
+    } else {
+      console.error('ID korisnika nije pronađen u JWT tokenu');
+    }
+  }
+
 
 logOut() {
  this.authService.logout();

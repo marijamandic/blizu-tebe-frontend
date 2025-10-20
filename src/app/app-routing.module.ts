@@ -10,6 +10,8 @@ import { AnnouncementUpdateComponent } from './announcements/announcement-update
 import { LocalCommunityAdminComponent } from './local-community/local-community-admin/local-community-admin.component';
 import { ViewAllLocalCommunityComponent } from './local-community/view-all-local-community/view-all-local-community.component';
 import { RegisterComponent } from './register/register.component';
+import { UserProfileComponent } from './profile/user-profile/user-profile.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,7 +23,9 @@ const routes: Routes = [
   { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent },
   { path: 'announcement/:id', component: AnnouncementViewComponent },
   { path: 'community/add', component: LocalCommunityAdminComponent},
-  {path: 'community/all', component:ViewAllLocalCommunityComponent}
+  {path: 'community/all', component:ViewAllLocalCommunityComponent},
+  { path: 'view-user/:id', component: UserProfileComponent },
+  { path: 'edit-user/:id', component: EditProfileComponent }
 ];
 
 @NgModule({

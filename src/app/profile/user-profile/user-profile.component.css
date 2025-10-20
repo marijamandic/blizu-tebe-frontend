@@ -1,0 +1,158 @@
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.desktop-sidebar {
+  display: block;
+  flex-shrink: 0;
+  width: 20vw;
+  min-width: 250px;
+  height: 100vh;
+  background-color: #fcfaff;
+  border-right: 1.7px solid var(--color-dark);
+  transition: all 0.3s ease;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: var(--color-lightest);
+  padding: 3rem;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-details {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.profile-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+  border: 3px solid var(--color-blue);
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.profile-username {
+  color: #666;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.profile-info {
+  text-align: left;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  color: #333;
+}
+
+.profile-info mat-icon {
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  color: var(--color-dark);
+}
+
+.admin-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.btn-edit {
+  padding: 0.6rem 3rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--color-blue);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-edit:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobilna verzija */
+.mobile-navbar {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .mobile-navbar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #fcfaff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .layout-container {
+    flex-direction: column;
+  }
+
+  .desktop-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: calc(100vh - 60px);
+    background-color: #fcfaff;
+    border-right: 1.7px solid var(--color-dark);
+    transform: translateX(-200%);
+    transition: transform 0.3s ease;
+    z-index: 1200;
+  }
+
+  p{
+    font-size: 1.1rem;
+  }
+
+  .desktop-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    padding: 1.5rem;
+    padding-top: 70px;
+  }
+
+  .profile-details {
+    max-width: 95vw;
+    padding: 1.5rem;
+  }
+
+  .profile-name {
+    font-size: 6vw;
+  }
+
+  .profile-info {
+    font-size: 4vw;
+  }
+}
