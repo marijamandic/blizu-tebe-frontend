@@ -14,6 +14,7 @@ export class SidebarComponent {
     pokloni: boolean =  false;
     radneAkcije: boolean =  false;
     mesneZajednice: boolean = false;
+    korisnici: boolean = false;
 
     @Input() isOpen: boolean = false;
     isAdmin: boolean = false;
@@ -38,6 +39,10 @@ export class SidebarComponent {
   toggleAkcije(): void {
     this.radneAkcije = !this.radneAkcije;
   }
+
+  toggleUsers() {
+  this.korisnici = !this.korisnici;
+}
 
   toggleCommunities(): void { this.mesneZajednice = !this.mesneZajednice; }
 

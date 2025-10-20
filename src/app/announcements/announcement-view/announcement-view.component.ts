@@ -84,7 +84,7 @@ export class AnnouncementViewComponent implements OnInit {
             icon: 'success',
             title: 'Obrisano!',
             text: 'Objava je uspešno obrisana.',
-            timer: 3000,
+            timer: 2000,
             showConfirmButton: false
           });
           // osveži listu objava

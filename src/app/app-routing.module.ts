@@ -12,6 +12,7 @@ import { ViewAllLocalCommunityComponent } from './local-community/view-all-local
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './profile/user-profile/user-profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'community/add', component: LocalCommunityAdminComponent},
   {path: 'community/all', component:ViewAllLocalCommunityComponent},
   { path: 'view-user/:id', component: UserProfileComponent },
-  { path: 'edit-user/:id', component: EditProfileComponent }
+  { path: 'edit-user/:id', component: EditProfileComponent },
+  { path: 'view-all-users', component: ViewAllUsersComponent }
 ];
 
 @NgModule({

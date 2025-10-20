@@ -132,7 +132,7 @@
     
     
     <!-- Moj nalog -->
-    <li>
+    <li *ngIf="!isAdmin">
       <h4>
         <a (click)="goToMyProfile()">
           <mat-icon>person</mat-icon>
@@ -140,6 +140,29 @@
         </a>
       </h4>
     </li>
+
+    <li *ngIf="isAdmin">
+    <h4 (click)="toggleUsers()">
+      <mat-icon>people</mat-icon>
+      <span>Korisnici</span>
+      <mat-icon class="arrow" [class.open]="korisnici">chevron_right</mat-icon>
+    </h4>
+
+    <ul *ngIf="korisnici">
+      <li>
+        <a (click)="goToMyProfile()">
+          <mat-icon class="bullet-icon">circle</mat-icon>
+          <span>Moj nalog</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/view-all-users">
+          <mat-icon class="bullet-icon">circle</mat-icon>
+          <span>Svi korisnici</span>
+        </a>
+      </li>
+    </ul>
+  </li>
 
      <!-- Admin: Mesne zajednice -->
     <li *ngIf="isAdmin">

@@ -47,9 +47,14 @@
     </div>
 
     <!-- Moj nalog -->
-    <div class="card2">
+    <div *ngIf="!isAdmin" class="card2" (click)=" goToMyProfile()">
       <h3><mat-icon>person</mat-icon> Moj nalog</h3>
       <p>Uredite svoj profil i saznajte kako vas drugi vide i ocenjuju.</p>
+    </div>
+
+    <div *ngIf="isAdmin" class="card2" (click)="handleAccountClick()">
+      <h3><mat-icon>person</mat-icon> Moj nalog</h3>
+      <p>Uredite svoj profil i saznajte o korisnica aplikacije.</p>
     </div>
 
   </div>
@@ -97,6 +102,17 @@
 
       <button class="modalButton">Sve akcije</button>
       <button class="modalButton">Diskusije</button>
+
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModalAccountOpen" (click)="toggleAccountModal()">
+    <div class="modal4" (click)="$event.stopPropagation()">
+      <h2 class="title">Izaberite šta želite da vidite</h2>
+      <button class="closeModal" (click)="toggleAccountModal()">x</button>
+
+      <button class="modalButton" (click)="goToMyProfile()">Moj nalog</button>
+      <button class="modalButton"  (click)="goToAllUsers()">Svi korisnici</button>
 
     </div>
   </div>

@@ -1,0 +1,42 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="users-header">
+      <h1>Svi korisnici</h1>
+    </header>
+
+    <div class="users-grid">
+      <div *ngFor="let user of users" class="user-card">
+        <img [src]="getImageUrl(user.profilePicture)" class="user-image"
+          alt="{{user.name}} {{user.surname}}"
+          (error)="setDefaultImage($event)">
+        <div class="user-info">
+          <h3 class="user-name">{{ user.name }} {{ user.surname }}</h3>
+          <p class="user-username">@{{ user.username }}</p>
+          <p><mat-icon>person</mat-icon> Uloga: {{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
+          <p><mat-icon>cake</mat-icon> Datum rođenja: {{ user.dateOfBirth | date:'shortDate' }}</p>
+          <p>
+            <mat-icon>verified</mat-icon>
+            Status: {{ user.isVerified ? 'Odobren' : 'Nije odobren' }}
+          </p>
+
+          <div class="user-buttons">
+            <button (click)="viewUser(user.id)" class="btn-more">Prikažite više</button>
+            <button *ngIf="!user.isVerified" (click)="approveUser(user)" class="btn-approve">Odobrite</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

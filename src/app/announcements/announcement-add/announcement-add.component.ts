@@ -99,7 +99,7 @@ export class AnnouncementAddComponent implements OnInit {
       icon: 'success',
       title: 'Uspešno!',
       text: 'Obaveštenje uspesno dodato.',
-      timer: 3000,
+      timer: 2000,
       showConfirmButton: false
     });
         this.router.navigate(['/announcement']);

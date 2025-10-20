@@ -15,8 +15,19 @@ export class HomeLoggedComponent {
   isModal2Open: boolean = false;
   isModal3Open: boolean = false;
   isModal4Open: boolean = false;
+  isModalAccountOpen = false;
+  userId: number = -1;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  isAdmin = false;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.checkRole();
+  }
+
+  checkRole() {
+    this.isAdmin = this.authService.getRole() === 'Admin'
+    this.userId = Number(this.authService.getId())
+  }
 
   toggleModal1() {
 this.isModal1Open = !this.isModal1Open;
@@ -34,6 +45,8 @@ toggleModal4() {
 this.isModal4Open = !this.isModal4Open;
 } 
 
+toggleAccountModal() { this.isModalAccountOpen = !this.isModalAccountOpen; }
+
 logOut() {
  this.authService.logout();
 }
@@ -42,5 +55,22 @@ goToAnnouncement() {
 this.router.navigate(['/announcement']);
 }
 
+ goToMyProfile() {
+    this.router.navigate([`/view-user/${this.userId}`]);
+  }
+
+  goToAllUsers() {
+    this.router.navigate(['/view-all-users']);
+  }
+
+  handleAccountClick() {
+    if (this.isAdmin) {
+      this.toggleAccountModal();
+    } else {
+      this.goToMyProfile();
+    }
+  }
+
   
 }
+
