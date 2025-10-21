@@ -23,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './profile/user-profile/user-profile.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.component';
+import { ViewCommunityComponent } from './local-community/view-community/view-community.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.c
      RegisterComponent,
      UserProfileComponent,
      EditProfileComponent,
-     ViewAllUsersComponent
+     ViewAllUsersComponent,
+     ViewCommunityComponent
   ],
   imports: [
     BrowserModule,

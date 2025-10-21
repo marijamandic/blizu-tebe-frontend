@@ -164,6 +164,17 @@
     </ul>
   </li>
 
+  <li *ngIf="!isAdmin">
+      <h4>
+        <a (click)="goToMyCommunity()">
+          <mat-icon>location_city</mat-icon>
+          <span>Mesna zajednica</span>
+        </a>
+      </h4>
+    </li>
+
+  
+
      <!-- Admin: Mesne zajednice -->
     <li *ngIf="isAdmin">
       <h4 (click)="toggleCommunities()">
@@ -182,6 +193,12 @@
           <a routerLink="/community/all">
             <mat-icon class="bullet-icon">circle</mat-icon>
             <span>Sve zajednice</span>
+          </a>
+        </li>
+        <li>
+          <a (click)="goToMyCommunity()">
+            <mat-icon class="bullet-icon">circle</mat-icon>
+            <span>Moja zajednica</span>
           </a>
         </li>
       </ul>
