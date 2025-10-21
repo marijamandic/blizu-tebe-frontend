@@ -117,4 +117,12 @@
     </div>
   </div>
 
+  <footer class="home-footer" (click)="goToMyCommunity()">
+  <mat-icon>location_city</mat-icon>
+  <span>Mesna zajednica:</span><span *ngIf="myCommunityName" class="community-name">
+    {{ myCommunityName }}
+  </span>
+</footer>
+
+
 </div>

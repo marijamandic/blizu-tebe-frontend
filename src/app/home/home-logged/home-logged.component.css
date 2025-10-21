@@ -131,6 +131,36 @@ mat-icon {
   color: #fff;
 }
 
+.home-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(252, 250, 255, 0.3);
+  border-top: 1.5px solid var(--color-dark);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  padding: 1vh 0;
+  font-size: 1.2vw;
+  font-weight: 500;
+  color: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 900;
+}
+
+.home-footer:hover {
+  transform: translateY(-2px);
+}
+
+.home-footer mat-icon {
+  font-size: 1.8vw;
+}
+
 
 /**********************TELEFON*****************************/
 
@@ -144,6 +174,16 @@ mat-icon {
     font-size: 7vw;
     margin-bottom: 3.5vh;
     margin-top: 0.7vh;
+  }
+
+  .home-footer {
+    font-size: 4vw;
+    gap: 2vw;
+    padding: 1.5vh 0;
+  }
+
+  .home-footer mat-icon {
+    font-size: 5vw;
   }
 
   .home-cards {
