@@ -25,12 +25,12 @@
       <div class="announcement-info">
         <p class="announcement-dates">
           <mat-icon>event</mat-icon>
-          Pocetak: {{ announcement.publishedAt | date:'shortDate' }} |
-          Ističe: {{ announcement.expirationDate | date:'shortDate' }}
+        <strong>  Pocetak: </strong>{{ announcement.publishedAt | date:'shortDate' }} |
+        <strong>  Ističe: </strong>{{ announcement.expirationDate | date:'shortDate' }}
         </p>
         <p *ngIf="localCommunityName" class="announcement-dates">
           <mat-icon>location_city</mat-icon>
-          Mesna zajednica: {{ localCommunityName }}
+         <strong> Mesna zajednica: </strong>{{ localCommunityName }}
         </p>
 
 

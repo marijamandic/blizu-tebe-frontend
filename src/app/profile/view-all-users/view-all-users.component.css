@@ -44,7 +44,7 @@
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
-  height: 70vh;
+  height: 60vh;
 }
 
 .user-card:hover {
@@ -59,10 +59,10 @@
 }
 
 .user-info {
-  padding: 1rem;
+  padding: 0.7rem 0.8rem;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.4rem;
   justify-content: space-between;
   flex-grow: 1;
 }
@@ -77,6 +77,11 @@
 .user-username {
   color: #666;
   font-style: italic;
+}
+
+.user-info strong {      
+  color: #655; 
+  margin-left: 1vh;            
 }
 
 .user-buttons {
@@ -114,6 +119,11 @@
 
 .mobile-navbar {
   display: none;
+}
+
+.user-info mat-icon {
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 599px) {

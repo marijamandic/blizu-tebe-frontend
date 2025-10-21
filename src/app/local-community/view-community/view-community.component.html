@@ -18,23 +18,23 @@
       <div class="community-info">
         <p class="community-field">
           <mat-icon>location_city</mat-icon>
-          Grad: <strong>{{ community.city }}</strong>
+        <strong>  Grad: </strong>{{ community.city }}
         </p>
 
         <p class="community-field" *ngIf="community.phoneNumber">
           <mat-icon>call</mat-icon>
-          Telefon: <strong>{{ community.phoneNumber }}</strong>
+         <strong>Telefon: </strong>{{ community.phoneNumber }}
         </p>
 
         <p class="community-field" *ngIf="community.facebook">
           <mat-icon>facebook</mat-icon>
-          Facebook: 
+         <strong> Facebook: </strong>
           <a [href]="community.facebook" target="_blank">{{ community.facebook }}</a>
         </p>
 
         <p class="community-field" *ngIf="presidentName">
           <mat-icon>person</mat-icon>
-          Predsednik: <strong>{{ presidentName }}</strong>
+        <strong> Predsednik:</strong> {{ presidentName }}
         </p>
 
         <div id="communityMap"></div>

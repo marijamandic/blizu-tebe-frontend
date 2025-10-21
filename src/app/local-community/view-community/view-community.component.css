@@ -59,6 +59,9 @@
   gap: 0.5rem;
   line-height: 1.6;
 }
+.community-field strong {      
+  color: #555;             
+}
 
 
 #communityMap {

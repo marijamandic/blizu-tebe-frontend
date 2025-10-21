@@ -24,19 +24,19 @@
       <p class="profile-username">@{{ user.username }}</p>
 
       <div class="profile-info">
-        <p><mat-icon>cake</mat-icon> Datum rođenja: {{ user.dateOfBirth | date:'shortDate' }}</p>
+        <p><mat-icon>cake</mat-icon> <strong> Datum rođenja: </strong>{{ user.dateOfBirth | date:'shortDate' }}</p>
         <p>
         <mat-icon>star</mat-icon>
         <ng-container *ngIf="user.rating === 0; else hasRating">
-            Nema još ocena
+          <strong>  Nema još ocena </strong>
         </ng-container>
         <ng-template #hasRating>
-            Ocena: {{ user.rating }}/5
+          <strong>  Ocena: </strong>{{ user.rating }}/5
         </ng-template>
         </p>
-        <p *ngIf="localCommunityName"><mat-icon>location_city</mat-icon> Mesna zajednica: {{ localCommunityName }}</p>
-        <p><mat-icon>verified</mat-icon> Status: {{ user.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}</p>
-        <p><mat-icon>person</mat-icon> Uloga: {{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
+        <p *ngIf="localCommunityName"><mat-icon>location_city</mat-icon><strong> Mesna zajednica: </strong>{{ localCommunityName }}</p>
+        <p><mat-icon>verified</mat-icon><strong> Status: </strong>{{ user.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}</p>
+        <p><mat-icon>person</mat-icon><strong> Uloga: </strong>{{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
       </div>
 
       <div *ngIf="isOwnProfile" class="admin-buttons">

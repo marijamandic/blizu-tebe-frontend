@@ -39,7 +39,7 @@
 }
 
 .announcement-form label {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .announcement-form input,
@@ -104,6 +104,7 @@
   object-fit: cover;
 }
 
+/* Checkbox za važnost */
 .announcement-form .form-group-checkbox {
   display: flex;
   align-items: center;
@@ -155,7 +156,7 @@
 
   .desktop-sidebar {
     position: fixed;
-    top: 60px; /* ispod navbar-a */
+    top: 60px; 
     left: 0;
     width: 80%;
     max-width: 300px;
