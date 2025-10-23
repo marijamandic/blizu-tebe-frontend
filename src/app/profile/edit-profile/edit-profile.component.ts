@@ -39,7 +39,8 @@ export class EditProfileComponent implements OnInit {
       surname: ['', Validators.required],
       username: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      profilePicture: [null]
+      profilePicture: [null],
+      localCommunityId: [null]
     });
 
     this.loadLocalCommunities();

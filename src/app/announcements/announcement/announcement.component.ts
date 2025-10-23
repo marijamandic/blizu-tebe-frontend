@@ -4,6 +4,7 @@ import { AnnouncementService } from '../../services/announcement.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-announcement',
@@ -36,8 +37,8 @@ export class AnnouncementComponent {
         let filteredData = data;
         console.log(currentUser)
 
-        if (currentUser && currentUser.role === 1) { 
-          filteredData = data.filter(a => a.localCommuntyId === currentUser.localCommunityId);
+        if (currentUser) { 
+          filteredData = data.filter(a => a.localCommunityId === currentUser.localCommunityId);
         }
 
         // Podeli na važne i obične
@@ -77,6 +78,32 @@ export class AnnouncementComponent {
   }
 
   goToAddAnnouncement(): void {
-    this.router.navigate(['/announcement/add']);
-  }
+  this.userService.getCurrentUserFromApi().subscribe({
+    next: (currentUser) => {
+      if (currentUser && !currentUser.localCommunityId) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Pažnja!',
+          text: 'Morate izabrati mesnu zajednicu pre nego što dodate obaveštenje.',
+          confirmButtonText: 'U redu',
+          confirmButtonColor: '#3085d6'
+        }).then(() => {
+          this.router.navigate(['/community/all']);
+        });
+      } else {
+        this.router.navigate(['/announcement/add']);
+      }
+    },
+    error: (err) => {
+      console.error('Greška pri proveri korisnika:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Greška!',
+        text: 'Došlo je do greške prilikom učitavanja korisnika.',
+        confirmButtonText: 'U redu'
+      });
+    }
+  });
+}
+
 }

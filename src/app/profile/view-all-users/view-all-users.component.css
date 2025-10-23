@@ -191,4 +191,36 @@
     font-size: 4vw;
     padding: 0.8rem 1.2rem;
   }
+
+
+  .user-card {
+    width: 90%;               
+    margin: 0 auto;            
+    height: 55vh;              
+    border-radius: 10px;
+  }
+
+  .user-image {
+    height: 160px;            
+    object-fit: cover;
+  }
+
+  .user-info {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .user-name {
+    font-size: 4.2vw;
+  }
+
+  .user-username {
+    font-size: 3.4vw;
+  }
+
+  .btn-more,
+  .btn-approve {
+    font-size: 3.6vw;
+    padding: 0.6rem 1rem;
+    height: 5vh; 
+  }
 }

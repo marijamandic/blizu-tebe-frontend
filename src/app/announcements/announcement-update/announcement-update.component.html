@@ -35,10 +35,10 @@
       </div>
 
       <label class="select-label" for="localCommunityId">Mesna zajednica</label>
-      <select id="localCommunityId" formControlName="localCommunityId">
-        <option [value]="null">-- Izaberite mesnu zajednicu --</option>
+      <select id="localCommunityId" formControlName="localCommunityId" [disabled]="true">
         <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}</option>
       </select>
+      <p class="info-text">Mesna zajednica se ne može menjati.</p>
 
       <label for="picture">Slika</label>
       <input id="picture" type="file" (change)="onFileSelected($event)">

@@ -18,6 +18,7 @@ export class AnnouncementUpdateComponent implements OnInit {
   selectedFile?: File;
   previewUrl?: string;
   existingPictureName?: string;
+  existingAdminId?: number; // Dodaj za čuvanje adminId
 
   isSidebarOpen: boolean = false;
   localCommunities: LocalCommunity[] = [];
@@ -38,7 +39,7 @@ export class AnnouncementUpdateComponent implements OnInit {
       publishedAt: ['', Validators.required],
       expirationDate: ['', Validators.required],
       isImportant: [false],
-      localCommunityId: [null],
+      localCommunityId: [{ value: null, disabled: true }], // Disabled - ne može se menjati
       picture: [null]
     });
 
@@ -67,17 +68,20 @@ export class AnnouncementUpdateComponent implements OnInit {
   loadAnnouncement(id: number) {
     this.announcementService.getAnnouncementById(id).subscribe({
       next: data => {
+        console.log('Učitano obaveštenje:', data); // Debug log da vidiš šta vraća backend
+        
         this.announcementForm.patchValue({
           title: data.title,
           description: data.description,
           publishedAt: new Date(data.publishedAt).toISOString().split('T')[0],
           expirationDate: new Date(data.expirationDate).toISOString().split('T')[0],
           isImportant: data.isImportant || false,
-          localCommunityId: data.localCommuntyId || null
+          localCommunityId: data.localCommunityId || null
         });
 
         this.existingPictureName = data.existingPicture;
-
+        
+        this.existingAdminId = data.adminId || data.adminId || -1;
         if (data.existingPicture) {
           this.previewUrl = `https://localhost:44375/images/announcements/${data.existingPicture}`;
         }
@@ -100,19 +104,35 @@ export class AnnouncementUpdateComponent implements OnInit {
 
   submit() {
     if (this.announcementForm.invalid) {
-      console.error('Forma nije validna');
+      Swal.fire({
+        icon: 'error',
+        title: 'Greška',
+        text: 'Molimo popunite sva obavezna polja.',
+        confirmButtonText: 'U redu'
+      });
       return;
     }
 
-    const formData = new FormData();
-    formData.append('title', this.announcementForm.value.title);
-    formData.append('description', this.announcementForm.value.description);
-    formData.append('publishedAt', this.announcementForm.value.publishedAt);
-    formData.append('expirationDate', this.announcementForm.value.expirationDate);
-    formData.append('isImportant', this.announcementForm.value.isImportant);
+    const formValues = this.announcementForm.getRawValue(); // Koristi getRawValue() za disabled polja
 
-    if (this.announcementForm.value.localCommunityId) {
-      formData.append('localCommunityId', this.announcementForm.value.localCommunityId);
+    const formData = new FormData();
+    formData.append('title', formValues.title);
+    formData.append('description', formValues.description);
+    formData.append('publishedAt', formValues.publishedAt);
+    formData.append('expirationDate', formValues.expirationDate);
+    formData.append('isImportant', formValues.isImportant.toString());
+
+    // Dodaj adminId - koristi postojeći ili trenutnog korisnika ako ne postoji
+    const adminId = this.existingAdminId || this.authService.getId();
+    if (adminId) {
+      formData.append('adminId', adminId.toString());
+      console.log('Šaljem adminId:', adminId); // Debug log
+    } else {
+      console.warn('adminId nije pronađen!'); // Warning ako nema adminId
+    }
+
+    if (formValues.localCommunityId) {
+      formData.append('localCommunityId', formValues.localCommunityId.toString());
     }
 
     if (this.selectedFile) {
@@ -124,15 +144,23 @@ export class AnnouncementUpdateComponent implements OnInit {
     this.announcementService.updateAnnouncement(this.announcementId, formData).subscribe({
       next: () => {
         Swal.fire({
-      icon: 'success',
-      title: 'Uspešno!',
-      text: 'Obaveštenje uspešno izmenjeno.',
-      timer: 2000,
-      showConfirmButton: false
-    });
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Obaveštenje uspešno izmenjeno.',
+          timer: 2000,
+          showConfirmButton: false
+        });
         this.router.navigate(['/announcement']);
       },
-      error: err => console.error('Greška pri izmeni:', err)
+      error: err => {
+        console.error('Greška pri izmeni:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška',
+          text: 'Došlo je do greške pri izmeni obaveštenja.',
+          confirmButtonText: 'U redu'
+        });
+      }
     });
   }
 

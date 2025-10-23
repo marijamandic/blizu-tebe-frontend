@@ -38,8 +38,8 @@ export class AnnouncementViewComponent implements OnInit {
       next: (ann) => {
         this.announcement = ann;
 
-        if (ann.localCommuntyId) {
-          this.localCommunityService.getById(ann.localCommuntyId).subscribe({
+        if (ann.localCommunityId) {
+          this.localCommunityService.getById(ann.localCommunityId).subscribe({
             next: (lc) => this.localCommunityName = lc.name,
             error: (err) => console.error('Greška pri učitavanju mesne zajednice', err)
           });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AnnouncementService } from '../../services/announcement.service';
 import { LocalCommunityService } from '../../services/localcommunity.service';
+import { UserService } from '../../services/user.service'; // Dodaj import
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
@@ -18,12 +19,14 @@ export class AnnouncementAddComponent implements OnInit {
   previewUrl?: string;
 
   isSidebarOpen: boolean = false;
-  localCommunities: LocalCommunity[] = []; // lista mesnih zajednica
+  localCommunities: LocalCommunity[] = [];
+  isLoading: boolean = true; // Dodaj loading indicator
 
   constructor(
     private fb: FormBuilder,
     private announcementService: AnnouncementService,
     private localCommunityService: LocalCommunityService,
+    private userService: UserService, // Dodaj UserService
     private router: Router,
     public authService: AuthService
   ) {}
@@ -36,12 +39,12 @@ export class AnnouncementAddComponent implements OnInit {
       publishedAt: [new Date().toISOString().split('T')[0], Validators.required],
       expirationDate: ['', Validators.required],
       isImportant: [false], 
-      localCommunityId: [null], 
+      localCommunityId: [{ value: null, disabled: true }, Validators.required], // Disabled dok se ne učita
       picture: [null]
     });
 
-
     this.loadLocalCommunities();
+    this.loadCurrentUser();
   }
 
   toggleSidebar() {
@@ -69,24 +72,70 @@ export class AnnouncementAddComponent implements OnInit {
     });
   }
 
+  loadCurrentUser() {
+    this.userService.getCurrentUserFromApi().subscribe({
+      next: (currentUser) => {
+        this.isLoading = false;
+        
+        if (currentUser && currentUser.localCommunityId) {
+          // Admin ima mesnu zajednicu - postavi je u formu
+          this.announcementForm.patchValue({
+            localCommunityId: currentUser.localCommunityId
+          });
+        } else {
+          // Admin nema mesnu zajednicu - prikaži upozorenje i vrati na listu
+          Swal.fire({
+            icon: 'warning',
+            title: 'Pažnja!',
+            text: 'Morate biti dodeljen mesnoj zajednici pre nego što dodate obaveštenje.',
+            confirmButtonText: 'U redu'
+          }).then(() => {
+            this.router.navigate(['/announcement']);
+          });
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        console.error('Greška pri učitavanju korisnika:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška',
+          text: 'Došlo je do greške pri učitavanju podataka.',
+          confirmButtonText: 'U redu'
+        }).then(() => {
+          this.router.navigate(['/announcement']);
+        });
+      }
+    });
+  }
+
   submit() {
     if (this.announcementForm.invalid) {
-      console.error('Forma nije validna');
+      Swal.fire({
+        icon: 'error',
+        title: 'Greška',
+        text: 'Molimo popunite sva obavezna polja.',
+        confirmButtonText: 'U redu'
+      });
       return;
     }
 
-    const formData = new FormData();
-    formData.append('title', this.announcementForm.value.title);
-    formData.append('description', this.announcementForm.value.description);
-    formData.append('publishedAt', this.announcementForm.value.publishedAt);
-    formData.append('expirationDate', this.announcementForm.value.expirationDate);
-    formData.append('isImportant', this.announcementForm.value.isImportant);
+    const formValues = this.announcementForm.getRawValue(); // Koristi getRawValue() da uzmeš i disabled polja
     
-    formData.append('adminId', this.authService.getId() ?? '');
-
-
-    if (this.announcementForm.value.localCommunityId) {
-      formData.append('localCommunityId', this.announcementForm.value.localCommunityId);
+    const formData = new FormData();
+    formData.append('title', formValues.title);
+    formData.append('description', formValues.description);
+    formData.append('publishedAt', formValues.publishedAt);
+    formData.append('expirationDate', formValues.expirationDate);
+    formData.append('isImportant', formValues.isImportant.toString());
+    
+    const adminId = this.authService.getId();
+    if (adminId) {
+      formData.append('adminId', adminId.toString());
+    }
+    
+    if (formValues.localCommunityId) {
+      formData.append('localCommunityId', formValues.localCommunityId.toString());
     }
 
     if (this.selectedFile) {
@@ -96,15 +145,23 @@ export class AnnouncementAddComponent implements OnInit {
     this.announcementService.createAnnouncement(formData).subscribe({
       next: () => {
         Swal.fire({
-      icon: 'success',
-      title: 'Uspešno!',
-      text: 'Obaveštenje uspesno dodato.',
-      timer: 2000,
-      showConfirmButton: false
-    });
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Obaveštenje uspešno dodato.',
+          timer: 2000,
+          showConfirmButton: false
+        });
         this.router.navigate(['/announcement']);
       },
-      error: (err) => console.error('Greška pri dodavanju:', err)
+      error: (err) => {
+        console.error('Greška pri dodavanju:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška',
+          text: 'Došlo je do greške pri dodavanju obaveštenja.',
+          confirmButtonText: 'U redu'
+        });
+      }
     });
   }
 
