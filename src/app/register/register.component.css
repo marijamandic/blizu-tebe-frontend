@@ -141,11 +141,7 @@ select.inputArea {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, filter 0.3s ease;
-  margin-top: 1rem;
-}
-
-.registerButton:hover:not(:disabled) {
-  filter: brightness(120%);
+  margin-top: 0.5rem;
 }
 
 .registerButton:disabled {
@@ -221,7 +217,11 @@ select.inputArea {
   }
 
   .login-link {
-    font-size: 3.8vw;
+    font-size: 3.5vw;
+  }
+
+  p{
+    font-size: 3.5vw;
   }
 
   .map {

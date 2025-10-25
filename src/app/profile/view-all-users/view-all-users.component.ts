@@ -30,13 +30,27 @@ export class ViewAllUsersComponent implements OnInit {
   }
 
  fetchAllUsers(): void {
-  this.userService.getAll().subscribe({
-    next: data => {
-      this.users = data.filter(u => u.role !== 0); 
+  this.userService.getCurrentUserFromApi().subscribe({
+    next: (currentUser) => {
+      if (!currentUser) {
+        console.error('Trenutni korisnik nije učitan');
+        return;
+      }
+
+      this.userService.getAll().subscribe({
+        next: (data) => {
+          this.users = data.filter(u => 
+            u.role !== 0 && u.localCommunityId === currentUser.localCommunityId
+          );
+        },
+        error: (err) => console.error('Error fetching users', err)
+      });
     },
-    error: err => console.error('Error fetching users', err)
+    error: (err) => console.error('Error fetching current user', err)
   });
 }
+
+
 
 
   toggleSidebar() {

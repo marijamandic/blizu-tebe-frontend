@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,7 +24,11 @@ import { UserProfileComponent } from './profile/user-profile/user-profile.compon
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.component';
 import { ViewCommunityComponent } from './local-community/view-community/view-community.component';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 
+
+registerLocaleData(localeDe);
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +60,9 @@ import { ViewCommunityComponent } from './local-community/view-community/view-co
    
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'de-DE' }
+    
   ],
   bootstrap: [AppComponent]
 })

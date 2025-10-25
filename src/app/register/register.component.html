@@ -46,14 +46,14 @@
       <div *ngIf="previewUrl" class="image-preview">
         <img [src]="previewUrl" alt="Preview profilne slike">
       </div>
-
+      <p >Morate biti punoletni da biste se registrovali</p>
       <button class="registerButton" type="submit" [disabled]="registerForm.invalid">
         Registrujte se
       </button>
     </form>
 
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-
+    
     <p class="login-link">
       Već imate nalog?
       <a (click)="goToLogin()">Prijavite se</a>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { LocalCommunity } from '../model/localcommunity.model';
 import { AuthService } from '../services/auth.service';
 import { LocalCommunityService } from '../services/localcommunity.service';
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
+      dateOfBirth: ['', [Validators.required, this.adultValidator]],
       localCommunityId: [null, Validators.required],
       picture: [null]
     });
@@ -55,6 +55,20 @@ export class RegisterComponent implements OnInit {
       error: (err) => console.error('Greška pri učitavanju mesnih zajednica:', err)
     });
   }
+
+  adultValidator(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) return null;
+
+  const today = new Date();
+  const birthDate = new Date(control.value);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age >= 18 ? null : { underage: true };
+}
 
   onFileSelected(event: any): void {
     const input = event.target as HTMLInputElement;
