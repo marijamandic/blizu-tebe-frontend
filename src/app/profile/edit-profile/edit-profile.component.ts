@@ -20,6 +20,7 @@ export class EditProfileComponent implements OnInit {
   selectedFile?: File;
   previewUrl?: string;
   existingPictureName?: string;
+  errorMessage = '';
 
   isSidebarOpen = false;
   localCommunities: LocalCommunity[] = [];
@@ -76,10 +77,9 @@ export class EditProfileComponent implements OnInit {
 
         this.existingPictureName = user.profilePicture;
         if (user.profilePicture) {
-          this.previewUrl = user.profilePicture.includes('/images/profiles/')
-            ? user.profilePicture.replace('/images/profiles/', '/images/users/')
-            : user.profilePicture;
+          this.previewUrl = `https://localhost:44375/images/users/${user.profilePicture}`;
         }
+
       },
       error: err => console.error('Greška pri učitavanju korisnika:', err)
     });
@@ -96,10 +96,26 @@ export class EditProfileComponent implements OnInit {
   }
 
   submit() {
+    Object.keys(this.profileForm.controls).forEach(field => {
+    const el = document.getElementById(field);
+    if (el) el.classList.remove('input-error');
+  });
+
     if (this.profileForm.invalid) {
-      console.error('Forma nije validna');
+
+      Object.keys(this.profileForm.controls).forEach(field => {
+      const control = this.profileForm.get(field);
+      if (control && control.invalid) {
+        const el = document.getElementById(field);
+        if (el) el.classList.add('input-error');
+      }
+    });
+
+      this.errorMessage = 'Popunite sva obavezna polja';
       return;
     }
+
+    this.errorMessage = '';
 
     const formData = new FormData();
     formData.append('name', this.profileForm.value.name);

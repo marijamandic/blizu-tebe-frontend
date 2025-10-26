@@ -101,6 +101,19 @@
   font-weight: 500;
 }
 
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-error {
+  border-color: red !important;
+  background-color: #ffeeef;
+}
+
 @media (max-width: 599px) {
   .mobile-navbar {
     display: flex;

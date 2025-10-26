@@ -128,6 +128,7 @@ export class AnnouncementAddComponent implements OnInit {
       this.errorMessage = 'Popunite sva obavezna polja';
       return;
     }
+    this.errorMessage = '';
 
     const formValues = this.announcementForm.getRawValue(); // Koristi getRawValue() da uzmeš i disabled polja
     

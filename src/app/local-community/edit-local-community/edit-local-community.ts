@@ -21,6 +21,10 @@ export class EditLocalCommunity implements OnInit {
   phoneNumber = '';
   facebook = '';
   isSidebarOpen = false;
+  errorMessage = '';
+  nameError = false;
+  cityError = false;
+  mapError = false;
 
   constructor(
     private service: LocalCommunityService,
@@ -176,8 +180,17 @@ export class EditLocalCommunity implements OnInit {
   }
 
   updateCommunity(): void {
-    if (!this.drawnPolygon || !this.communityName || !this.communityCity) {
-      alert('Popunite obavezna polja i nacrtajte granicu!');
+    this.errorMessage = '';
+    this.nameError = false;
+    this.cityError = false;
+    this.mapError = false;
+    
+    if (!this.communityName || !this.communityCity || !this.drawnPolygon) {
+      if (!this.communityName) this.nameError = true;
+      if (!this.communityCity) this.cityError = true;
+      if (!this.drawnPolygon) this.mapError = true;
+
+      this.errorMessage = 'Popunite sva obavezna polja!';
       return;
     }
 
@@ -222,5 +235,8 @@ export class EditLocalCommunity implements OnInit {
       lngs.reduce((a: number, b: number) => a + b) / lngs.length,
       lats.reduce((a: number, b: number) => a + b) / lats.length
     ];
+  }
+  cancel() {
+    this.router.navigate(['/view-community', this.communityId]);
   }
 }

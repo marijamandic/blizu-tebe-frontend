@@ -17,16 +17,19 @@
     </header>
 
     <form [formGroup]="announcementForm" class="announcement-form" (ngSubmit)="submit()">
-  <label for="title">Naslov</label>
+  <label for="title">Naslov *</label>
   <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
 
-  <label for="description">Opis</label>
+  <label for="description">Opis *</label>
   <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
 
-  <label for="publishedAt">Datum objave</label>
+  <label for="publishedAt">Datum objave *</label>
   <input id="publishedAt" formControlName="publishedAt" type="date">
 
-  <label for="expirationDate">Datum isteka</label>
+  <label for="expirationDate" class="label-with-tooltip">
+  Datum isteka *
+  <span class="help-icon" title="Posle isteka datuma obaveštenje se automatski briše.">ℹ️</span>
+</label>
   <input id="expirationDate" formControlName="expirationDate" type="date">
 
 <div class="form-group-checkbox">
@@ -49,12 +52,11 @@
     <img [src]="previewUrl" alt="Preview slike">
   </div>
 
-  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-
   <div class="form-buttons">
     <button type="submit" class="btn-submit">Dodajte</button>
     <button type="button" class="btn-cancel" (click)="cancel()">Otkaži</button>
   </div>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 </form>
   </main>
 </div>

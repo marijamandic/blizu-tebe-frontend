@@ -17,16 +17,16 @@
     </header>
 
     <form [formGroup]="profileForm" class="profile-form" (ngSubmit)="submit()">
-      <label for="name">Ime</label>
+      <label for="name">Ime *</label>
       <input id="name" formControlName="name" type="text" placeholder="Unesite ime">
 
-      <label for="surname">Prezime</label>
+      <label for="surname">Prezime *</label>
       <input id="surname" formControlName="surname" type="text" placeholder="Unesite prezime">
 
-      <label for="username">Korisničko ime</label>
+      <label for="username">Korisničko ime *</label>
       <input id="username" formControlName="username" type="text" placeholder="Unesite korisničko ime">
 
-      <label for="dateOfBirth">Datum rođenja</label>
+      <label for="dateOfBirth">Datum rođenja *</label>
       <input id="dateOfBirth" formControlName="dateOfBirth" type="date">
 
       <label for="profilePicture">Profilna slika</label>
@@ -39,6 +39,7 @@
         <button type="submit" class="btn-submit">Sačuvajte izmene</button>
         <button type="button" class="btn-cancel" (click)="cancel()">Otkažite</button>
       </div>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
   </main>
 </div>

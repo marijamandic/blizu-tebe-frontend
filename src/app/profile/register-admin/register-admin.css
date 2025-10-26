@@ -90,8 +90,15 @@
 
 .error-message {
   color: red;
-  text-align: center;
   font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-error {
+  border-color: red !important;
+  background-color: #ffeeef;
 }
 
 .mobile-navbar {

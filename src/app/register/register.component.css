@@ -164,7 +164,13 @@ select.inputArea {
   color: red;
   font-weight: bold;
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.input-error {
+  border-color: red !important;
+  background-color: #ffeeef;
 }
 
 /* Scrollbar styling */
@@ -180,10 +186,6 @@ select.inputArea {
 .register-card::-webkit-scrollbar-thumb {
   background: var(--color-dark);
   border-radius: 10px;
-}
-
-.input-error {
-  border-color: red !important;
 }
 
 

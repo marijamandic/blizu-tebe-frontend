@@ -157,26 +157,31 @@ export class RegisterComponent implements OnInit {
 
   onRegister(): void {
 
-    Object.keys(this.registerForm.controls).forEach(field => {
+   Object.keys(this.registerForm.controls).forEach(field => {
     const el = document.getElementById(field);
     if (el) el.classList.remove('input-error');
   });
-    if (this.registerForm.invalid) {
-      this.errorMessage = 'Popunite sva obavezna polja';
-      Object.keys(this.registerForm.controls).forEach(field => {
+
+  if (this.registerForm.invalid) {
+    let firstMessage = ''; 
+
+    Object.keys(this.registerForm.controls).forEach(field => {
       const control = this.registerForm.get(field);
       if (control && control.invalid) {
         const el = document.getElementById(field);
-        if (el) {
-          el.classList.add('input-error');
+        if (el) el.classList.add('input-error');
+
+        if (!firstMessage) {
+          firstMessage = this.getErrorMessage(field);
         }
       }
     });
 
+    this.errorMessage = firstMessage; 
     return;
-    }
+  }
 
-    
+  this.errorMessage = '';
 
     const formData = new FormData();
     formData.append('username', this.registerForm.value.username);
@@ -218,6 +223,33 @@ export class RegisterComponent implements OnInit {
   goToHomePage(): void {
     this.router.navigate(['/']);
   }
+
+  private getErrorMessage(field: string): string {
+  const control = this.registerForm.get(field);
+
+  if (control?.hasError('required')) {
+    switch (field) {
+      case 'username': return 'Popunite sva obavezna polja.';
+      case 'password': return 'Popunite sva obavezna polja.';
+      case 'name': return 'Popunite sva obavezna polja.';
+      case 'surname': return 'Popunite sva obavezna polja.';
+      case 'dateOfBirth': return 'Popunite sva obavezna polja.';
+      case 'localCommunityId': return 'Popunite sva obavezna polja.';
+      default: return 'Ovo polje je obavezno.';
+    }
+  }
+
+  if (control?.hasError('minlength')) {
+    if (field === 'username') return 'Korisničko ime mora imati najmanje 3 karaktera.';
+    if (field === 'password') return 'Lozinka mora imati najmanje 6 karaktera.';
+  }
+
+  if (control?.hasError('adult')) {
+    return 'Morate imati najmanje 18 godina.';
+  }
+
+  return '';
+}
 
 
 

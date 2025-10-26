@@ -40,7 +40,7 @@ export class AnnouncementUpdateComponent implements OnInit {
       publishedAt: ['', Validators.required],
       expirationDate: ['', Validators.required],
       isImportant: [false],
-      localCommunityId: [{ value: null, disabled: true }], // Disabled - ne može se menjati
+      localCommunityId: [{ value: null, disabled: true }], 
       picture: [null]
     });
 
@@ -122,6 +122,7 @@ export class AnnouncementUpdateComponent implements OnInit {
       this.errorMessage = 'Popunite sva obavezna polja';
       return;
     }
+    this.errorMessage = '';
 
     const formValues = this.announcementForm.getRawValue(); // Koristi getRawValue() za disabled polja
 
@@ -160,7 +161,7 @@ export class AnnouncementUpdateComponent implements OnInit {
           timer: 2000,
           showConfirmButton: false
         });
-        this.router.navigate(['/announcement']);
+        this.router.navigate(['/announcement', this.announcementId]);
       },
       error: err => {
         console.error('Greška pri izmeni:', err);

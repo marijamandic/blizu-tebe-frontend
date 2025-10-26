@@ -33,7 +33,7 @@
         <label for="dateOfBirth">Datum rođenja *</label>
         <input class="inputArea" type="date" id="dateOfBirth" formControlName="dateOfBirth">
 
-        <label for="localCommunityId">Mesna zajednica</label>
+        <label for="localCommunityId">Mesna zajednica *</label>
         <select class="inputArea" id="localCommunityId" formControlName="localCommunityId">
           <option [value]="null" disabled>-- Izaberite mesnu zajednicu * --</option>
           <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}, {{ mc.city }}</option>
@@ -47,7 +47,7 @@
           <img [src]="previewUrl" alt="Preview profilne slike">
         </div>
 
-        <button class="registerButton" type="submit" [disabled]="registerForm.invalid">Registrujte</button>
+        <button class="registerButton" type="submit">Registrujte</button>
       </form>
 
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
