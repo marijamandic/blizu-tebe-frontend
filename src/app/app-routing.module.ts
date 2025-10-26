@@ -15,12 +15,14 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.component';
 import { ViewCommunityComponent } from './local-community/view-community/view-community.component';
 import { EditLocalCommunity } from './local-community/edit-local-community/edit-local-community';
+import { RegisterAdmin } from './profile/register-admin/register-admin';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component:HomeLoggedComponent},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
+  { path: 'registerAdmin', component: RegisterAdmin},
   {path: 'announcement', component: AnnouncementComponent},
   { path: 'announcement/add', component: AnnouncementAddComponent },
   { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent },

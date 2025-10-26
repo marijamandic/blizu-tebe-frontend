@@ -1,29 +1,25 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { LocalCommunity } from '../model/localcommunity.model';
-import { AuthService } from '../services/auth.service';
-import { LocalCommunityService } from '../services/localcommunity.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
-import { UserService } from '../services/user.service';
+import { LocalCommunity } from 'src/app/model/localcommunity.model';
+import { AuthService } from 'src/app/services/auth.service';
+import { LocalCommunityService } from 'src/app/services/localcommunity.service';
+import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-register-admin',
+  templateUrl: './register-admin.html',
+  styleUrls: ['./register-admin.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterAdmin implements OnInit {
   registerForm!: FormGroup;
   localCommunities: LocalCommunity[] = [];
   selectedFile?: File;
   previewUrl?: string;
   errorMessage = '';
-
-  // Mapa
-  showMap = false;
-  private map?: L.Map;
-  selectedCommunityFromMap?: LocalCommunity;
+  isSidebarOpen = false;
 
   constructor(
     private fb: FormBuilder,
@@ -82,101 +78,14 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  toggleMap(): void {
-    this.showMap = !this.showMap;
-    if (this.showMap) {
-      setTimeout(() => this.initMap(), 100);
-    }
-  }
+ 
 
-  initMap(): void {
-    if (this.map) {
-      this.map.remove();
-    }
-
-    this.map = L.map('registerMap').setView([45.2671, 19.8335], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(this.map);
-
-    // Učitaj sve mesne zajednice na mapu
-    this.localCommunities.forEach(community => {
-      if (community.boundary) {
-        const boundaryJson = JSON.parse(community.boundary);
-        const geoJsonLayer = L.geoJSON(boundaryJson, {
-          style: {
-            color: '#4db1d9ff',
-            weight: 2,
-            fillOpacity: 0.3
-          }
-        }).bindPopup(`<b>${community.name}</b><br>${community.city}`);
-
-        geoJsonLayer.addTo(this.map!);
-
-        geoJsonLayer.on('click', () => {
-          this.selectCommunityFromMap(community);
-        });
-
-        geoJsonLayer.on('mouseover', () => {
-        geoJsonLayer.setStyle({ fillOpacity: 0.6 });
-      });
-
-      geoJsonLayer.on('mouseout', () => {
-        geoJsonLayer.setStyle({ fillOpacity: 0.3 });
-      });
-      }
-    });
-
-    // Klik na mapu za pronalaženje mesne zajednice po koordinatama
-    this.map.on('click', (e: L.LeafletMouseEvent) => {
-      this.findCommunityByLocation(e.latlng.lat, e.latlng.lng);
-    });
-  }
-
-  findCommunityByLocation(lat: number, lng: number): void {
-    this.localCommunityService.getByLocation(lat, lng).subscribe({
-      next: (community) => {
-        this.selectCommunityFromMap(community);
-        alert(`Kliknuli ste na: ${community.name}, ${community.city}`);
-      },
-      error: () => {
-        alert('Ova lokacija nije u okviru nijedne mesne zajednice');
-      }
-    });
-  }
-
-  selectCommunityFromMap(community: LocalCommunity): void {
-    this.selectedCommunityFromMap = community;
-    this.registerForm.patchValue({
-      localCommunityId: community.id
-    });
-    this.showMap = false;
-  }
 
   onRegister(): void {
-
-    Object.keys(this.registerForm.controls).forEach(field => {
-    const el = document.getElementById(field);
-    if (el) el.classList.remove('input-error');
-  });
     if (this.registerForm.invalid) {
       this.errorMessage = 'Popunite sva obavezna polja';
-      Object.keys(this.registerForm.controls).forEach(field => {
-      const control = this.registerForm.get(field);
-      if (control && control.invalid) {
-        const el = document.getElementById(field);
-        if (el) {
-          el.classList.add('input-error');
-        }
-      }
-    });
-
-    return;
+      return;
     }
-
-    
 
     const formData = new FormData();
     formData.append('username', this.registerForm.value.username);
@@ -193,16 +102,16 @@ export class RegisterComponent implements OnInit {
       formData.append('picture', this.selectedFile);
     }
 
-    this.userService.register(formData).subscribe({
+    this.userService.registerAdmin(formData).subscribe({
       next: () => {
         Swal.fire({
       icon: 'success',
       title: 'Uspešno!',
-      text: 'Uspešna registracija, sačekajte da vas administrator validira.',
+      text: 'Uspešna registracija.',
       timer: 4000,
       showConfirmButton: false
     });
-        this.router.navigate(['/']);
+        this.ngOnInit()
       },
       error: (err) => {
         this.errorMessage = 'Greška pri registraciji: ' + (err.error?.message || 'Pokušajte ponovo');
@@ -219,6 +128,11 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
 
 
 }
+

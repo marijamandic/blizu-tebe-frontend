@@ -27,6 +27,7 @@ import { ViewCommunityComponent } from './local-community/view-community/view-co
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { EditLocalCommunity } from './local-community/edit-local-community/edit-local-community';
+import { RegisterAdmin } from './profile/register-admin/register-admin';
 
 
 registerLocaleData(localeDe);
@@ -49,7 +50,8 @@ registerLocaleData(localeDe);
      EditProfileComponent,
      ViewAllUsersComponent,
      ViewCommunityComponent,
-     EditLocalCommunity
+     EditLocalCommunity,
+     RegisterAdmin
   ],
   imports: [
     BrowserModule,

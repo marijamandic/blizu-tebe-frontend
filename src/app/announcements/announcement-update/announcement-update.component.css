@@ -133,6 +133,18 @@
   font-weight: 500;
 }
 
+.input-error {
+  border-color: red !important;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
 
 @media (max-width: 599px) {
   .mobile-navbar {

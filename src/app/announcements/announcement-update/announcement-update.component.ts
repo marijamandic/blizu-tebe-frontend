@@ -19,6 +19,7 @@ export class AnnouncementUpdateComponent implements OnInit {
   previewUrl?: string;
   existingPictureName?: string;
   existingAdminId?: number; // Dodaj za čuvanje adminId
+  errorMessage = '';
 
   isSidebarOpen: boolean = false;
   localCommunities: LocalCommunity[] = [];
@@ -103,13 +104,22 @@ export class AnnouncementUpdateComponent implements OnInit {
   }
 
   submit() {
+    Object.keys(this.announcementForm.controls).forEach(field => {
+    const el = document.getElementById(field);
+    if (el) el.classList.remove('input-error');
+  });
+
     if (this.announcementForm.invalid) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Greška',
-        text: 'Molimo popunite sva obavezna polja.',
-        confirmButtonText: 'U redu'
-      });
+
+      Object.keys(this.announcementForm.controls).forEach(field => {
+      const control = this.announcementForm.get(field);
+      if (control && control.invalid) {
+        const el = document.getElementById(field);
+        if (el) el.classList.add('input-error');
+      }
+    });
+
+      this.errorMessage = 'Popunite sva obavezna polja';
       return;
     }
 

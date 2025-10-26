@@ -49,6 +49,8 @@
     <img [src]="previewUrl" alt="Preview slike">
   </div>
 
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
   <div class="form-buttons">
     <button type="submit" class="btn-submit">Dodajte</button>
     <button type="button" class="btn-cancel" (click)="cancel()">Otkaži</button>

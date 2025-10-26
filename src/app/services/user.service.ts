@@ -38,6 +38,10 @@ export class UserService {
     return this.http.post<User>(`${environment.apiHost}users/register`, formData);
   }
 
+  registerAdmin(formData: FormData): Observable<User> {
+    return this.http.post<User>(`${environment.apiHost}users/registerAdmin`, formData);
+  }
+
   updateUser(id: number, formData: FormData): Observable<User> {
     return this.http.put<User>(`${environment.apiHost}users/${id}`, formData);
   }

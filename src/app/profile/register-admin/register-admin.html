@@ -1,0 +1,56 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="register-header">
+      <h1>Registracija Admina</h1>
+    </header>
+
+    <div class="register-card">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="register-form">
+        <label for="username">Korisničko ime *</label>
+        <input class="inputArea" type="text" id="username" formControlName="username" placeholder="Unesite korisničko ime">
+
+        <label for="password">Lozinka *</label>
+        <input class="inputArea" type="password" id="password" formControlName="password" placeholder="Minimum 6 karaktera">
+
+        <label for="name">Ime *</label>
+        <input class="inputArea" type="text" id="name" formControlName="name" placeholder="Unesite ime">
+
+        <label for="surname">Prezime *</label>
+        <input class="inputArea" type="text" id="surname" formControlName="surname" placeholder="Unesite prezime">
+
+        <label for="dateOfBirth">Datum rođenja *</label>
+        <input class="inputArea" type="date" id="dateOfBirth" formControlName="dateOfBirth">
+
+        <label for="localCommunityId">Mesna zajednica</label>
+        <select class="inputArea" id="localCommunityId" formControlName="localCommunityId">
+          <option [value]="null" disabled>-- Izaberite mesnu zajednicu * --</option>
+          <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}, {{ mc.city }}</option>
+        </select>
+
+
+        <label for="picture">Profilna slika</label>
+        <input class="inputArea" type="file" id="picture" (change)="onFileSelected($event)" accept="image/*">
+
+        <div *ngIf="previewUrl" class="image-preview">
+          <img [src]="previewUrl" alt="Preview profilne slike">
+        </div>
+
+        <button class="registerButton" type="submit" [disabled]="registerForm.invalid">Registrujte</button>
+      </form>
+
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </div>
+  </main>
+</div>

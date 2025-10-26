@@ -120,6 +120,9 @@ goToMyCommunity(): void {
     });
   }
 
+goToRegisterAdmin() {
+    this.router.navigate(['/registerAdmin']);
+  }
 
   
 }

@@ -45,6 +45,7 @@
       <div *ngIf="previewUrl" class="image-preview">
         <img [src]="previewUrl" alt="Preview slike">
       </div>
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
       <div class="form-buttons">
         <button type="submit" class="btn-submit">Sačuvajte izmene</button>

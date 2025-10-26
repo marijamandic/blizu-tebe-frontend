@@ -144,11 +144,6 @@ select.inputArea {
   margin-top: 0.5rem;
 }
 
-.registerButton:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
 .login-link {
   margin-top: 1.5rem;
   font-size: 0.95rem;
@@ -186,6 +181,11 @@ select.inputArea {
   background: var(--color-dark);
   border-radius: 10px;
 }
+
+.input-error {
+  border-color: red !important;
+}
+
 
 @media (max-width: 768px) {
   .register-card {

@@ -38,6 +38,19 @@
   gap: 1rem;
 }
 
+.input-error {
+  border-color: red !important;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+
 .announcement-form label {
   font-weight: 500;
 }
@@ -176,6 +189,10 @@
 
   label {
     font-size: 4vw;
+  }
+
+  p {
+    font-size: 3vw;
   }
 
   .main-content {
