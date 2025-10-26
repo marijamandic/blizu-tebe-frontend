@@ -61,10 +61,11 @@ export class ViewAllLocalCommunityComponent implements OnInit {
           this.loadCommunities(); // osveži listu
         },
         error: (err) => {
+          const errorMessage = err?.error?.message[0]?.message || 'Došlo je do greške prilikom brisanja mesne zajednice.';
           Swal.fire({
             icon: 'error',
             title: 'Greška!',
-            text: 'Došlo je do greške prilikom brisanja mesne zajednice.'
+            text: errorMessage
           });
           console.error('Greška pri brisanju:', err);
         }

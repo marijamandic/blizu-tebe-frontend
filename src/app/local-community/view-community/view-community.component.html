@@ -39,6 +39,12 @@
 
         <div id="communityMap"></div>
       </div>
+      <div *ngIf="isAdmin" class="admin-buttons">
+      <button class="btn-edit" (click)="editCommunity(community.id)">
+        Izmeni zajednicu
+      </button>
+    </div>
+
     </div>
   </main>
 </div>

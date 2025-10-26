@@ -19,6 +19,10 @@ export class LocalCommunityService {
     return this.http.post<LocalCommunity>(this.apiUrl, community);
   }
 
+  update(id: number, community: LocalCommunity): Observable<LocalCommunity> {
+    return this.http.put<LocalCommunity>(`${this.apiUrl}/${id}`, community);
+  }
+
   getById(id: number): Observable<LocalCommunity> {
   return this.http.get<LocalCommunity>(`${this.apiUrl}/${id}`);
 }

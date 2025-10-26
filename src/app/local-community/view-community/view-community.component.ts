@@ -1,7 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -21,7 +22,9 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private localCommunityService: LocalCommunityService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -95,4 +98,14 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+
+  get isAdmin(): boolean {
+    console.log(this.authService.getRole)
+    return this.authService.getRole() === 'Admin';
+  }
+
+  editCommunity(id: number | undefined): void {
+  if (!id) return;
+  this.router.navigate(['/edit-community', id]);
+}
 }

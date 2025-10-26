@@ -1,0 +1,59 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1>
+        Izmenite Mesnu Zajednicu
+        <span class="help-icon" title="Kako koristiti mapu?">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <div class="help-tooltip">
+            Koristite Edit layers (ikonicu praznog poligona) da precizirate granice prevlačenjem tačaka. Kliknite Save da sačuvate izmene na mapi. Možete i obrisati postojeći poligon i nacrtati novi.
+          </div>
+        </span>
+      </h1>
+      <p class="subtitle">Izmenite granice i osnovne podatke mesne zajednice.</p>
+    </header>
+
+    <div class="form-container">
+      <div class="form-group">
+        <label>Naziv mesne zajednice:</label>
+        <input type="text" [(ngModel)]="communityName" placeholder="Npr. Detelinara">
+      </div>
+
+      <div class="form-group">
+        <label>Grad:</label>
+        <input type="text" [(ngModel)]="communityCity" placeholder="Npr. Novi Sad">
+      </div>
+      <div class="form-group">
+        <label>Broj telefona (neobavezno):</label>
+        <input type="text" [(ngModel)]="phoneNumber" placeholder="Npr. +381641234567">
+      </div>
+
+      <div class="form-group">
+        <label>Facebook stranica (neobavezno):</label>
+        <input type="text" [(ngModel)]="facebook" placeholder="Npr. https://facebook.com/detelinara">
+      </div>
+
+      <div id="map"></div>
+
+      <button class="btn-save" (click)="updateCommunity()" [disabled]="!drawnPolygon">
+        Sačuvajte Izmene
+      </button>
+    </div>
+  </main>
+</div>
