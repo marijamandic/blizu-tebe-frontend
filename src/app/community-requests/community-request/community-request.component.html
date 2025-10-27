@@ -1,0 +1,41 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="request-header">
+      <h1>Radne akcije</h1>
+      <button *ngIf="isAdmin" class="btn-add" (click)="goToAddRequest()">
+        Dodajte radnu akciju
+      </button>
+    </header>
+
+    <div class="request-grid">
+      <div *ngFor="let req of requests" class="request-card">
+        <img [src]="getImageUrl(req.picture || '')" class="request-image"
+             alt="{{req.title}}"
+             (error)="setDefaultImage($event)">
+
+        <div class="request-info">
+          <h3 class="request-title">{{ req.title }}</h3>
+          <p class="request-meta">
+            <span class="time">
+              <mat-icon>schedule</mat-icon>
+              {{ req.createdAt | date:'short' }}
+            </span>
+          </p>
+          <button (click)="goToRequest(req.id)" class="btn-more">Prikažite više</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LocalCommunity } from 'src/app/model/localcommunity.model';
 import { User } from 'src/app/model/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -15,7 +17,9 @@ export class ViewAllLocalCommunityComponent implements OnInit {
   isSidebarOpen = false;
   currentUser: User | null = null;
 
-  constructor(private service: LocalCommunityService, private userService: UserService) {}
+  constructor(private service: LocalCommunityService, private userService: UserService, private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.userService.getCurrentUserFromApi().subscribe(user => {
@@ -73,6 +77,10 @@ export class ViewAllLocalCommunityComponent implements OnInit {
     }
   });
 }
+
+goToAddCommunity(): void {
+    this.router.navigate(['/community/add']);
+  }
 
 joinCommunity(communityId: number | undefined): void {
   if (!communityId) return;
@@ -143,6 +151,10 @@ private buildFormDataForUser(user: User, communityId?: number, profilePictureFil
 
   return formData;
 }
+
+get isAdmin(): boolean {
+    return this.authService.getRole() === 'Admin';
+  }
 
 
 

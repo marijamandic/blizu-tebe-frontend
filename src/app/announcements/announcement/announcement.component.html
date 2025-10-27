@@ -32,7 +32,7 @@
           <p class="announcement-meta">
             <span class="time">
               <mat-icon>schedule</mat-icon>
-              {{ ann.expirationDate | date:'short' }}
+              {{ ann.publishedAt| date:'short' }}
             </span>
           </p>
           <button (click)="goToAnnouncement(ann.id)" class="btn-more" >Prikažite više</button>

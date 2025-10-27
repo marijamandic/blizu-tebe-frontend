@@ -4,6 +4,7 @@ import { LocalCommunity } from 'src/app/model/localcommunity.model';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import 'leaflet-draw';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-local-community-admin',
@@ -25,7 +26,7 @@ export class LocalCommunityAdminComponent implements OnInit {
   cityError = false;
   mapError = false;
 
-  constructor(private service: LocalCommunityService) {}
+  constructor(private service: LocalCommunityService, private router: Router) {}
 
   ngOnInit(): void {
     this.initMap();
@@ -157,7 +158,9 @@ export class LocalCommunityAdminComponent implements OnInit {
       text: 'Mesna zajednica je uspešno dodata.',
       timer: 3000,
       showConfirmButton: false
-    });
+    }).then(() => {
+    this.router.navigate(['/community/all']);
+  });
         this.drawnItems.clearLayers();
         this.drawnPolygon = null;
         this.communityName = '';

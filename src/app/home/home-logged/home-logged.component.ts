@@ -13,6 +13,7 @@ export class HomeLoggedComponent implements OnInit{
 
 
 
+
   isModal1Open: boolean = false;
   isModal2Open: boolean = false;
   isModal3Open: boolean = false;
@@ -123,6 +124,10 @@ goToMyCommunity(): void {
 goToRegisterAdmin() {
     this.router.navigate(['/registerAdmin']);
   }
+
+  goToCommunityRequest() {
+this.router.navigate(['/community-request']);
+}
 
   
 }

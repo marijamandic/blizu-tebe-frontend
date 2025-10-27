@@ -105,7 +105,7 @@
       </h4>
       <ul *ngIf="radneAkcije">
         <li>
-          <a routerLink="/akcije/sve">
+          <a routerLink="/community-request">
             <mat-icon class="bullet-icon">circle</mat-icon>
             <span>Sve akcije</span>
           </a>
@@ -120,7 +120,7 @@
     </li>
 
     <!-- Obaveštenja -->
-    <li>
+    <li *ngIf="!isAdmin">
       <h4>
         <a href="announcement">
           <mat-icon>campaign</mat-icon>
@@ -128,6 +128,29 @@
         </a>
       </h4>
     </li>
+
+    <li *ngIf="isAdmin">
+    <h4 (click)="toggleAnnoncements()">
+      <mat-icon>campaign</mat-icon>
+      <span>Obaveštenja</span>
+      <mat-icon class="arrow" [class.open]="obavestenja">chevron_right</mat-icon>
+    </h4>
+
+    <ul *ngIf="obavestenja">
+      <li>
+        <a href="announcement">
+          <mat-icon class="bullet-icon">circle</mat-icon>
+          <span>Sva obaveštenja</span>
+        </a>
+      </li>
+      <li>
+        <a href="announcement/add">
+          <mat-icon class="bullet-icon">circle</mat-icon>
+          <span>Dodajte obaveštenje</span>
+        </a>
+      </li>
+    </ul>
+  </li>
 
     
     

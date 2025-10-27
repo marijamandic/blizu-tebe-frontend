@@ -13,35 +13,36 @@
 
   <main class="main-content">
     <header class="form-header">
-      <h1>Izmeni obaveštenje</h1>
+      <h1>Dodajte radnu akciju</h1>
     </header>
 
-    <form [formGroup]="announcementForm" class="announcement-form" (ngSubmit)="submit()">
+    <form [formGroup]="requestForm" class="request-form" (ngSubmit)="submit()">
+
       <label for="title">Naslov *</label>
       <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
 
       <label for="description">Opis *</label>
       <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
 
-      <label for="publishedAt">Datum početka *</label>
-      <input id="publishedAt" formControlName="publishedAt" type="date">
+        <label for="createdAt">Datum održavanja *</label>
+        <input id="createdAt" type="date" formControlName="createdAt">
 
-      <label for="expirationDate" class="label-with-tooltip">
-      Datum isteka *
-      <span class="help-icon" title="Posle isteka datuma obaveštenje se automatski briše.">ℹ️</span>
-    </label>
-      <input id="expirationDate" formControlName="expirationDate" type="date">
-
-      <div class="form-group-checkbox">
-        <input type="checkbox" id="isImportant" formControlName="isImportant">
-        <label for="isImportant">Označi kao važno</label>
-      </div>
+      <label for="requestType">Tip zahteva *</label>
+      <select id="requestType" formControlName="requestType">
+        <option value="" disabled>Izaberite tip akcije</option>
+        <option value="Donation">Donacija</option>
+        <option value="Volunteering">Volontiranje</option>
+        <option value="Transport">Transport</option>
+        </select>
 
       <label class="select-label" for="localCommunityId">Mesna zajednica</label>
       <select id="localCommunityId" formControlName="localCommunityId" [disabled]="true">
+        <option *ngIf="isLoading" value="">Učitavanje...</option>
         <option *ngFor="let mc of localCommunities" [value]="mc.id">{{ mc.name }}</option>
       </select>
-      <p class="info-text">Mesna zajednica se ne može menjati.</p>
+      <p *ngIf="!isLoading && requestForm.get('localCommunityId')?.value" class="info-text">
+        Vaša mesna zajednica će biti korišćena za ovaj zahtev.
+      </p>
 
       <label for="picture">Slika</label>
       <input id="picture" type="file" (change)="onFileSelected($event)">
@@ -50,10 +51,12 @@
       </div>
 
       <div class="form-buttons">
-        <button type="submit" class="btn-submit">Sačuvajte izmene</button>
+        <button type="submit" class="btn-submit">Dodajte</button>
         <button type="button" class="btn-cancel" (click)="cancel()">Otkažite</button>
       </div>
+
       <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
     </form>
   </main>
 </div>

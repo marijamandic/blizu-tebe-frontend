@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Announcement } from '../../model/announcement.model';
 import { AnnouncementService } from '../../services/announcement.service';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   templateUrl: 'announcement.component.html',
   styleUrls: ['./announcement.component.css'],
 })
-export class AnnouncementComponent { 
+export class AnnouncementComponent implements OnInit{ 
 
   announcements: Announcement[] = [];
   importantAnnouncements: Announcement[] = [];

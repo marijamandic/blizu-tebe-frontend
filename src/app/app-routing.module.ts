@@ -16,6 +16,10 @@ import { ViewAllUsersComponent } from './profile/view-all-users/view-all-users.c
 import { ViewCommunityComponent } from './local-community/view-community/view-community.component';
 import { EditLocalCommunity } from './local-community/edit-local-community/edit-local-community';
 import { RegisterAdmin } from './profile/register-admin/register-admin';
+import { CommunityRequestComponent } from './community-requests/community-request/community-request.component';
+import { CommunityRequestAddComponent } from './community-requests/community-request-add.component/community-request-add.component';
+import { CommunityRequestViewComponent } from './community-requests/community-request-view.component/community-request-view.component';
+import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,7 +37,11 @@ const routes: Routes = [
   { path: 'edit-user/:id', component: EditProfileComponent },
   { path: 'view-all-users', component: ViewAllUsersComponent },
   { path: 'view-community/:id', component: ViewCommunityComponent },
-  { path: 'edit-community/:id', component: EditLocalCommunity }
+  { path: 'edit-community/:id', component: EditLocalCommunity },
+  { path: 'community-request', component: CommunityRequestComponent},
+  { path: 'community-request/add', component: CommunityRequestAddComponent },
+  { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent },
+   { path: 'community-request/:id', component: CommunityRequestViewComponent }
 ];
 
 @NgModule({

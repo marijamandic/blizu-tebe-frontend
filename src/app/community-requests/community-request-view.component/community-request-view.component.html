@@ -1,0 +1,42 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="request-details" *ngIf="request">
+      <h1 class="request-title">{{ request.title }}</h1>
+
+      <img [src]="getImageUrl(request.picture || '')" class="request-image"
+             alt="{{request.title}}"
+             (error)="setDefaultImage($event)">
+
+      <div class="request-info">
+        <p class="request-dates">
+          <mat-icon>event</mat-icon>
+          <strong>Datum akcije:</strong> {{ request.createdAt | date:'shortDate' }}
+        </p>
+
+        <p class="request-type">
+          <mat-icon>category</mat-icon>
+          <strong>Tip akcije:</strong> {{ translateRequestType(request.requestType) }}
+        </p>
+         <p *ngIf="request.fulfilled" class="request-description">Zavrsena</p>
+        <p class="request-description">{{ request.description }}</p>
+
+        <div *ngIf="isAdmin" class="admin-buttons">
+          <button class="btn-edit" (click)="editRequest(request.id)">Izmenite</button>
+          <button class="btn-delete" (click)="deleteRequest(request.id)">Obrišite</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

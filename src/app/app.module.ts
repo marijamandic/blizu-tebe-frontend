@@ -28,6 +28,10 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { EditLocalCommunity } from './local-community/edit-local-community/edit-local-community';
 import { RegisterAdmin } from './profile/register-admin/register-admin';
+import { CommunityRequestComponent } from './community-requests/community-request/community-request.component';
+import { CommunityRequestAddComponent } from './community-requests/community-request-add.component/community-request-add.component';
+import { CommunityRequestViewComponent } from './community-requests/community-request-view.component/community-request-view.component';
+import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
 
 
 registerLocaleData(localeDe);
@@ -51,7 +55,11 @@ registerLocaleData(localeDe);
      ViewAllUsersComponent,
      ViewCommunityComponent,
      EditLocalCommunity,
-     RegisterAdmin
+     RegisterAdmin,
+     CommunityRequestComponent,
+     CommunityRequestAddComponent,
+     CommunityRequestViewComponent,
+     CommunityRequestUpdateComponent
   ],
   imports: [
     BrowserModule,

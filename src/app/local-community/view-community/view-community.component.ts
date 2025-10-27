@@ -108,4 +108,8 @@ export class ViewCommunityComponent implements OnInit, AfterViewInit {
   if (!id) return;
   this.router.navigate(['/edit-community', id]);
 }
+goToAllCommunities(): void {
+  this.router.navigate(['/community/all']);
+}
+
 }
