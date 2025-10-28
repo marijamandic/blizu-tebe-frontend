@@ -147,6 +147,39 @@ mat-icon {
   color: #655;
 }
 
+.request-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; 
+  margin-bottom: 1rem;
+}
+
+.btn-back {
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-back mat-icon {
+  font-size: 30px;
+}
+
+.btn-back:hover {
+  color: #555;
+}
+
+
 
 @media (max-width: 599px) {
   .mobile-navbar {
@@ -244,5 +277,9 @@ mat-icon {
     font-size: 3.6vw;
     padding: 0.6rem 1rem;
     height: 5.5vh; 
+  }
+
+  .btn-back {
+    margin-top: 8vh;
   }
 }

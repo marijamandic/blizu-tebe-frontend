@@ -102,4 +102,8 @@ export class AnnouncementViewComponent implements OnInit {
   });
 }
 
+goBack(): void {
+  this.router.navigate(['/announcement']); 
+}
+
 }

@@ -42,6 +42,15 @@ export class ViewAllUsersComponent implements OnInit {
           this.users = data.filter(u => 
             u.role !== 0 && u.localCommunityId === currentUser.localCommunityId
           );
+          if (data.length === 0) {
+                    Swal.fire({
+                      icon: 'info',
+                      title: 'Nema korisnika',
+                      text: 'Trenutno nema nijedan korisnik za vašu mesnu zajednicu.',
+                      confirmButtonText: 'U redu',
+                      confirmButtonColor: '#398fb2'
+                    });
+                  }
         },
         error: (err) => console.error('Error fetching users', err)
       });

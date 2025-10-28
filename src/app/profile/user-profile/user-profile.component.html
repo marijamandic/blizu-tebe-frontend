@@ -42,6 +42,25 @@
       <div *ngIf="isOwnProfile" class="admin-buttons">
         <button class="btn-edit" (click)="editProfile(user.id)">Izmenite profil</button>
       </div>
+
+      <div class="ratings-section" *ngIf="ratings.length > 0">
+        <div class="rating-card" *ngFor="let item of ratings">
+          <div class="rating-header">
+            <div class="rating-stars">
+              <mat-icon *ngFor="let star of getStarsArray(item.rating.score)" class="star-icon">star</mat-icon>
+            </div>
+            <span class="rating-date">{{ item.rating.timeStamp | date:'short' }}</span>
+          </div>
+          
+          <p class="rating-comment" *ngIf="item.rating.comment">{{ item.rating.comment }}</p>
+          
+          <div class="rater-info">
+            <mat-icon>person</mat-icon>
+            <span class="rater-name">{{ item.raterUser.name }} {{ item.raterUser.surname }}</span>
+            <span class="rater-role">{{ getRoleLabel(item.raterUser.role) }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </div>

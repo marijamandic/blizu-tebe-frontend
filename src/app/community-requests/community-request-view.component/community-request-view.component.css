@@ -79,7 +79,8 @@
 .admin-buttons {
   display: flex;
   gap: 1rem;
-  justify-content: space-between;
+  justify-content: center; 
+  align-items: center;
   margin-top: 1.5rem;
 }
 
@@ -169,6 +170,39 @@
   background-color: var(--color-light);
   border: 1px solid var(--color-light);
   color: #333;
+}
+
+.request-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; 
+  margin-bottom: 1rem;
+}
+
+.btn-back {
+  position: absolute;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-back mat-icon {
+  font-size: 25px;
+}
+
+.btn-back:hover {
+  background-color: #b2afaf;
+  color: #555;
 }
 
 

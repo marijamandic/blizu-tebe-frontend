@@ -1,0 +1,58 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="form-header">
+      <h1>Ocenite korisnika</h1>
+    </header>
+    
+
+    <form [formGroup]="ratingForm" class="rating-form" (ngSubmit)="submit()">
+
+      <div class="user-info">
+        <label>Korisnik:</label>
+        <p *ngIf="isLoading" class="loading-text">Učitavanje...</p>
+        <p *ngIf="!isLoading" class="user-name">{{ ratedUserName }}</p>
+      </div>
+
+      <div class="rating-stars">
+        <label>Ocena *</label>
+        <div class="stars-container">
+          <span 
+            *ngFor="let star of [1, 2, 3, 4, 5]"
+            [class]="getStarClass(star)"
+            (click)="setRating(star)"
+            (mouseenter)="onStarHover(star)"
+            (mouseleave)="onStarLeave()">
+            ★
+          </span>
+        </div>
+        <p class="rating-text" *ngIf="ratingForm.get('score')?.value > 0">
+          Vaša ocena: {{ ratingForm.get('score')?.value }}/5
+        </p>
+      </div>
+
+        <p *ngIf="!isLoading">Razlog ocenjivanja je radna akcija: {{ requestTitle }}</p>
+      <label for="comment">Komentar (opciono)</label>
+      <textarea id="comment" formControlName="comment" rows="5" placeholder="Unesite komentar o korisniku..."></textarea>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn-submit">Ocenite</button>
+        <button type="button" class="btn-cancel" (click)="cancel()">Otkažite</button>
+      </div>
+
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+    </form>
+  </main>
+</div>

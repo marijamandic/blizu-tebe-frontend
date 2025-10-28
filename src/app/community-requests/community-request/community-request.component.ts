@@ -40,6 +40,15 @@ export class CommunityRequestComponent implements OnInit{
           }
 
           this.requests = filteredData;
+          if (filteredData.length === 0) {
+                    Swal.fire({
+                      icon: 'info',
+                      title: 'Nema radnih akcija',
+                      text: 'Trenutno nema nijedna radna akcija za vašu mesnu zajednicu.',
+                      confirmButtonText: 'U redu',
+                      confirmButtonColor: '#398fb2'
+                    });
+                  }
         },
         error: (err) => console.error('Error fetching community requests', err)
       });

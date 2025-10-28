@@ -33,6 +33,7 @@ import { CommunityRequestAddComponent } from './community-requests/community-req
 import { CommunityRequestViewComponent } from './community-requests/community-request-view.component/community-request-view.component';
 import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
 import { ParticipantsComponent } from './profile/participants/participants';
+import { RateComponent } from './profile/rate/rate';
 
 
 registerLocaleData(localeDe);
@@ -61,7 +62,8 @@ registerLocaleData(localeDe);
      CommunityRequestAddComponent,
      CommunityRequestViewComponent,
      CommunityRequestUpdateComponent,
-     ParticipantsComponent
+     ParticipantsComponent,
+     RateComponent
   ],
   imports: [
     BrowserModule,

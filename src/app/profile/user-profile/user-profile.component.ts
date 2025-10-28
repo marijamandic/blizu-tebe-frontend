@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { Rating } from 'src/app/model/rating.model';
 import { User } from 'src/app/model/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
+import { RatingService } from 'src/app/services/rating.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,13 +19,15 @@ export class UserProfileComponent implements OnInit {
   localCommunityName: string = '';
   isSidebarOpen = false;
   isOwnProfile = false;
+  ratings: { rating: Rating, raterUser: User }[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private localCommunityService: LocalCommunityService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private ratingService: RatingService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +39,7 @@ export class UserProfileComponent implements OnInit {
     }
     if (id) {
       this.loadUser(id);
+      this.loadRatings(id);
     }
   }
 
@@ -50,8 +56,37 @@ export class UserProfileComponent implements OnInit {
       },
       error: (err) => console.error('Greška pri učitavanju korisnika', err)
     });
+  }
 
-    
+  loadRatings(ratedId: number) {
+    this.ratingService.getRatingsByRatedId(ratedId).subscribe({
+      next: (ratings) => {
+        const userRequests = ratings.map(rating => 
+          this.userService.getById(rating.raterId)
+        );
+        
+        if (userRequests.length > 0) {
+          forkJoin(userRequests).subscribe({
+            next: (users) => {
+              this.ratings = ratings.map((rating, index) => ({
+                rating: rating,
+                raterUser: users[index]
+              }));
+            },
+            error: (err) => console.error('Greška pri učitavanju korisnika koji su ocenili', err)
+          });
+        }
+      },
+      error: (err) => console.error('Greška pri učitavanju ocena', err)
+    });
+  }
+
+  getStarsArray(score: number): number[] {
+    return Array(score).fill(0);
+  }
+
+  getRoleLabel(role: number): string {
+    return role === 0 ? 'Admin' : 'Član';
   }
 
   toggleSidebar(): void {

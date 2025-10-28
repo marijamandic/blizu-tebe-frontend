@@ -4,6 +4,7 @@ import { User } from 'src/app/model/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommunityRequestUsersService } from 'src/app/services/community-request-user.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-participants',
@@ -37,6 +38,19 @@ export class ParticipantsComponent implements OnInit {
   fetchParticipants(): void {
   this.communityRequestUserService.getByRequestId(this.requestId).subscribe({
     next: (data) => {
+      if (!data || data.length === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Nema podataka',
+          text: 'Nema više neocenjenih učesnika za ovu radnu akciju.',
+          confirmButtonText: 'U redu',
+          confirmButtonColor: '#398fb2'
+        }).then(() => {
+          this.router.navigate(['/community-request', this.requestId]); 
+        });
+        return;
+      }
+
       this.participants = data;
 
       this.participants.forEach((p, index) => {
@@ -44,13 +58,24 @@ export class ParticipantsComponent implements OnInit {
           next: (user) => {
             this.participants[index].user = user;
           },
-          error: (err) => console.error(`Greška pri učitavanju korisnika ${p.userId}`, err)
+          error: (err) =>
+            console.error(`Greška pri učitavanju korisnika ${p.userId}`, err),
         });
       });
     },
-    error: (err) => console.error('Greška pri učitavanju učesnika', err)
+    error: (err) => {
+      console.error('Greška pri učitavanju učesnika', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Greška',
+        text: 'Došlo je do problema pri učitavanju učesnika.',
+        confirmButtonText: 'U redu',
+        confirmButtonColor: '#6c63ff'
+      });
+    },
   });
 }
+
 
 
   toggleSidebar() {
@@ -73,7 +98,7 @@ export class ParticipantsComponent implements OnInit {
   }
 
   rateUser(user: User): void {
-    this.router.navigate(['/rate-user', user.id], {
+    this.router.navigate(['/rate', user.id], {
       queryParams: { requestId: this.requestId }
     });
   }
@@ -81,4 +106,8 @@ export class ParticipantsComponent implements OnInit {
   get isAdmin(): boolean {
     return this.authService.getRole() === 'Admin';
   }
+
+  goBack(): void {
+  this.router.navigate(['/community-request', this.requestId]); // ili router.navigateByUrl('/')
+}
 }

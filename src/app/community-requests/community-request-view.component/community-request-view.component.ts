@@ -191,6 +191,9 @@ goToParticipants(requestId: number): void {
     }
   });
 }
+goBack(): void {
+  this.router.navigate(['/community-request']); // ili router.navigateByUrl('/')
+}
 
 
 

@@ -13,11 +13,18 @@
 
   <main class="main-content">
     <header class="users-header">
-      <h1>Učesnici radne akcije – {{ requestTitle }}</h1>
+        <div class="request-header">
+  <button class="btn-back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1 class="request-title">Učesnici radne akcije – {{ requestTitle }}</h1>
+</div>
     </header>
 
     <div class="users-grid">
       <div *ngFor="let participant of participants" class="user-card">
+        
+
         <img [src]="getImageUrl(participant.user.profilePicture)" class="user-image"
              alt="{{participant.user.name}} {{participant.user.surname}}"
              (error)="setDefaultImage($event)">

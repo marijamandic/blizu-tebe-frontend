@@ -152,6 +152,38 @@
   background-color: #ffeeef;
 }
 
+.request-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; 
+  margin-bottom: 1rem;
+}
+
+.btn-back {
+  position: absolute;
+  left: 30vh;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-back mat-icon {
+  font-size: 30px;
+}
+
+.btn-back:hover {
+  color: #555;
+}
+
 @media (max-width: 599px) {
   .mobile-navbar {
     display: flex;
@@ -167,6 +199,11 @@
 
   label {
     font-size: 4vw;
+  }
+
+  .btn-back{
+    position: absolute;
+  left: 0vh;
   }
 
   .desktop-sidebar {

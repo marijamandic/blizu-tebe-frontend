@@ -35,7 +35,6 @@ export class AnnouncementComponent implements OnInit{
     this.announcementService.getAllAnnouncements().subscribe({
       next: (data) => {
         let filteredData = data;
-        console.log(currentUser)
 
         if (currentUser) { 
           filteredData = data.filter(a => a.localCommunityId === currentUser.localCommunityId);
@@ -45,6 +44,15 @@ export class AnnouncementComponent implements OnInit{
         this.importantAnnouncements = filteredData.filter(a => a.isImportant);
         this.regularAnnouncements = filteredData.filter(a => !a.isImportant);
         this.announcements = filteredData.sort((a, b) => Number(b.isImportant) - Number(a.isImportant));
+        if (filteredData.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Nema obaveštenja',
+            text: 'Trenutno nema nijedno obaveštenje za vašu mesnu zajednicu.',
+            confirmButtonText: 'U redu',
+            confirmButtonColor: '#398fb2'
+          });
+        }
       },
       error: (err) => console.error('Error fetching announcements', err)
     });

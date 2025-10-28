@@ -184,4 +184,8 @@ export class LocalCommunityAdminComponent implements OnInit {
       lats.reduce((a: number, b: number) => a + b) / lats.length
     ];
   }
+
+  goBack(): void {
+  this.router.navigate(['/community/all']); 
+}
 }
