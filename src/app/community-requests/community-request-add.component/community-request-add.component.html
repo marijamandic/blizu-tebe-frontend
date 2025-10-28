@@ -24,8 +24,9 @@
       <label for="description">Opis *</label>
       <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
 
-        <label for="createdAt">Datum održavanja *</label>
-        <input id="createdAt" type="date" formControlName="createdAt">
+        <label for="createdAt">Datum i vreme održavanja *</label>
+        <input id="createdAt" type="datetime-local" formControlName="createdAt">
+
 
       <label for="requestType">Tip zahteva *</label>
       <select id="requestType" formControlName="requestType">

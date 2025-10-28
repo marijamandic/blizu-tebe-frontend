@@ -20,6 +20,7 @@ import { CommunityRequestComponent } from './community-requests/community-reques
 import { CommunityRequestAddComponent } from './community-requests/community-request-add.component/community-request-add.component';
 import { CommunityRequestViewComponent } from './community-requests/community-request-view.component/community-request-view.component';
 import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
+import { ParticipantsComponent } from './profile/participants/participants';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'community-request', component: CommunityRequestComponent},
   { path: 'community-request/add', component: CommunityRequestAddComponent },
   { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent },
-   { path: 'community-request/:id', component: CommunityRequestViewComponent }
+   { path: 'community-request/:id', component: CommunityRequestViewComponent },
+   { path: 'community-request-participants/:id', component: ParticipantsComponent }
 ];
 
 @NgModule({

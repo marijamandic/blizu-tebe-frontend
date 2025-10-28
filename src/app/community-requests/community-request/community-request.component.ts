@@ -98,4 +98,11 @@ export class CommunityRequestComponent implements OnInit{
       }
     });
   }
+
+  adjustOneHourBack(date: Date): Date {
+  const d = new Date(date);
+  d.setHours(d.getHours() - 1);
+  return d;
+}
+
 }

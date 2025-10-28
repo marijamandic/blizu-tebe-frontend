@@ -32,6 +32,7 @@ import { CommunityRequestComponent } from './community-requests/community-reques
 import { CommunityRequestAddComponent } from './community-requests/community-request-add.component/community-request-add.component';
 import { CommunityRequestViewComponent } from './community-requests/community-request-view.component/community-request-view.component';
 import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
+import { ParticipantsComponent } from './profile/participants/participants';
 
 
 registerLocaleData(localeDe);
@@ -59,7 +60,8 @@ registerLocaleData(localeDe);
      CommunityRequestComponent,
      CommunityRequestAddComponent,
      CommunityRequestViewComponent,
-     CommunityRequestUpdateComponent
+     CommunityRequestUpdateComponent,
+     ParticipantsComponent
   ],
   imports: [
     BrowserModule,

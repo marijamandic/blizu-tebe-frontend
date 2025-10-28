@@ -22,18 +22,52 @@
       <div class="request-info">
         <p class="request-dates">
           <mat-icon>event</mat-icon>
-          <strong>Datum akcije:</strong> {{ request.createdAt | date:'shortDate' }}
+          <strong>Datum i vreme akcije:</strong>
+          {{ (request.createdAt | date:'dd.MM.yyyy. HH:mm':'UTC') }}
         </p>
-
         <p class="request-type">
           <mat-icon>category</mat-icon>
           <strong>Tip akcije:</strong> {{ translateRequestType(request.requestType) }}
         </p>
+        <p class="request-type">
+          <mat-icon>groups</mat-icon>
+      <strong>  Trenutno prijavljeno učesnika: </strong>{{ participantCount }}
+  <button *ngIf="isAdmin"
+    class="btn-view-participants"
+    (click)="goToParticipants(request.id)">
+    {{ request.fulfilled ? 'Ocenite učesnike' : 'Vidite učesnike' }}
+  </button>
+
+      </p>
+      
          <p *ngIf="request.fulfilled" class="request-description">Zavrsena</p>
         <p class="request-description">{{ request.description }}</p>
 
+        <div  *ngIf="!request.fulfilled && !isAdmin" class="participation-section">
+            <button
+              class="btn-participate"
+              *ngIf="!isParticipating"
+              (click)="participateInAction()">
+              Učestvujte u radnoj akciji
+            </button>
+
+            <button
+              class="btn-cancel-participation"
+              *ngIf="isParticipating"
+              (click)="cancelParticipation()">
+              Otkažite učešće
+            </button>
+          </div>
+
+          <p class="participation-info" *ngIf="!isAdmin">
+  Učestvovanjem u akciji možete poboljšati svoju reputaciju! 
+  Administrator dodeljuje pozitivnu ocenu samo učesnicima koji zaista prisustvuju i učestvuju u akciji.
+</p>
+
+
+
         <div *ngIf="isAdmin" class="admin-buttons">
-          <button class="btn-edit" (click)="editRequest(request.id)">Izmenite</button>
+          <button class="btn-edit" (click)="editRequest(request.id)">Izmenite ili zavrsite akciju</button>
           <button class="btn-delete" (click)="deleteRequest(request.id)">Obrišite</button>
         </div>
       </div>

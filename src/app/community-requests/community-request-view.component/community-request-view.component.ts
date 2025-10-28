@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommunityRequestUser } from 'src/app/model/community-request-user.model';
 import { CommunityRequest, RequestType } from 'src/app/model/community-request.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { CommunityRequestUsersService } from 'src/app/services/community-request-user.service';
 import { CommunityRequestService } from 'src/app/services/communtiy-request.service';
 import Swal from 'sweetalert2';
 
@@ -14,10 +16,13 @@ export class CommunityRequestViewComponent implements OnInit {
 
   request!: CommunityRequest;
   isSidebarOpen = false;
+  isParticipating = false;
+  participantCount = 0;
 
   constructor(
     private route: ActivatedRoute,
     private requestService: CommunityRequestService,
+    private requestUsersService: CommunityRequestUsersService,
     private router: Router,
     private authService: AuthService
   ) {}
@@ -28,11 +33,38 @@ export class CommunityRequestViewComponent implements OnInit {
   }
 
   loadRequest(id: number) {
-    this.requestService.getCommunityRequestById(id).subscribe({
-      next: req => this.request = req,
-      error: err => console.error('Greška pri učitavanju zahteva', err)
-    });
-  }
+  this.requestService.getCommunityRequestById(id).subscribe({
+    next: req => {
+      this.request = req;
+      this.checkParticipation();
+      this.loadParticipantCount();
+    },
+    error: err => console.error('Greška pri učitavanju zahteva', err)
+  });
+}
+
+checkParticipation() {
+  const userId = this.authService.getId();
+  if (!userId || !this.request?.id) return;
+
+  this.requestUsersService.getByUserId(Number(userId)).subscribe({
+    next: (userRequests) => {
+      this.isParticipating = userRequests.some(r => r.communityRequestId === this.request.id);
+    },
+    error: err => console.error('Greška pri proveri učešća:', err)
+  });
+}
+
+loadParticipantCount() {
+  if (!this.request?.id) return;
+
+  this.requestUsersService.getByRequestId(this.request.id).subscribe({
+    next: (users) => {
+      this.participantCount = users.length;
+    },
+    error: err => console.error('Greška pri dobijanju učesnika:', err)
+  });
+}
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -104,6 +136,65 @@ export class CommunityRequestViewComponent implements OnInit {
     default: return type;
   }
 }
+
+participateInAction() {
+  const userId = this.authService.getId();
+  if (!userId || !this.request?.id) return;
+
+  const newUserRequest: CommunityRequestUser = {
+    id: 0,
+    userId: Number(userId),
+    communityRequestId: this.request.id
+  };
+
+  this.requestUsersService.createCommunityRequestUser(newUserRequest).subscribe({
+    next: () => {
+      this.isParticipating = true;
+      this.loadParticipantCount();
+      Swal.fire({
+        icon: 'success',
+        title: 'Prijavljeni ste!',
+        text: 'Uspešno ste se prijavili za učešće u radnoj akciji.',
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    error: err => console.error('Greška pri prijavi:', err)
+  });
+}
+
+cancelParticipation() {
+  const userId = this.authService.getId();
+  if (!userId || !this.request?.id) return;
+
+  this.requestUsersService.deleteCommunityRequestUser(Number(userId), this.request.id).subscribe({
+    next: () => {
+      this.isParticipating = false;
+      this.loadParticipantCount();
+      Swal.fire({
+        icon: 'info',
+        title: 'Učešće otkazano!',
+        text: 'Više ne učestvujete u ovoj radnoj akciji.',
+        timer: 2000,
+        showConfirmButton: false
+      });
+    },
+    error: err => console.error('Greška pri otkazivanju:', err)
+  });
+}
+
+goToParticipants(requestId: number): void {
+  this.router.navigate(['/community-request-participants', requestId], {
+    queryParams: {
+      title: this.request.title,
+      fulfilled: this.request.fulfilled
+    }
+  });
+}
+
+
+
+
 
 
 }

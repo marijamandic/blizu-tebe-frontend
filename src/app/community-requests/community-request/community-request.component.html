@@ -30,7 +30,7 @@
           <p class="request-meta">
             <span class="time">
               <mat-icon>schedule</mat-icon>
-              {{ req.createdAt | date:'short' }}
+              {{ adjustOneHourBack(req.createdAt) | date:'dd.MM.yyyy. HH:mm' }}
             </span>
           </p>
           <button (click)="goToRequest(req.id)" class="btn-more">Prikažite više</button>

@@ -1,0 +1,49 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="users-header">
+      <h1>Učesnici radne akcije – {{ requestTitle }}</h1>
+    </header>
+
+    <div class="users-grid">
+      <div *ngFor="let participant of participants" class="user-card">
+        <img [src]="getImageUrl(participant.user.profilePicture)" class="user-image"
+             alt="{{participant.user.name}} {{participant.user.surname}}"
+             (error)="setDefaultImage($event)">
+
+        <div class="user-info">
+          <h3 class="user-name">{{ participant.user.name }} {{ participant.user.surname }}</h3>
+          <p class="user-username">@{{ participant.user.username }}</p>
+          <p>
+            <mat-icon>star</mat-icon>
+            <strong>Prosečna ocena:</strong>
+            {{ participant.averageRating ? (participant.averageRating | number:'1.1-1') : 'Nema još ocena' }}
+          </p>
+
+          <div class="user-buttons">
+            <button (click)="viewUser(participant.user.id)" class="btn-more">
+              Prikažite više
+            </button>
+            <button
+              *ngIf="isAdmin && isFulfilled"
+              (click)="rateUser(participant.user)"
+              class="btn-rate">
+              Ocenite
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -82,7 +82,7 @@ export class CommunityRequestUpdateComponent implements OnInit {
         this.requestForm.patchValue({
           title: data.title,
           description: data.description,
-          createdAt: new Date(data.createdAt).toISOString().split('T')[0],
+          createdAt: data.createdAt? new Date(data.createdAt).toISOString().slice(0, 16): '',
           requestType: this.requestTypeMap[Number(data.requestType)],
           fulfilled: data.fulfilled,
           localCommunityId: data.localCommunityId || null
