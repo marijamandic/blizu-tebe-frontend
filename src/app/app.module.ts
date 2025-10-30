@@ -40,6 +40,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
 
 
 registerLocaleData(localeDe);
@@ -71,7 +72,8 @@ registerLocaleData(localeDe);
      ParticipantsComponent,
      RateComponent,
      DiscussionComponent,
-     ChatComponent
+     ChatComponent,
+     ViewUsersForMembersComponent
   ],
   imports: [
     BrowserModule,

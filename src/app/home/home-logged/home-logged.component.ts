@@ -90,11 +90,8 @@ this.router.navigate(['/announcement']);
   }
 
   handleAccountClick() {
-    if (this.isAdmin) {
       this.toggleAccountModal();
-    } else {
-      this.goToMyProfile();
-    }
+
   }
 
 goToMyCommunity(): void {
@@ -129,6 +126,10 @@ this.router.navigate(['/community-request']);
 goToDiscussions() {
 this.router.navigate(['/discussion']);
 }
+
+goToAllUsersForUsers() {
+    this.router.navigate(['/view-all-users-for-members']);
+  }
 
   
 }

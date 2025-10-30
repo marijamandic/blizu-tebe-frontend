@@ -24,6 +24,7 @@ import { ParticipantsComponent } from './profile/participants/participants';
 import { RateComponent } from './profile/rate/rate';
 import { DiscussionComponent } from './discussions/discussion.component/discussion.component';
 import { ChatComponent } from './discussions/chat.component/chat.component';
+import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'view-user/:id', component: UserProfileComponent },
   { path: 'edit-user/:id', component: EditProfileComponent },
   { path: 'view-all-users', component: ViewAllUsersComponent },
+  { path: 'view-all-users-for-members', component: ViewUsersForMembersComponent },
   { path: 'view-community/:id', component: ViewCommunityComponent },
   { path: 'edit-community/:id', component: EditLocalCommunity },
   { path: 'community-request', component: CommunityRequestComponent},

@@ -21,10 +21,19 @@
       />
 
       <h1 class="profile-name">{{ user.name }} {{ user.surname }}</h1>
-      <p class="profile-username">@{{ user.username }}</p>
+      <p class="profile-username" *ngIf="fullInfo">@{{ user.username }}</p>
 
       <div class="profile-info">
-        <p><mat-icon>cake</mat-icon> <strong> Datum rođenja: </strong>{{ user.dateOfBirth | date:'shortDate' }}</p>
+        <p>
+  <mat-icon>cake</mat-icon>
+  <strong> 
+    {{ fullInfo ? 'Datum rođenja:' : 'Godine:' }}
+  </strong> 
+  {{ fullInfo 
+      ? (user.dateOfBirth | date:'shortDate') 
+      : (getAge(user.dateOfBirth) + ' godina') }}
+</p>
+
         <p>
         <mat-icon>star</mat-icon>
         <ng-container *ngIf="user.rating === 0; else hasRating">
@@ -35,7 +44,7 @@
         </ng-template>
         </p>
         <p *ngIf="localCommunityName"><mat-icon>location_city</mat-icon><strong> Mesna zajednica: </strong>{{ localCommunityName }}</p>
-        <p><mat-icon>verified</mat-icon><strong> Status: </strong>{{ user.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}</p>
+        <p *ngIf="fullInfo"><mat-icon>verified</mat-icon><strong> Status: </strong>{{ user.isVerified ? 'Verifikovan' : 'Nije verifikovan' }}</p>
         <p><mat-icon>person</mat-icon><strong> Uloga: </strong>{{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
       </div>
 

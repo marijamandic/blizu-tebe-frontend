@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommunityRequestUser } from 'src/app/model/community-request-user.model';
 import { CommunityRequest, RequestType } from 'src/app/model/community-request.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { CommunityRequestUsersService } from 'src/app/services/community-request-user.service';
 import { CommunityRequestService } from 'src/app/services/communtiy-request.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -22,12 +24,17 @@ export class CommunityRequestComponent implements OnInit {
   selectedType: string = '';
   selectedStatus: string = '';
   requestTypes = Object.values(RequestType);
+  allRequestUsers: CommunityRequestUser[] = [];
+  selectedParticipation: string = '';
+  currentUserId: number | null = null;
+
 
   constructor(
     private requestService: CommunityRequestService,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private requestUserService: CommunityRequestUsersService
   ) {}
 
   ngOnInit(): void {
@@ -35,32 +42,41 @@ export class CommunityRequestComponent implements OnInit {
   }
 
   fetchAllRequests(): void {
-    this.userService.getCurrentUserFromApi().subscribe(currentUser => {
-      this.requestService.getAllCommunityRequests().subscribe({
-        next: (data) => {
-          let filteredData = data;
+  this.userService.getCurrentUserFromApi().subscribe(currentUser => {
+    this.currentUserId = currentUser?.id || null;
 
-          if (currentUser) {
-            filteredData = data.filter(r => r.localCommunityId === currentUser.localCommunityId);
-          }
+    this.requestService.getAllCommunityRequests().subscribe({
+      next: (data) => {
+        let filteredData = data;
+        if (currentUser) {
+          filteredData = data.filter(r => r.localCommunityId === currentUser.localCommunityId);
+        }
 
-          this.allRequests = filteredData; 
-          this.requests = [...filteredData]; 
+        this.allRequests = filteredData;
+        this.requests = [...filteredData];
 
-          if (filteredData.length === 0) {
-            Swal.fire({
-              icon: 'info',
-              title: 'Nema radnih akcija',
-              text: 'Trenutno nema nijedna radna akcija za vašu mesnu zajednicu.',
-              confirmButtonText: 'U redu',
-              confirmButtonColor: '#398fb2'
-            });
-          }
-        },
-        error: (err) => console.error('Error fetching community requests', err)
-      });
-    }, err => console.error('Error fetching current user', err));
-  }
+        this.requestUserService.getAllCommunityRequestUsers().subscribe({
+          next: (relations) => {
+            this.allRequestUsers = relations;
+          },
+          error: (err) => console.error('Error fetching request users', err)
+        });
+
+        if (filteredData.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Nema radnih akcija',
+            text: 'Trenutno nema nijedna radna akcija za vašu mesnu zajednicu.',
+            confirmButtonText: 'U redu',
+            confirmButtonColor: '#398fb2'
+          });
+        }
+      },
+      error: (err) => console.error('Error fetching community requests', err)
+    });
+  }, err => console.error('Error fetching current user', err));
+}
+
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -122,7 +138,7 @@ export class CommunityRequestComponent implements OnInit {
   }
 
 applyFilters(): void {
-  let filtered = [...this.allRequests]; 
+  let filtered = [...this.allRequests];
 
   if (this.selectedType !== '') {
     filtered = filtered.filter(r => r.requestType == Number(this.selectedType));
@@ -134,8 +150,21 @@ applyFilters(): void {
     filtered = filtered.filter(r => !r.fulfilled);
   }
 
+  if (this.selectedParticipation && this.currentUserId) {
+    const participatedIds = this.allRequestUsers
+      .filter(u => u.userId === this.currentUserId)
+      .map(u => u.communityRequestId);
+
+    if (this.selectedParticipation === 'participating') {
+      filtered = filtered.filter(r => participatedIds.includes(r.id));
+    } else if (this.selectedParticipation === 'not_participating') {
+      filtered = filtered.filter(r => !participatedIds.includes(r.id));
+    }
+  }
+
   this.requests = filtered;
 }
+
 
 getRequestTypeLabel(type: number): string {
   const labels: any = {

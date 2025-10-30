@@ -201,4 +201,5 @@ export class RateComponent implements OnInit {
       }
     });
   }
+
 }

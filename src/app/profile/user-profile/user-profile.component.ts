@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   isOwnProfile = false;
   ratings: { rating: Rating, raterUser: User }[] = [];
   showRatings = false;
+  fullInfo: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,10 +38,15 @@ export class UserProfileComponent implements OnInit {
     if(id.toString() === loggedUserId)
     {
       this.isOwnProfile = true;
+      this.fullInfo = true;
     }
     if (id) {
       this.loadUser(id);
       this.loadRatings(id);
+    }
+    if(this.isAdmin)
+    {
+      this.fullInfo = true;
     }
   }
 
@@ -109,4 +115,18 @@ export class UserProfileComponent implements OnInit {
   toggleRatings(): void {
   this.showRatings = !this.showRatings;
 }
+
+getAge(dateOfBirth: string | Date): number {
+  const birthDate = new Date(dateOfBirth);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+}
+
 }

@@ -6,11 +6,11 @@ import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-view-all-users',
-  templateUrl: './view-all-users.component.html',
-  styleUrls: ['./view-all-users.component.css'],
+  selector: 'app-view-users-for-members',
+  templateUrl: './view-users-for-members.html',
+  styleUrls: ['./view-users-for-members.css'],
 })
-export class ViewAllUsersComponent implements OnInit {
+export class ViewUsersForMembersComponent implements OnInit {
 
   users: User[] = [];
   isSidebarOpen = false;
@@ -36,7 +36,7 @@ export class ViewAllUsersComponent implements OnInit {
       this.userService.getAll().subscribe({
         next: (data) => {
           this.users = data.filter(u => 
-            u.id !== currentUser.id  && u.localCommunityId === currentUser.localCommunityId
+            u.id !== currentUser.id && u.localCommunityId === currentUser.localCommunityId
           );
           if (data.length === 0) {
                     Swal.fire({

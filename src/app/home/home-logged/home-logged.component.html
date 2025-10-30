@@ -47,14 +47,9 @@
     </div>
 
     <!-- Moj nalog -->
-    <div *ngIf="!isAdmin" class="card2" (click)=" goToMyProfile()">
+    <div class="card2" (click)="handleAccountClick()">
       <h3><mat-icon>person</mat-icon> Moj nalog</h3>
-      <p>Uredite svoj profil i saznajte kako vas drugi vide i ocenjuju.</p>
-    </div>
-
-    <div *ngIf="isAdmin" class="card2" (click)="handleAccountClick()">
-      <h3><mat-icon>person</mat-icon> Moj nalog</h3>
-      <p>Uredite svoj profil i saznajte o korisnica aplikacije.</p>
+      <p>Uredite svoj profil i saznajte o korisnicima aplikacije.</p>
     </div>
 
   </div>
@@ -112,8 +107,9 @@
       <button class="closeModal" (click)="toggleAccountModal()">x</button>
 
       <button class="modalButton" (click)="goToMyProfile()">Moj nalog</button>
-      <button class="modalButton"  (click)="goToAllUsers()">Svi korisnici</button>
-      <button class="modalButton"  (click)="goToRegisterAdmin()">Dodajte admina</button>
+      <button class="modalButton" *ngIf="!isAdmin" (click)="goToAllUsersForUsers()">Svi korisnici</button>
+      <button class="modalButton" *ngIf="isAdmin" (click)="goToAllUsers()">Svi korisnici</button>
+      <button class="modalButton" *ngIf="isAdmin" (click)="goToRegisterAdmin()">Dodajte admina</button>
 
     </div>
   </div>
