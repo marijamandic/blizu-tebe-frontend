@@ -106,12 +106,28 @@ editDiscussion(discussion: Discussion): void {
     }
   });
 }
+togglePin(discussion: Discussion): void {
+  const updated = { ...discussion, isPinned: !discussion.isPinned };
 
-
-
+  this.discussionService.updateDiscussion(discussion.id, updated).subscribe({
+    next: (res) => {
+      discussion.isPinned = res.isPinned;
+      Swal.fire({
+        icon: 'success',
+        title: res.isPinned ? 'Diskusija je pinovana!' : 'Diskusija je otkačena.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      this.fetchDiscussions()
+    },
+    error: () => {
+      Swal.fire('Greška', 'Neuspešno menjanje statusa pinovanja.', 'error');
+    }
+  });
+}
 
   goToDiscussion(id: number): void {
-    this.router.navigate(['/discussion', id]);
+    this.router.navigate(['/chat', id]);
   }
 
   createDiscussion(): void {
@@ -146,7 +162,7 @@ editDiscussion(discussion: Discussion): void {
         name: result.value!.name,
         description: result.value!.description,
         createdAt: new Date(),
-        isClosed: false,
+        isPinned: false,
         adminId: Number(this.authService.getId()),
         localCommunityId: this.currentUser.localCommunityId // 👈 ovde se dodaje
       };

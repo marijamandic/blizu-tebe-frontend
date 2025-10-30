@@ -35,6 +35,7 @@ import { CommunityRequestUpdateComponent } from './community-requests/community-
 import { ParticipantsComponent } from './profile/participants/participants';
 import { RateComponent } from './profile/rate/rate';
 import { DiscussionComponent } from './discussions/discussion.component/discussion.component';
+import { ChatComponent } from './discussions/chat.component/chat.component';
 
 
 registerLocaleData(localeDe);
@@ -65,7 +66,8 @@ registerLocaleData(localeDe);
      CommunityRequestUpdateComponent,
      ParticipantsComponent,
      RateComponent,
-     DiscussionComponent
+     DiscussionComponent,
+     ChatComponent
   ],
   imports: [
     BrowserModule,

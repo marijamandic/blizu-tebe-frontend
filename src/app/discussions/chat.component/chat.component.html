@@ -1,0 +1,58 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()"
+></app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen"
+  ></app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="discussion-container chat-container">
+        <div class="request-header">
+  <button class="btn-back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+   <h1 class="title">{{currentDiscussion.name}}</h1>
+</div>
+
+     
+
+      <div class="messages-container" id="chat-container">
+        <div
+          *ngFor="let comment of comments"
+          [ngClass]="{
+            'message-own': comment.userId === currentUser?.id,
+            'message-other': comment.userId !== currentUser?.id
+          }"
+          class="message-bubble"
+        >
+        <div class="message-header">
+    <span class="message-author">
+      {{ comment.userId === currentUser?.id ? '' : (comment.user?.name + ' ' + comment.user?.surname) }}
+    </span>
+  </div>
+        
+          <p class="message-text">{{ comment.text }}</p>
+          <span class="message-time">
+            {{ comment.commentedAt | date: 'HH:mm dd.MM.yyyy' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          placeholder="Unesite poruku..."
+          (keyup.enter)="sendMessage()"
+        />
+        <button (click)="sendMessage()">Pošaljite</button>
+      </div>
+    </div>
+  </main>
+</div>

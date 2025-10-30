@@ -3,7 +3,7 @@ export interface Discussion {
   name: string;
   description: string;
   createdAt: Date;
-  isClosed: boolean;
+  isPinned: boolean;
   adminId?: number;
   localCommunityId?: number;
 }

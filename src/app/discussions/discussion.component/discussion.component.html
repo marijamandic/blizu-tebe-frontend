@@ -20,16 +20,20 @@ class="mobile-navbar"
       <div class="discussion-list">
         <div
           class="discussion-card"
+          [class.pinned]="discussion.isPinned"
           *ngFor="let discussion of discussions"
           (click)="goToDiscussion(discussion.id)"
         >
           <div class="card-header">
   <h3>{{ discussion.name }}</h3>
   <div class="btn-group" *ngIf="isAdmin">
-    <button class="btn-edit" (click)="editDiscussion(discussion)">
+    <button class="btn-edit" (click)="togglePin(discussion); $event.stopPropagation()">
+    <mat-icon>{{ discussion.isPinned ? 'push_pin' : 'push_pin_outlined' }}</mat-icon>
+  </button>
+    <button class="btn-edit" (click)="editDiscussion(discussion); $event.stopPropagation()">
       <mat-icon>edit</mat-icon>
     </button>
-    <button class="btn-delete" (click)="deleteDiscussion(discussion.id)">
+    <button class="btn-delete" (click)="deleteDiscussion(discussion.id); $event.stopPropagation()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
