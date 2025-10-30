@@ -1,22 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommunityRequest } from 'src/app/model/community-request.model';
+import { CommunityRequest, RequestType } from 'src/app/model/community-request.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommunityRequestService } from 'src/app/services/communtiy-request.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-community-request',
   templateUrl: './community-request.component.html',
   styleUrls: ['./community-request.component.css'],
 })
-export class CommunityRequestComponent implements OnInit{
+export class CommunityRequestComponent implements OnInit {
 
+  allRequests: CommunityRequest[] = []; 
   requests: CommunityRequest[] = [];
-  importantRequests: CommunityRequest[] = [];
-  regularRequests: CommunityRequest[] = [];
+
   isSidebarOpen = false;
+  selectedType: string = '';
+  selectedStatus: string = '';
+  requestTypes = Object.values(RequestType);
 
   constructor(
     private requestService: CommunityRequestService,
@@ -39,16 +44,18 @@ export class CommunityRequestComponent implements OnInit{
             filteredData = data.filter(r => r.localCommunityId === currentUser.localCommunityId);
           }
 
-          this.requests = filteredData;
+          this.allRequests = filteredData; 
+          this.requests = [...filteredData]; 
+
           if (filteredData.length === 0) {
-                    Swal.fire({
-                      icon: 'info',
-                      title: 'Nema radnih akcija',
-                      text: 'Trenutno nema nijedna radna akcija za vašu mesnu zajednicu.',
-                      confirmButtonText: 'U redu',
-                      confirmButtonColor: '#398fb2'
-                    });
-                  }
+            Swal.fire({
+              icon: 'info',
+              title: 'Nema radnih akcija',
+              text: 'Trenutno nema nijedna radna akcija za vašu mesnu zajednicu.',
+              confirmButtonText: 'U redu',
+              confirmButtonColor: '#398fb2'
+            });
+          }
         },
         error: (err) => console.error('Error fetching community requests', err)
       });
@@ -109,9 +116,35 @@ export class CommunityRequestComponent implements OnInit{
   }
 
   adjustOneHourBack(date: Date): Date {
-  const d = new Date(date);
-  d.setHours(d.getHours() - 1);
-  return d;
+    const d = new Date(date);
+    d.setHours(d.getHours() - 1);
+    return d;
+  }
+
+applyFilters(): void {
+  let filtered = [...this.allRequests]; 
+
+  if (this.selectedType !== '') {
+    filtered = filtered.filter(r => r.requestType == Number(this.selectedType));
+  }
+
+  if (this.selectedStatus === 'fulfilled') {
+    filtered = filtered.filter(r => r.fulfilled);
+  } else if (this.selectedStatus === 'unfulfilled') {
+    filtered = filtered.filter(r => !r.fulfilled);
+  }
+
+  this.requests = filtered;
 }
 
+getRequestTypeLabel(type: number): string {
+  const labels: any = {
+    0: 'Donacija',
+    1: 'Volontiranje',
+    2: 'Transport'
+  };
+  return labels[type] || 'Nepoznato';
+}
+
+  
 }

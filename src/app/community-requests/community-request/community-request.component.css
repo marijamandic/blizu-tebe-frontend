@@ -23,7 +23,7 @@
 
 .request-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .request-header h1 {
@@ -108,7 +108,46 @@
   font-weight: 500;
 }
 
-/* MOBILE RESPONSIVE */
+.filter-bar { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  gap: 2rem; 
+  margin-bottom: 2.0rem; 
+  flex-wrap: wrap;
+  padding-top: 1.0rem;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+} 
+ 
+
+
+.filter-group select option {
+  padding: 0.5rem;
+  background-color: white;
+  color: #333;
+}
+
+.filter-select {
+  width: 100%;
+  min-width: 180px;
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
+}
+
+::ng-deep .mat-select-panel {
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+
+::ng-deep .mat-option {
+  padding: 0.9rem 1.2rem;
+}
+
+
 @media (max-width: 599px) {
   .mobile-navbar {
     display: flex;
@@ -156,7 +195,6 @@
 
   .request-header h1 {
     font-size: 8vw;
-    margin-bottom: 1rem;
   }
 
   .request-title {
@@ -166,4 +204,39 @@
   .request-grid {
     grid-template-columns: 1fr;
   }
+
+  .filter-bar {
+    flex-direction: row;         /* Umesto kolone */
+    justify-content: center;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0.8rem;
+    flex-wrap: nowrap;          
+    overflow-x: auto;            
+  }
+
+  .filter-group {
+    flex: 1 1 auto;              
+    min-width: 130px;
+  }
+
+  .filter-group label {
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .filter-group select,
+  ::ng-deep .mat-select-trigger {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+
+  ::ng-deep .mat-select-panel {
+    font-size: 1.2rem;
+  }
+
+  ::ng-deep .mat-option {
+    padding: 1rem;
+  }
+  
 }

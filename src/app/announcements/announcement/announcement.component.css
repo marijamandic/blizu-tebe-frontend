@@ -108,9 +108,20 @@
   font-weight: 500;
 }
 
+.announcement-card.important {
+  box-shadow: 0 0 10px rgba(245, 197, 66, 0.25);
+  position: relative;
+}
 
-
-
+.important-star {
+  color: #f5c542; 
+  font-size: 20px; 
+  margin-left: 100px; 
+  position: relative;
+  top: 2px; 
+  vertical-align: middle;
+  cursor: default;
+}
 
 @media (max-width: 599px) {
   .mobile-navbar {

@@ -19,6 +19,33 @@
       </button>
     </header>
 
+    <div class="filter-bar">
+  <div class="filter-group">
+    <mat-form-field appearance="fill" class="filter-select">
+      <mat-label>Tip akcije</mat-label>
+      <mat-select [(ngModel)]="selectedType" (selectionChange)="applyFilters()">
+        <mat-option value="">Sve</mat-option>
+        <mat-option value="0">Donacija</mat-option>
+        <mat-option value="1">Volontiranje</mat-option>
+        <mat-option value="2">Transport</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="filter-group">
+    <mat-form-field appearance="fill" class="filter-select">
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilters()">
+        <mat-option value="">Sve</mat-option>
+        <mat-option value="fulfilled">Završene</mat-option>
+        <mat-option value="unfulfilled">Nezavršene</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+
     <div class="request-grid">
       <div *ngFor="let req of requests" class="request-card">
         <img [src]="getImageUrl(req.picture || '')" class="request-image"

@@ -20,7 +20,7 @@
     </header>
 
     <div class="announcement-grid">
-      <div *ngFor="let ann of announcements" class="announcement-card">
+      <div *ngFor="let ann of announcements" class="announcement-card" [class.important]="ann.isImportant">
         <img [src]="getImageUrl(ann.existingPicture)" class="announcement-image"
      alt="{{ann.title}}" 
      (error)="setDefaultImage($event)">
@@ -28,7 +28,13 @@
 
 
         <div class="announcement-info">
-          <h3 class="announcement-title">{{ ann.title }}</h3>
+          <h3 class="announcement-title">{{ ann.title }} <mat-icon
+        *ngIf="ann.isImportant"
+        class="important-star"
+        matTooltip="Važno obaveštenje"
+      >
+        star
+      </mat-icon></h3>
           <p class="announcement-meta">
             <span class="time">
               <mat-icon>schedule</mat-icon>

@@ -35,7 +35,7 @@
           <p>
             <mat-icon>star</mat-icon>
             <strong>Prosečna ocena:</strong>
-            {{ participant.averageRating ? (participant.averageRating | number:'1.1-1') : 'Nema još ocena' }}
+            {{ participant.user.rating ? (participant.user.rating) : 'Nema još ocena' }}
           </p>
 
           <div class="user-buttons">

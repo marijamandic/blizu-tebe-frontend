@@ -52,6 +52,7 @@ export class ParticipantsComponent implements OnInit {
       }
 
       this.participants = data;
+      console.log(this.participants)
 
       this.participants.forEach((p, index) => {
         this.userService.getById(p.userId).subscribe({

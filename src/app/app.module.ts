@@ -36,6 +36,10 @@ import { ParticipantsComponent } from './profile/participants/participants';
 import { RateComponent } from './profile/rate/rate';
 import { DiscussionComponent } from './discussions/discussion.component/discussion.component';
 import { ChatComponent } from './discussions/chat.component/chat.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
 
 
 registerLocaleData(localeDe);
@@ -76,7 +80,11 @@ registerLocaleData(localeDe);
     MatIconModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatOptionModule
    
   ],
   providers: [

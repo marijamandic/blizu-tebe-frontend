@@ -11,8 +11,8 @@ export interface CommunityRequest {
 }
 
 export enum RequestType {
-  Donation = 'Donacija',
-  Volunteering = 'Volontiranje',
-  Transport = 'Transport'
+  Donation = 0,
+  Volunteering = 1,
+  Transport = 2
 }
 
