@@ -11,9 +11,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HomeLoggedComponent implements OnInit{
 
-
-
-
   isModal1Open: boolean = false;
   isModal2Open: boolean = false;
   isModal3Open: boolean = false;
@@ -127,6 +124,10 @@ goToRegisterAdmin() {
 
   goToCommunityRequest() {
 this.router.navigate(['/community-request']);
+}
+
+goToDiscussions() {
+this.router.navigate(['/discussion']);
 }
 
   

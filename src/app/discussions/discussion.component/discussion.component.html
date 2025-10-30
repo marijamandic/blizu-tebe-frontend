@@ -1,0 +1,44 @@
+<app-navbar
+class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()"
+></app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen"
+  ></app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="discussion-container">
+      <h1 class="title">Diskusije</h1>
+
+      <button *ngIf="isAdmin" class="btn-add" (click)="createDiscussion()">+ Nova diskusija</button>
+
+      <div class="discussion-list">
+        <div
+          class="discussion-card"
+          *ngFor="let discussion of discussions"
+          (click)="goToDiscussion(discussion.id)"
+        >
+          <div class="card-header">
+  <h3>{{ discussion.name }}</h3>
+  <div class="btn-group" *ngIf="isAdmin">
+    <button class="btn-edit" (click)="editDiscussion(discussion)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button class="btn-delete" (click)="deleteDiscussion(discussion.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+
+          <p class="desc">{{ discussion.description }}</p>
+          <span class="date">{{ discussion.createdAt | date: 'short' }}</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

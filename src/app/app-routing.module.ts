@@ -22,6 +22,7 @@ import { CommunityRequestViewComponent } from './community-requests/community-re
 import { CommunityRequestUpdateComponent } from './community-requests/community-request-update.component/community-request-update.component';
 import { ParticipantsComponent } from './profile/participants/participants';
 import { RateComponent } from './profile/rate/rate';
+import { DiscussionComponent } from './discussions/discussion.component/discussion.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -45,7 +46,8 @@ const routes: Routes = [
   { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent },
    { path: 'community-request/:id', component: CommunityRequestViewComponent },
    { path: 'community-request-participants/:id', component: ParticipantsComponent },
-   { path: 'rate/:userId', component: RateComponent }
+   { path: 'rate/:userId', component: RateComponent },
+   { path: 'discussion', component: DiscussionComponent}
 ];
 
 @NgModule({

@@ -39,11 +39,17 @@
         <p><mat-icon>person</mat-icon><strong> Uloga: </strong>{{ user.role === 0 ? 'Administrator' : 'Član' }}</p>
       </div>
 
-      <div *ngIf="isOwnProfile" class="admin-buttons">
+      <div *ngIf="isOwnProfile " class="admin-buttons">
         <button class="btn-edit" (click)="editProfile(user.id)">Izmenite profil</button>
       </div>
+      <div class="ratings-toggle" *ngIf="ratings.length > 0">
+        <button class="btn-toggle" (click)="toggleRatings()">
+          <mat-icon>{{ showRatings ? 'expand_less' : 'expand_more' }}</mat-icon>
+          {{ showRatings ? 'Sakrijte ocene' : 'Prikažite ocene (' + ratings.length + ')' }}
+        </button>
+      </div>
 
-      <div class="ratings-section" *ngIf="ratings.length > 0">
+      <div class="ratings-section" *ngIf="showRatings && ratings.length > 0">
         <div class="rating-card" *ngFor="let item of ratings">
           <div class="rating-header">
             <div class="rating-stars">

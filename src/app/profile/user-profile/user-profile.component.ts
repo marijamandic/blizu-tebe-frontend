@@ -20,6 +20,7 @@ export class UserProfileComponent implements OnInit {
   isSidebarOpen = false;
   isOwnProfile = false;
   ratings: { rating: Rating, raterUser: User }[] = [];
+  showRatings = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -104,4 +105,8 @@ export class UserProfileComponent implements OnInit {
   editProfile(id: number) {
     this.router.navigate(['/edit-user', id]);
   }
+
+  toggleRatings(): void {
+  this.showRatings = !this.showRatings;
+}
 }
