@@ -25,33 +25,35 @@ import { RateComponent } from './profile/rate/rate';
 import { DiscussionComponent } from './discussions/discussion.component/discussion.component';
 import { ChatComponent } from './discussions/chat.component/chat.component';
 import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'home', component:HomeLoggedComponent},
+  { path: 'home', component:HomeLoggedComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'registerAdmin', component: RegisterAdmin},
-  {path: 'announcement', component: AnnouncementComponent},
-  { path: 'announcement/add', component: AnnouncementAddComponent },
-  { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent },
-  { path: 'announcement/:id', component: AnnouncementViewComponent },
-  { path: 'community/add', component: LocalCommunityAdminComponent},
-  {path: 'community/all', component:ViewAllLocalCommunityComponent},
-  { path: 'view-user/:id', component: UserProfileComponent },
-  { path: 'edit-user/:id', component: EditProfileComponent },
-  { path: 'view-all-users', component: ViewAllUsersComponent },
-  { path: 'view-all-users-for-members', component: ViewUsersForMembersComponent },
-  { path: 'view-community/:id', component: ViewCommunityComponent },
-  { path: 'edit-community/:id', component: EditLocalCommunity },
-  { path: 'community-request', component: CommunityRequestComponent},
-  { path: 'community-request/add', component: CommunityRequestAddComponent },
-  { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent },
-   { path: 'community-request/:id', component: CommunityRequestViewComponent },
-   { path: 'community-request-participants/:id', component: ParticipantsComponent },
-   { path: 'rate/:userId', component: RateComponent },
-   { path: 'discussion', component: DiscussionComponent},
-   { path: 'chat/:id', component: ChatComponent}
+  { path: 'registerAdmin', component: RegisterAdmin, canActivate: [AdminGuard]},
+  {path: 'announcement', component: AnnouncementComponent, canActivate: [AuthGuard]},
+  { path: 'announcement/add', component: AnnouncementAddComponent , canActivate: [AdminGuard]},
+  { path: 'announcement/edit/:id', component: AnnouncementUpdateComponent, canActivate: [AdminGuard] },
+  { path: 'announcement/:id', component: AnnouncementViewComponent , canActivate: [AuthGuard]},
+  { path: 'community/add', component: LocalCommunityAdminComponent, canActivate: [AdminGuard]},
+  {path: 'community/all', component:ViewAllLocalCommunityComponent, canActivate: [AdminGuard]},
+  { path: 'view-user/:id', component: UserProfileComponent , canActivate: [AuthGuard]},
+  { path: 'edit-user/:id', component: EditProfileComponent , canActivate: [AuthGuard]},
+  { path: 'view-all-users', component: ViewAllUsersComponent , canActivate: [AdminGuard]},
+  { path: 'view-all-users-for-members', component: ViewUsersForMembersComponent, canActivate: [AuthGuard] },
+  { path: 'view-community/:id', component: ViewCommunityComponent , canActivate: [AuthGuard]},
+  { path: 'edit-community/:id', component: EditLocalCommunity , canActivate: [AdminGuard]},
+  { path: 'community-request', component: CommunityRequestComponent, canActivate: [AuthGuard]},
+  { path: 'community-request/add', component: CommunityRequestAddComponent , canActivate: [AdminGuard]},
+  { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent , canActivate: [AdminGuard]},
+   { path: 'community-request/:id', component: CommunityRequestViewComponent , canActivate: [AuthGuard]},
+   { path: 'community-request-participants/:id', component: ParticipantsComponent, canActivate: [AuthGuard] },
+   { path: 'rate/:userId', component: RateComponent , canActivate: [AdminGuard]},
+   { path: 'discussion', component: DiscussionComponent, canActivate: [AuthGuard]},
+   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
