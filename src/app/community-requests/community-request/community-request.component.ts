@@ -52,7 +52,7 @@ export class CommunityRequestComponent implements OnInit {
           filteredData = data.filter(r => r.localCommunityId === currentUser.localCommunityId);
         }
 
-        this.allRequests = filteredData;
+        this.allRequests = filteredData.sort((a, b) => Number(a.fulfilled) - Number(b.fulfilled));
         this.requests = [...filteredData];
 
         this.requestUserService.getAllCommunityRequestUsers().subscribe({

@@ -68,6 +68,10 @@
               {{ adjustOneHourBack(req.createdAt) | date:'dd.MM.yyyy. HH:mm' }}
             </span>
           </p>
+                  <p class="request-meta" style="justify-content: left;" [class.fulfilled]="req.fulfilled" [class.active]="!req.fulfilled">
+          <mat-icon>{{ req.fulfilled ? 'check_circle' : 'pending' }}</mat-icon>
+          {{ req.fulfilled ? 'Završena' : 'Aktivna' }}
+        </p>
           <button (click)="goToRequest(req.id)" class="btn-more">Prikažite više</button>
         </div>
       </div>
