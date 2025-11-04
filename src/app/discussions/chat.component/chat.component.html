@@ -20,39 +20,48 @@
    <h1 class="title">{{currentDiscussion.name}}</h1>
 </div>
 
-     
-
-      <div class="messages-container" id="chat-container">
-        <div
-          *ngFor="let comment of comments"
-          [ngClass]="{
-            'message-own': comment.userId === currentUser?.id,
-            'message-other': comment.userId !== currentUser?.id
-          }"
-          class="message-bubble"
-        >
-        <div class="message-header">
-    <span class="message-author">
-      {{ comment.userId === currentUser?.id ? '' : (comment.user?.name + ' ' + comment.user?.surname) }}
-    </span>
-  </div>
-        
-          <p class="message-text">{{ comment.text }}</p>
-          <span class="message-time">
-            {{ comment.commentedAt | date: 'HH:mm dd.MM.yyyy' }}
-          </span>
-        </div>
-      </div>
-
-      <div class="input-area">
-        <input
-          type="text"
-          [(ngModel)]="newMessage"
-          placeholder="Unesite poruku..."
-          (keyup.enter)="sendMessage()"
-        />
-        <button (click)="sendMessage()">Pošaljite</button>
-      </div>
+ <div class="messages-container" id="chat-container">
+  <div
+    *ngFor="let comment of comments"
+    [ngClass]="{
+      'message-own': comment.userId === currentUser?.id,
+      'message-other': comment.userId !== currentUser?.id
+    }"
+    class="message-bubble"
+    (click)="selectMessage(comment)"
+    [class.selected]="selectedComment?.id === comment.id"
+  >
+    <div class="message-header">
+      <span class="message-author">
+        {{ comment.userId === currentUser?.id ? '' : (comment.user?.name + ' ' + comment.user?.surname) }}
+      </span>
     </div>
-  </main>
+
+    <p class="message-text">{{ comment.text }}</p>
+    <span class="message-time">
+      {{ comment.commentedAt | date: 'HH:mm dd.MM.yyyy' }}
+    </span>
+
+    <div
+      class="message-actions"
+      *ngIf="comment.userId === currentUser?.id && selectedComment?.id === comment.id"
+    >
+      <button class="btn-icon edit" (click)="editMessage(comment); $event.stopPropagation()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button class="btn-icon delete" (click)="deleteMessage(comment); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <input
+    type="text"
+    [(ngModel)]="newMessage"
+    placeholder="Unesite poruku..."
+    (keyup.enter)="sendMessage()"
+  />
+  <button (click)="sendMessage()">Pošaljite</button>
 </div>

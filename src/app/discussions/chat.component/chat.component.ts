@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DiscussionCommentService } from 'src/app/services/discussion-comment.service';
 import { DiscussionService } from 'src/app/services/discussion.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-chat.component',
@@ -21,7 +22,8 @@ export class ChatComponent implements OnInit {
   currentUser!: User;
   isSidebarOpen = false;
   currentDiscussion!: Discussion;
-  
+  selectedComment: DiscussionComment | null = null;
+  isEditing = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -123,4 +125,59 @@ export class ChatComponent implements OnInit {
   goBack(): void {
   this.router.navigate(['/discussion']); 
 }
+
+selectMessage(comment: DiscussionComment): void {
+    if (this.selectedComment?.id === comment.id) {
+      this.selectedComment = null;
+    } else {
+      this.selectedComment = comment;
+    }
+  }
+
+  editMessage(comment: DiscussionComment): void {
+    Swal.fire({
+      title: 'Izmenite poruku',
+      input: 'text',
+      inputValue: comment.text,
+      showCancelButton: true,
+      confirmButtonText: 'Sačuvajte',
+      cancelButtonText: 'Otkažite',
+      inputValidator: (value) => {
+        if (!value) return 'Poruka ne može biti prazna!';
+        return null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        const updatedComment = { ...comment, text: result.value };
+
+        this.commentService.updateDiscussionComment(comment.id, updatedComment).subscribe({
+          next: (res) => {
+            comment.text = res.text;
+            Swal.fire('Uspeh!', 'Poruka je izmenjena.', 'success');
+          },
+          error: () => Swal.fire('Greška', 'Došlo je do greške pri izmeni.', 'error')
+        });
+      }
+    });
+  }
+
+  deleteMessage(comment: DiscussionComment): void {
+    Swal.fire({
+      title: 'Da li sigurno želiš da obrišeš poruku?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Obrišite',
+      cancelButtonText: 'Otkažite'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.commentService.deleteDiscussionComment(comment.id).subscribe({
+          next: () => {
+            this.comments = this.comments.filter(c => c.id !== comment.id);
+            Swal.fire('Obrisano!', 'Poruka je uspešno obrisana.', 'success');
+          },
+          error: () => Swal.fire('Greška', 'Nije moguće obrisati poruku.', 'error')
+        });
+      }
+    });
+  }
 }

@@ -187,6 +187,65 @@
 }
 
 
+.message-bubble.selected {
+  position: relative;
+  box-shadow: 0 0 0 2px #1d87b0;
+  background-color: rgba(37, 95, 119, 0.25);
+  transition: background-color 0.2s ease;
+}
+
+
+.message-actions {
+  position: absolute;
+  top: -20px; 
+  right: 6px;
+  display: flex;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 1px 3px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.message-bubble.selected .message-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+
+.btn-icon:active {
+  transform: scale(0.9);
+}
+.message-own.selected {
+  background-color: rgba(31, 137, 179, 0.45); 
+}
+
+.message-own.selected .btn-icon mat-icon {
+  color: #1d87b0;;
+}
+
+.message-own .btn-icon.edit:hover mat-icon {
+  color: #073848;
+}
+.message-own .btn-icon.delete:hover mat-icon {
+  color: #073848;
+}
+
+
+
+
 @media (max-width: 599px) {
   .mobile-navbar {
     display: flex;
