@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HomeLoggedComponent implements OnInit{
 
   isModal1Open: boolean = false;
-  isModal2Open: boolean = false;
+  isModalRequestOpen: boolean = false;
   isModal3Open: boolean = false;
   isModal4Open: boolean = false;
   isModalAccountOpen = false;
@@ -59,8 +59,8 @@ export class HomeLoggedComponent implements OnInit{
 this.isModal1Open = !this.isModal1Open;
 } 
 
-toggleModal2() {
-this.isModal2Open = !this.isModal2Open;
+toggleModalRequest() {
+this.isModalRequestOpen = !this.isModalRequestOpen;
 } 
 
 toggleModal3() {
@@ -132,5 +132,9 @@ goToAllUsersForUsers() {
   }
 
   
+goToHelpRequests(){
+  this.router.navigate(['/helpRequests']);
+}
+
 }
 

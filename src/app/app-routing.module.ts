@@ -27,6 +27,8 @@ import { ChatComponent } from './discussions/chat.component/chat.component';
 import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { HelpRequestComponent } from './help-requests/help-request/help-request.component';
+import { HelpRequestAddComponent } from './help-requests/help-request-add/help-request-add.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -53,7 +55,9 @@ const routes: Routes = [
    { path: 'community-request-participants/:id', component: ParticipantsComponent, canActivate: [AuthGuard] },
    { path: 'rate/:userId', component: RateComponent , canActivate: [AdminGuard]},
    { path: 'discussion', component: DiscussionComponent, canActivate: [AuthGuard]},
-   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard]}
+   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard]},
+   { path: 'helpRequests', component: HelpRequestComponent, canActivate: [AuthGuard]},
+  { path: 'helpRequest/add', component: HelpRequestAddComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

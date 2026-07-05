@@ -1,0 +1,63 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="request-header">
+      <h1>Zahtevi za pomoć</h1>
+
+      <button class="btn-add" (click)="goToAddRequest()">
+        Dodajte zahtev za pomoć
+      </button>
+    </header>
+
+    <div class="request-grid">
+      <div *ngFor="let req of requests" class="request-card">
+        <img
+          [src]="req.attachment || defaultImage"
+          class="request-image"
+          alt="{{ req.title }}"
+          (error)="setDefaultImage($event)"
+        >
+
+        <div class="request-info">
+          <h3 class="request-title">
+            {{ req.title }}
+          </h3>
+
+          <p class="request-description">
+            {{ req.description }}
+          </p>
+
+          <p class="request-meta">
+            <span>
+              <mat-icon>category</mat-icon>
+              {{ req.category }}
+            </span>
+
+            <span>
+              <mat-icon>schedule</mat-icon>
+              {{ req.postDate | date:'short' }}
+            </span>
+          </p>
+
+          <button
+            (click)="goToRequest(req.id)"
+            class="btn-more"
+          >
+            Prikažite više
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
