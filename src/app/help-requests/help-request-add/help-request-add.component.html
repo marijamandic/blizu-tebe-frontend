@@ -13,7 +13,9 @@
 
   <main class="main-content">
     <header class="form-header">
-      <h1>{{ 'Dodajte novi zahtev' }}</h1>
+      <h1>
+        {{ isRequest ? 'Dodajte novi zahtev' : 'Dodajte novu ponudu' }}
+      </h1>
     </header>
 
     <form [formGroup]="requestForm" class="announcement-form" (ngSubmit)="submit()">

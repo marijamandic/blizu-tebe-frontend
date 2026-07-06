@@ -18,6 +18,7 @@ export class HelpRequestComponent implements OnInit {
   isSidebarOpen = false;
   defaultImage = 'assets/pictures/help-placeholder.png';
   mode: 'all' | 'mine' = 'all';
+  isRequest = false;
 
   constructor(
     private helpRequestService: HelpRequestService,
@@ -29,9 +30,16 @@ export class HelpRequestComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.isRequest = !this.router.url.toLowerCase().includes('helpoffer');
     this.mode = this.route.snapshot.data['mode'];
 
-    this.loadRequests();
+    console.log('is request: ', this.isRequest);
+    console.log('mode: ', this.mode);
+    if (this.isRequest) {
+      this.loadRequests();
+    } else {
+      this.loadOffers();
+    }
   }
 
   loadRequests(): void {
@@ -51,6 +59,23 @@ export class HelpRequestComponent implements OnInit {
     });
   }
 
+  loadOffers(): void {
+    this.helpRequestService.getPendingOffers().subscribe({
+      next: (response) => {
+        const currentUserId = Number(this.authService.getId());
+
+        this.requests = response.filter(x =>
+          this.mode === 'all'
+            ? true
+            : currentUserId !== null && x.userId === currentUserId
+        );
+      },
+      error: (err) => {
+        console.error('Greška pri učitavanju ponuda:', err);
+      }
+    });
+  }
+
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
@@ -66,10 +91,16 @@ export class HelpRequestComponent implements OnInit {
             confirmButtonText: 'U redu',
             confirmButtonColor: '#3085d6'
           }).then(() => {
-            this.router.navigate(['/helpRequests']);
+            if(this.isRequest)
+              this.router.navigate(['/helpRequests']);
+            else
+              this.router.navigate(['/helpOffers'])
           });
         } else{
-          this.router.navigate(['/helpRequest/add']);
+          if(this.isRequest)
+            this.router.navigate(['/helpRequest/add']);
+          else
+            this.router.navigate(['/helpOffer/add']);
         }
       },
       error: (err) => {
@@ -86,10 +117,11 @@ export class HelpRequestComponent implements OnInit {
 
   goToRequest(id: number): void {
     console.log(this.requests);
-    console.log('Navigating to request id:', id);
-    console.log('Full route:', ['/helpRequest', id]);
 
-    this.router.navigate(['/helpRequest', id]);
+    if(this.isRequest)
+      this.router.navigate(['/helpRequest', id]);
+    else
+      this.router.navigate(['/helpOffer', id])
   }
 
   setDefaultImage(event: Event): void {

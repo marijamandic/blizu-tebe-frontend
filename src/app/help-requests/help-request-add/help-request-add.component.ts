@@ -25,6 +25,7 @@ export class HelpRequestAddComponent implements OnInit{
   HelpCategory = HelpCategory;
   isEditMode = false;
   requestId: number | null = null;
+  isRequest = false;
 
   constructor(
     private fb: FormBuilder,
@@ -46,7 +47,7 @@ export class HelpRequestAddComponent implements OnInit{
         attachment: [null]
     });
 
-    this.loadCurrentUser();
+    this.isRequest = !this.router.url.toLowerCase().includes('helpoffer');
 
     this.requestId = Number(this.route.snapshot.paramMap.get('id'));
     if(this.requestId){
@@ -69,41 +70,6 @@ export class HelpRequestAddComponent implements OnInit{
       };
       reader.readAsDataURL(this.selectedFile);
     }
-  }
-
-  loadCurrentUser() {
-    this.userService.getCurrentUserFromApi().subscribe({
-      next: (currentUser) => {
-        this.isLoading = false;
-        
-        if (currentUser && currentUser.localCommunityId) {
-          this.requestForm.patchValue({
-            localCommunityId: currentUser.localCommunityId
-          });
-        } else {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Pažnja!',
-            text: 'Morate biti dodeljen mesnoj zajednici pre nego što dodate oglas.',
-            confirmButtonText: 'U redu'
-          }).then(() => {
-            this.router.navigate(['/helpRequests']);
-          });
-        }
-      },
-      error: (err) => {
-        this.isLoading = false;
-        console.error('Greška pri učitavanju korisnika:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Greška',
-          text: 'Došlo je do greške pri učitavanju podataka.',
-          confirmButtonText: 'U redu'
-        }).then(() => {
-          this.router.navigate(['/helpRequests']);
-        });
-      }
-    });
   }
 
   submit() {
@@ -139,6 +105,7 @@ export class HelpRequestAddComponent implements OnInit{
       expireDate: formValues.expireDate,
       userId: this.authService.getId(),
       localCommunityId: formValues.localCommunityId,
+      helpType: this.isRequest ? 0 : 1,
       attachment: this.selectedFile ? this.selectedFile.name : null
     };
 
@@ -152,9 +119,10 @@ export class HelpRequestAddComponent implements OnInit{
           Swal.fire({
             icon: 'success',
             title: 'Uspešno!',
-            text: 'Zahtev uspešno izmenjen.'
+            text: 'Objava uspešno izmenjena.'
           });
-          this.router.navigate(['/helpRequests']);
+          this.goBack();
+
         },
         error: (err) => {
           console.log(err.error);
@@ -165,7 +133,7 @@ export class HelpRequestAddComponent implements OnInit{
           Swal.fire({
             icon: 'error',
             title: 'Greška',
-            text: 'Došlo je do greške pri izmeni zahteva.',
+            text: 'Došlo je do greške pri izmeni objave.',
             confirmButtonText: 'U redu'
           });
         }
@@ -176,10 +144,10 @@ export class HelpRequestAddComponent implements OnInit{
         Swal.fire({
           icon: 'success',
           title: 'Uspešno!',
-          text: 'Zahtev uspešno dodat.'
+          text: 'Objava uspešno dodata.'
         });
 
-        this.router.navigate(['/helpRequests']);
+        this.goBack();
       },
       error: (err) => {
         console.log(err.error);
@@ -190,7 +158,7 @@ export class HelpRequestAddComponent implements OnInit{
         Swal.fire({
           icon: 'error',
           title: 'Greška',
-          text: 'Došlo je do greške pri dodavanju zahteva.',
+          text: 'Došlo je do greške pri dodavanju objave.',
           confirmButtonText: 'U redu'
         });
       }
@@ -198,7 +166,7 @@ export class HelpRequestAddComponent implements OnInit{
   }
 
   cancel() {
-    this.router.navigate(['/helpRequests']);
+    this.goBack();
   }
 
   toggleDropdown(): void {
@@ -227,10 +195,28 @@ export class HelpRequestAddComponent implements OnInit{
   loadRequest(id: number){
     this.helpRequestService.getById(id).subscribe({
       next: (res: HelpRequest) => {
-        this.requestForm.patchValue(res);
+        this.requestForm.patchValue({
+          title: res.title,
+          description: res.description,
+          category: res.category,
+          contact: res.contact,
+          postDate: res.postDate
+            ? new Date(res.postDate).toISOString().split('T')[0]
+            : null,
+          expireDate: res.expireDate
+            ? new Date(res.expireDate).toISOString().split('T')[0]
+            : null,
+          attachment: res.attachment
+        });
         this.selectedCategory = res.category;
       },
       error: (err) => console.error(err)
     });
+  }
+
+  private goBack() {
+    this.router.navigate([
+      this.isRequest ? '/helpRequests' : '/helpOffers'
+    ]);
   }
 }

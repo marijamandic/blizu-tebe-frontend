@@ -13,10 +13,12 @@
 
   <main class="main-content">
     <header class="request-header">
-      <h1>Zahtevi za pomoć</h1>
+      <h1>
+        {{ isRequest ? 'Zahtevi za pomoć' : 'Ponude za pomoć' }}
+      </h1>
 
       <button class="btn-add" (click)="goToAddRequest()">
-        Dodajte zahtev za pomoć
+        {{ isRequest ? 'Dodajte zahtev za pomoć' : 'Dodajte ponudu za pomoć' }}
       </button>
     </header>
 

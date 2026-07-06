@@ -18,6 +18,7 @@ export class HelpRequestViewComponent implements OnInit{
   isSidebarOpen = false;
   user: User | null = null;
   owner: User | null = null;
+  isRequest = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +29,8 @@ export class HelpRequestViewComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.isRequest = !this.router.url.toLowerCase().includes('helpoffer');
+
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadUser();
     if(id){
@@ -49,7 +52,7 @@ export class HelpRequestViewComponent implements OnInit{
           }
         });
       },
-      error: (err) => console.error('Greška pri učitavanju zahteva', err)
+      error: (err) => console.error('Greška pri učitavanju objave', err)
     });
   }
 
@@ -84,12 +87,17 @@ export class HelpRequestViewComponent implements OnInit{
   }
 
 
-  goBack(): void {
-    this.router.navigate(['/helpRequests']); 
+  goBack() {
+    this.router.navigate([
+      this.isRequest ? '/helpRequests' : '/helpOffers'
+    ]);
   }
 
   editRequest(id: number){
-    this.router.navigate(['/helpRequest/edit', id]);
+    if(this.isRequest)
+      this.router.navigate(['/helpRequest/edit', id]);
+    else
+      this.router.navigate(['/helpOffer/edit', id]);
   }
 
 
@@ -110,17 +118,17 @@ export class HelpRequestViewComponent implements OnInit{
             Swal.fire({
               icon: 'success',
               title: 'Obrisano!',
-              text: 'Zahtev je uspešno obrisan.',
+              text: 'Objava je uspešno obrisana.',
               timer: 2000,
               showConfirmButton: false
             });
-            this.router.navigate(['/helpRequests']);
+            this.goBack();
           },
           error: () => {
             Swal.fire({
               icon: 'error',
               title: 'Greška!',
-              text: 'Došlo je do greške prilikom brisanja zahteva.'
+              text: 'Došlo je do greške prilikom brisanja objave.'
             });
           }
         });
