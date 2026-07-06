@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-import { HelpCategory } from 'src/app/model/help-request.model';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { HelpCategory, HelpRequest } from 'src/app/model/help-request.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HelpRequestService } from 'src/app/services/help-request.service';
 import { UserService } from 'src/app/services/user.service';
@@ -23,12 +23,15 @@ export class HelpRequestAddComponent implements OnInit{
   isDropdownOpen = false;
   selectedCategory: HelpCategory | null = null;
   HelpCategory = HelpCategory;
+  isEditMode = false;
+  requestId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
     private helpRequestService: HelpRequestService,
     private userService: UserService,
     private router: Router,
+    private route: ActivatedRoute,
     public authService: AuthService
   ) {}
 
@@ -44,6 +47,12 @@ export class HelpRequestAddComponent implements OnInit{
     });
 
     this.loadCurrentUser();
+
+    this.requestId = Number(this.route.snapshot.paramMap.get('id'));
+    if(this.requestId){
+      this.isEditMode = true;
+      this.loadRequest(this.requestId);
+    }
   }
 
   toggleSidebar() {
@@ -128,7 +137,7 @@ export class HelpRequestAddComponent implements OnInit{
       contact: formValues.contact,
       postDate: formValues.postDate,
       expireDate: formValues.expireDate,
-      adminId: this.authService.getId(),
+      userId: this.authService.getId(),
       localCommunityId: formValues.localCommunityId,
       attachment: this.selectedFile ? this.selectedFile.name : null
     };
@@ -136,6 +145,32 @@ export class HelpRequestAddComponent implements OnInit{
     console.log(dto);
     console.log(typeof dto.category);
     console.log(dto.category);
+
+    if(this.isEditMode){
+      this.helpRequestService.update(this.requestId!, dto).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Uspešno!',
+            text: 'Zahtev uspešno izmenjen.'
+          });
+          this.router.navigate(['/helpRequests']);
+        },
+        error: (err) => {
+          console.log(err.error);
+          console.log(err.error.errors);
+          console.log('STATUS:', err.status);
+          console.log('MESSAGE:', err.message);
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Greška',
+            text: 'Došlo je do greške pri izmeni zahteva.',
+            confirmButtonText: 'U redu'
+          });
+        }
+      })
+    } else{
     this.helpRequestService.create(dto).subscribe({
       next: () => {
         Swal.fire({
@@ -159,7 +194,7 @@ export class HelpRequestAddComponent implements OnInit{
           confirmButtonText: 'U redu'
         });
       }
-    })
+    })}
   }
 
   cancel() {
@@ -187,5 +222,15 @@ export class HelpRequestAddComponent implements OnInit{
       category: category
     });
     this.isDropdownOpen = false;
+  }
+
+  loadRequest(id: number){
+    this.helpRequestService.getById(id).subscribe({
+      next: (res: HelpRequest) => {
+        this.requestForm.patchValue(res);
+        this.selectedCategory = res.category;
+      },
+      error: (err) => console.error(err)
+    });
   }
 }

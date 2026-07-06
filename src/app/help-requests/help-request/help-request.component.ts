@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HelpRequest } from '../../model/help-request.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HelpCategory, HelpRequest } from '../../model/help-request.model';
 import { HelpRequestService } from '../../services/help-request.service';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/user.service';
@@ -16,24 +16,34 @@ export class HelpRequestComponent implements OnInit {
   requests: HelpRequest[] = [];
 
   isSidebarOpen = false;
-  defaultImage = 'assets/pictures/help-placeholder.png'
+  defaultImage = 'assets/pictures/help-placeholder.png';
+  mode: 'all' | 'mine' = 'all';
 
   constructor(
     private helpRequestService: HelpRequestService,
     private router: Router,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
+
   ngOnInit(): void {
+    this.mode = this.route.snapshot.data['mode'];
+
     this.loadRequests();
   }
 
   loadRequests(): void {
     this.helpRequestService.getPendingRequests().subscribe({
       next: (response) => {
-        console.log("RESPONSE:", response);
-        this.requests = response;
+        const currentUserId = Number(this.authService.getId());
+
+        this.requests = response.filter(x =>
+          this.mode === 'all'
+            ? true
+            : currentUserId !== null && x.userId === currentUserId
+        );
       },
       error: (err) => {
         console.error('Greška pri učitavanju zahteva:', err);
@@ -56,7 +66,7 @@ export class HelpRequestComponent implements OnInit {
             confirmButtonText: 'U redu',
             confirmButtonColor: '#3085d6'
           }).then(() => {
-            this.router.navigate(['/helpRequest/all']);
+            this.router.navigate(['/helpRequests']);
           });
         } else{
           this.router.navigate(['/helpRequest/add']);
@@ -75,12 +85,27 @@ export class HelpRequestComponent implements OnInit {
   }
 
   goToRequest(id: number): void {
-    this.router.navigate(['/help-requests', id]);
+    console.log(this.requests);
+    console.log('Navigating to request id:', id);
+    console.log('Full route:', ['/helpRequest', id]);
+
+    this.router.navigate(['/helpRequest', id]);
   }
 
   setDefaultImage(event: Event): void {
     const element = event.target as HTMLImageElement;
     element.src = this.defaultImage;
   }
+
+  categoryLabels: Record<HelpCategory, string> = {
+    [HelpCategory.OldPeopleHelp]: 'Pomoć starijima',
+    [HelpCategory.HouseKeeping]: 'Kućni poslovi',
+    [HelpCategory.PetCare]: 'Briga o ljubimcima',
+    [HelpCategory.SmallRepairs]: 'Sitne popravke',
+    [HelpCategory.StudyHelp]: 'Pomoć oko učenja',
+    [HelpCategory.ThingsExchange]: 'Razmena stvari',
+    [HelpCategory.PhysicalWork]: 'Fizički rad',
+    [HelpCategory.Socializing]: 'Druženje'
+  };
 
 }

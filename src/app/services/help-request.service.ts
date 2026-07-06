@@ -21,7 +21,9 @@ export class HelpRequestService {
     return this.http.get<HelpRequest[]>(this.apiUrl + '/pending-requests');
   }
 
-
+  getPendingOffers(): Observable<HelpRequest[]> {
+    return this.http.get<HelpRequest[]>(this.apiUrl + '/pending-offers');
+  }
 
   getById(id: number): Observable<HelpRequest> {
     return this.http.get<HelpRequest>(`${this.apiUrl}/${id}`);
@@ -31,7 +33,7 @@ export class HelpRequestService {
     return this.http.post<HelpRequest>(this.apiUrl, request);
   }
 
-  update(id: number, request: HelpRequest): Observable<HelpRequest> {
+  update(id: number, request: any): Observable<HelpRequest> {
     return this.http.put<HelpRequest>(
       `${this.apiUrl}/${id}`,
       request

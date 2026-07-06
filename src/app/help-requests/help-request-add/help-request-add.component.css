@@ -247,23 +247,38 @@ select[disabled] {
     padding-top: 70px; 
   }
 }
-
 .dropdown {
   position: relative;
-  display: inline-block;
+  width: 100%;
 }
 
 .dropdown-btn {
-  padding: 10px;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-dark);
+  color: var(--text-color, #000);
+  width: 100%;
+  font-size: 1rem;
+  background: white;
   cursor: pointer;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
 }
 
 .dropdown-content {
   position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
   background: white;
   border: 1px solid #ccc;
-  width: 200px;
+  border-radius: 8px;
   z-index: 10;
+  margin-top: 4px;
+  overflow: hidden;
 }
 
 .dropdown-content div {

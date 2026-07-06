@@ -43,6 +43,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
 import { HelpRequestComponent } from './help-requests/help-request/help-request.component';
 import { HelpRequestAddComponent } from './help-requests/help-request-add/help-request-add.component';
+import { HelpRequestViewComponent } from './help-requests/help-request-view/help-request-view.component';
 
 
 registerLocaleData(localeDe);
@@ -77,7 +78,8 @@ registerLocaleData(localeDe);
      ChatComponent,
      ViewUsersForMembersComponent,
      HelpRequestComponent,
-     HelpRequestAddComponent
+     HelpRequestAddComponent,
+     HelpRequestViewComponent
   ],
   imports: [
     BrowserModule,
