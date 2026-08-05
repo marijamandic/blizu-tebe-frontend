@@ -13,26 +13,26 @@
     <li>
       <h4 (click)="toggleUsluge()">
         <mat-icon>volunteer_activism</mat-icon>
-        <span>Usluge</span>
+        <span>Nudim usluge</span>
         <mat-icon class="arrow" [class.open]="usluge">chevron_right</mat-icon>
       </h4>
       <ul *ngIf="usluge">
   <li>
-    <a routerLink="/usluge/moje">
+    <a routerLink="/myHelpOffers">
       <mat-icon class="bullet-icon">circle</mat-icon>
-      <span>Moje usluge</span>
+      <span>Moje ponude</span>
     </a>
   </li>
   <li>
-    <a routerLink="/usluge/sve">
+    <a routerLink="/helpOffers">
       <mat-icon class="bullet-icon">circle</mat-icon>
-      <span>Sve usluge</span>
+      <span>Sve ponude</span>
     </a>
   </li>
   <li>
-    <a routerLink="/usluge/dodaj">
+    <a routerLink="/helpOffer/add">
       <mat-icon class="bullet-icon">circle</mat-icon>
-      <span>Dodajte uslugu</span>
+      <span>Dodajte ponudu</span>
     </a>
   </li>
 </ul>
@@ -42,26 +42,26 @@
     <li>
       <h4 (click)="togglePomoci()">
         <mat-icon>group</mat-icon>
-        <span>Pomoći</span>
+        <span>Tražim usluge</span>
         <mat-icon class="arrow" [class.open]="pomoci">chevron_right</mat-icon>
       </h4>
       <ul *ngIf="pomoci">
         <li>
-          <a routerLink="/pomoci/moji">
+          <a routerLink="/myHelpRequests">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Moje pomoći</span>
+            <span>Moje potažnje</span>
           </a>
         </li>
         <li>
-          <a routerLink="/pomoci/svi">
+          <a routerLink="/helpRequests">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Sve pomoći</span>
+            <span>Sve potražnje</span>
           </a>
         </li>
         <li>
-          <a routerLink="/pomoci/dodaj">
+          <a routerLink="/helpRequest/add">
             <mat-icon class="bullet-icon">circle</mat-icon>
-            <span>Dodajte pomoć</span>
+            <span>Dodajte potražnju</span>
           </a>
         </li>
       </ul>

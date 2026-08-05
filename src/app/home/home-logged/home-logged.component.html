@@ -22,7 +22,7 @@
     </div>
 
     <!-- Kartica: Pomoći -->
-    <div class="card1" (click)="toggleModal2()">
+    <div class="card1" (click)="toggleModalRequest()">
       <h3><mat-icon>group</mat-icon> Pomoći</h3>
       <p>Postavite ili pogledajte zahteve za pomoć u zajednici.</p>
       
@@ -66,12 +66,12 @@
     </div>
   </div>
 
-  <div class="modal-overlay" *ngIf="isModal2Open" (click)="toggleModal2()">
+  <div class="modal-overlay" *ngIf="isModalRequestOpen" (click)="toggleModalRequest()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h2 class="title">Izaberite šta želite da vidite</h2>
-      <button class="closeModal" (click)="toggleModal2()">x</button>
+      <button class="closeModal" (click)="toggleModalRequest()">x</button>
 
-      <button class="modalButton">Svi zahtevi</button>
+      <button class="modalButton" (click)="goToHelpRequests()">Svi zahtevi</button>
       <button class="modalButton">Moji zahtevi</button>
       <button class="modalButton">Dodajte zahtev</button>
 
