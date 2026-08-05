@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HelpCategory, HelpRequest } from '../../model/help-request.model';
+import { HelpCategory, HelpRequest, HelpStatus } from '../../model/help-request.model';
 import { HelpRequestService } from '../../services/help-request.service';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/user.service';
@@ -19,6 +19,10 @@ export class HelpRequestComponent implements OnInit {
   defaultImage = 'assets/pictures/help-placeholder.png';
   mode: 'all' | 'mine' = 'all';
   isRequest = false;
+  selectedStatus: HelpStatus = HelpStatus.Pending;
+  selectedCategory: HelpCategory | null = null;
+
+  HelpStatus = HelpStatus;
 
   constructor(
     private helpRequestService: HelpRequestService,
@@ -43,37 +47,67 @@ export class HelpRequestComponent implements OnInit {
   }
 
   loadRequests(): void {
-    this.helpRequestService.getPendingRequests().subscribe({
+    let request$;
+
+    switch (this.selectedStatus){
+      case HelpStatus.Pending:
+        request$ = this.helpRequestService.getPendingRequests();
+        break;
+      case HelpStatus.Completed:
+        request$ = this.helpRequestService.getCompletedRequests();
+        break;
+      default:
+        return;
+    }
+    request$.subscribe({
       next: (response) => {
         const currentUserId = Number(this.authService.getId());
 
-        this.requests = response.filter(x =>
+        let filtered = response.filter(x =>
           this.mode === 'all'
             ? true
             : currentUserId !== null && x.userId === currentUserId
         );
+        this.requests = this.applyCategoryFilter(filtered);
+
       },
       error: (err) => {
         console.error('Greška pri učitavanju zahteva:', err);
       }
     });
+    
   }
 
   loadOffers(): void {
-    this.helpRequestService.getPendingOffers().subscribe({
+   let offers$;
+
+    switch (this.selectedStatus){
+      case HelpStatus.Pending:
+        offers$ = this.helpRequestService.getPendingOffers();
+        break;
+      case HelpStatus.Completed:
+        offers$ = this.helpRequestService.getCompletedOffers();
+        break;
+      default:
+        return;
+    }
+    offers$.subscribe({
       next: (response) => {
         const currentUserId = Number(this.authService.getId());
 
-        this.requests = response.filter(x =>
+        let filtered = response.filter(x =>
           this.mode === 'all'
             ? true
             : currentUserId !== null && x.userId === currentUserId
         );
+        this.requests = this.applyCategoryFilter(filtered);
+
       },
       error: (err) => {
-        console.error('Greška pri učitavanju ponuda:', err);
+        console.error('Greška pri učitavanju zahteva:', err);
       }
     });
+    
   }
 
   toggleSidebar(): void {
@@ -139,5 +173,76 @@ export class HelpRequestComponent implements OnInit {
     [HelpCategory.PhysicalWork]: 'Fizički rad',
     [HelpCategory.Socializing]: 'Druženje'
   };
+
+  changeStatus(status:HelpStatus){
+    this.selectedStatus = status;
+    if (this.isRequest) {
+      this.loadRequests();
+    } else {
+      this.loadOffers();
+    }
+  }
+
+  categories = [
+    {
+      value: HelpCategory.OldPeopleHelp,
+      name: 'Pomoć starijima',
+      icon: 'elderly'
+    },
+    {
+      value: HelpCategory.HouseKeeping,
+      name: 'Kućni poslovi',
+      icon: 'cleaning_services'
+    },
+    {
+      value: HelpCategory.PetCare,
+      name: 'Ljubimci',
+      icon: 'pets'
+    },
+    {
+      value: HelpCategory.SmallRepairs,
+      name: 'Popravke',
+      icon: 'build'
+    },
+    {
+      value: HelpCategory.StudyHelp,
+      name: 'Učenje',
+      icon: 'school'
+    },
+    {
+      value: HelpCategory.ThingsExchange,
+      name: 'Razmena',
+      icon: 'swap_horiz'
+    },
+    {
+      value: HelpCategory.PhysicalWork,
+      name: 'Fizički poslovi',
+      icon: 'fitness_center'
+    },
+    {
+      value: HelpCategory.Socializing,
+      name: 'Druženje',
+      icon: 'groups'
+    }
+  ];
+
+  changeCategory(category: HelpCategory | null) {
+    this.selectedCategory = category;
+
+    if(this.isRequest){
+      this.loadRequests();
+    }
+    else{
+      this.loadOffers();
+    }
+  }
+
+  applyCategoryFilter(requests: HelpRequest[]): HelpRequest[] {
+    return requests.filter(x =>
+      this.selectedCategory === null
+        ? true
+        : x.category === this.selectedCategory
+    );
+  }
 
 }

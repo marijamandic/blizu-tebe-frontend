@@ -96,25 +96,43 @@ export class HelpRequestAddComponent implements OnInit{
 
     const formValues = this.requestForm.getRawValue();
 
-    const dto = {
-      title: formValues.title,
-      description: formValues.description,
-      category: formValues.category,
-      contact: formValues.contact,
-      postDate: formValues.postDate,
-      expireDate: formValues.expireDate,
-      userId: this.authService.getId(),
-      localCommunityId: formValues.localCommunityId,
-      helpType: this.isRequest ? 0 : 1,
-      attachment: this.selectedFile ? this.selectedFile.name : null
-    };
+    // const dto = {
+    //   title: formValues.title,
+    //   description: formValues.description,
+    //   category: formValues.category,
+    //   contact: formValues.contact,
+    //   postDate: formValues.postDate,
+    //   expireDate: formValues.expireDate,
+    //   userId: this.authService.getId(),
+    //   localCommunityId: formValues.localCommunityId,
+    //   helpType: this.isRequest ? 0 : 1,
+    //   attachment: this.selectedFile ? this.selectedFile.name : null
+    // };
 
-    console.log(dto);
-    console.log(typeof dto.category);
-    console.log(dto.category);
+    const formData = new FormData();
+
+    formData.append('title', formValues.title);
+    formData.append('description', formValues.description);
+    formData.append('category', formValues.category);
+    formData.append('contact', formValues.contact);
+    const userId = this.authService.getId();
+
+    if (userId == null) {
+      this.errorMessage = "Korisnik nije prijavljen.";
+      return;
+    }
+    formData.append('userId', userId.toString());
+    formData.append('helpType', (this.isRequest ? 0 : 1).toString());
+
+    if (this.selectedFile) {
+      formData.append('attachment', this.selectedFile);
+    }
+    // console.log(dto);
+    // console.log(typeof dto.category);
+    // console.log(dto.category);
 
     if(this.isEditMode){
-      this.helpRequestService.update(this.requestId!, dto).subscribe({
+      this.helpRequestService.update(this.requestId!, formData).subscribe({
         next: () => {
           Swal.fire({
             icon: 'success',
@@ -139,7 +157,7 @@ export class HelpRequestAddComponent implements OnInit{
         }
       })
     } else{
-    this.helpRequestService.create(dto).subscribe({
+    this.helpRequestService.create(formData).subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',

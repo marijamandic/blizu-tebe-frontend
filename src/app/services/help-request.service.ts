@@ -25,6 +25,14 @@ export class HelpRequestService {
     return this.http.get<HelpRequest[]>(this.apiUrl + '/pending-offers');
   }
 
+   getCompletedRequests(): Observable<HelpRequest[]> {
+    return this.http.get<HelpRequest[]>(this.apiUrl + '/completed-requests');
+  }
+
+  getCompletedOffers(): Observable<HelpRequest[]> {
+    return this.http.get<HelpRequest[]>(this.apiUrl + '/completed-offers');
+  }
+
   getById(id: number): Observable<HelpRequest> {
     return this.http.get<HelpRequest>(`${this.apiUrl}/${id}`);
   }

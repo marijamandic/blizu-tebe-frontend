@@ -22,10 +22,57 @@
       </button>
     </header>
 
+    <div class="status-filter">
+
+      <button
+          [class.active]="selectedStatus === HelpStatus.Pending"
+          (click)="changeStatus(HelpStatus.Pending)">
+          Active
+      </button>
+
+      <button
+          [class.active]="selectedStatus === HelpStatus.Completed"
+          (click)="changeStatus(HelpStatus.Completed)">
+          Completed
+      </button>
+
+      <!-- <button
+          [class.active]="selectedStatus === HelpStatus.Expired"
+          (click)="changeStatus(HelpStatus.Expired)">
+          Expired
+      </button> -->
+
+  </div>
+
+  <div class="category-filter">
+
+    <div 
+      class="category-item"
+      [class.selected]="selectedCategory === null"
+      (click)="changeCategory(null)">
+
+      <mat-icon>apps</mat-icon>
+      <span>Sve</span>
+    </div>
+
+    <div 
+      class="category-item"
+      *ngFor="let category of categories"
+      [class.selected]="selectedCategory === category.value"
+      (click)="changeCategory(category.value)">
+
+      <mat-icon>{{category.icon}}</mat-icon>
+      <span>
+        {{category.name}}
+      </span>
+    </div>
+
+  </div>
+
     <div class="request-grid">
       <div *ngFor="let req of requests" class="request-card">
         <img
-          [src]="req.attachment || defaultImage"
+          [src]="'https://localhost:44375/images/helpRequests/' + req.attachment || defaultImage"
           class="request-image"
           alt="{{ req.title }}"
           (error)="setDefaultImage($event)"
