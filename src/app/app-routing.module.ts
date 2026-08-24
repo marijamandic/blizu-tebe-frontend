@@ -30,6 +30,9 @@ import { AdminGuard } from './guards/admin.guard';
 import { HelpRequestComponent } from './help-requests/help-request/help-request.component';
 import { HelpRequestAddComponent } from './help-requests/help-request-add/help-request-add.component';
 import { HelpRequestViewComponent } from './help-requests/help-request-view/help-request-view.component';
+import { GiftComponent } from './gifts/gift/gift.component';
+import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
+import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,7 +70,14 @@ const routes: Routes = [
   { path: 'myHelpOffers', component: HelpRequestComponent, canActivate: [AuthGuard],  data: { mode: 'mine' }},
   { path: 'helpOffer/add', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
   { path: 'helpOffer/edit/:id', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
-  { path: 'helpOffer/:id', component: HelpRequestViewComponent, canActivate: [AuthGuard]}
+  { path: 'helpOffer/:id', component: HelpRequestViewComponent, canActivate: [AuthGuard]},
+
+  { path: 'gifts', component: GiftComponent, canActivate: [AuthGuard], data: {mode: 'all'}},
+  { path: 'myGifts', component: GiftComponent, canActivate: [AuthGuard], data: {mode: 'mine'}},
+  { path: 'gift/add',  component: GiftAddComponent, canActivate: [AuthGuard]},
+  { path: 'gift/edit/:id',  component: GiftAddComponent, canActivate: [AuthGuard]},
+  { path: 'gift/:id',  component: GiftViewComponent, canActivate: [AuthGuard]}
+
 ];
 
 @NgModule({
