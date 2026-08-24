@@ -29,7 +29,7 @@
     </div>
 
     <!-- Pokloni -->
-    <div class="card1" (click)="toggleModal3()">
+    <div class="card1" (click)="toggleModalGift()">
       <h3><mat-icon>card_giftcard</mat-icon> Pokloni</h3>
       <p>Pronađite nove vlasnike za stvari koje vam više ne trebaju ili pronađite ono što vam nedostaje.</p>
     </div>
@@ -78,14 +78,14 @@
     </div>
   </div>
 
-  <div class="modal-overlay" *ngIf="isModal3Open" (click)="toggleModal3()">
+  <div class="modal-overlay" *ngIf="isModal3Open" (click)="toggleModalGift()">
     <div class="modal" (click)="$event.stopPropagation()">
       <h2 class="title">Izaberite šta želite da vidite</h2>
-      <button class="closeModal" (click)="toggleModal3()">x</button>
+      <button class="closeModal" (click)="toggleModalGift()">x</button>
 
-      <button class="modalButton">Svi pokloni</button>
-      <button class="modalButton">Moji pokloni</button>
-      <button class="modalButton">Dodajte poklon</button>
+      <button class="modalButton" (click)="goToGifts()">Svi pokloni</button>
+      <button class="modalButton" (click)="goToMyGifts()">Moji pokloni</button>
+      <button class="modalButton" (click)="goToAddGift()">Dodajte poklon</button>
 
     </div>
   </div>

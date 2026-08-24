@@ -13,26 +13,21 @@
 
   <main class="main-content">
     <header class="request-header">
-      <h1>
-        {{ isRequest ? 'Zahtevi za pomoć' : 'Ponude za pomoć' }}
-      </h1>
 
-      <button class="btn-add" (click)="goToAddRequest()">
-        {{ isRequest ? 'Dodajte zahtev za pomoć' : 'Dodajte ponudu za pomoć' }}
-      </button>
+      <button class="btn-add" (click)="goToAddGift()"> Dodajte poklon </button>
     </header>
 
     <div class="status-filter">
 
       <button
-          [class.active]="selectedStatus === HelpStatus.Pending"
-          (click)="changeStatus(HelpStatus.Pending)">
+          [class.active]="selectedStatus === GiftStatus.Pending"
+          (click)="changeStatus(GiftStatus.Pending)">
           Active
       </button>
 
       <button
-          [class.active]="selectedStatus === HelpStatus.Completed"
-          (click)="changeStatus(HelpStatus.Completed)">
+          [class.active]="selectedStatus === GiftStatus.Completed"
+          (click)="changeStatus(GiftStatus.Completed)">
           Completed
       </button>
 
@@ -70,37 +65,37 @@
   </div>
 
     <div class="request-grid">
-      <div *ngFor="let req of requests" class="request-card">
+      <div *ngFor="let gift of gifts" class="request-card">
         <img
-          [src]="req.attachment ? 'https://localhost:44375/images/helpRequests/' + req.attachment : defaultImage"
+          [src]="gift.attachment ? 'https://localhost:44375/images/Gifts/' + gift.attachment : defaultImage"
           class="request-image"
-          alt="{{ req.title }}"
+          alt="{{ gift.title }}"
           (error)="setDefaultImage($event)"
         >
 
         <div class="request-info">
           <h3 class="request-title">
-            {{ req.title }}
+            {{ gift.title }}
           </h3>
 
           <p class="request-description">
-            {{ req.description }}
+            {{ gift.description }}
           </p>
 
           <p class="request-meta">
             <span>
               <mat-icon>category</mat-icon>
-              {{ categoryLabels[req.category] }}
+              {{ categoryLabels[gift.giftCategory] }}
             </span>
 
             <span>
               <mat-icon>schedule</mat-icon>
-              {{ req.postDate | date:'short' }}
+              {{ gift.postDate | date:'short' }}
             </span>
           </p>
 
           <button
-            (click)="goToRequest(req.id)"
+            (click)="goToGift(gift.id)"
             class="btn-more"
           >
             Prikažite više
@@ -108,5 +103,26 @@
         </div>
       </div>
     </div>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+
+      <button
+        [disabled]="page === 1"
+        (click)="previousPage()">
+        <mat-icon>chevron_left</mat-icon>
+        Prethodna
+      </button>
+
+      <span class="pagination-info">
+        Stranica {{ page }} od {{ totalPages }}
+      </span>
+
+      <button
+        [disabled]="page === totalPages"
+        (click)="nextPage()">
+        Sledeća
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+  </div>
   </main>
 </div>

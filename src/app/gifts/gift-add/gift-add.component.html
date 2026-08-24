@@ -1,0 +1,71 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <header class="form-header">
+      <h1>Dodajte novi poklon</h1>
+    </header>
+
+    <form [formGroup]="giftForm" class="announcement-form" (ngSubmit)="submit()">
+  <label for="title">Naslov *</label>
+  <input id="title" formControlName="title" type="text" placeholder="Unesite naslov">
+
+  <label for="description">Opis *</label>
+  <textarea id="description" formControlName="description" rows="5" placeholder="Unesite opis"></textarea>
+
+<div class="dropdown">
+  <label for="giftCategory">Kategorija *</label>
+
+  <button type="button" id="giftCategory" class="dropdown-btn" (click)="toggleDropdown()">
+    {{ selectedCategory ? categoryLabels[selectedCategory] : 'Izaberite kategoriju' }}
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+
+  <div class="dropdown-content" *ngIf="isDropdownOpen">
+    <div (click)="selectCategory(GiftCategory.Clothing)">Odeća</div>
+    <div (click)="selectCategory(GiftCategory.Electronics)">Elektronski uređaji</div>
+    <div (click)="selectCategory(GiftCategory.Books)">Knjige</div>
+    <div (click)="selectCategory(GiftCategory.Toys)">Igračke</div>
+    <div (click)="selectCategory(GiftCategory.Furniture)">Nameštaj</div>
+    <div (click)="selectCategory(GiftCategory.Household)">Domaćinstvo</div>
+    <div (click)="selectCategory(GiftCategory.Sports)">Sport</div>
+    <div (click)="selectCategory(GiftCategory.Other)">Drugo</div>
+  </div>
+</div>
+
+  <label for="postDate">Datum oglasa *</label>
+  <input id="postDate" formControlName="postDate" type="date">
+
+  <label for="expireDate" class="label-with-tooltip">
+  Datum isteka *
+  <span class="help-icon" title="Posle isteka datuma oglas se automatski briše.">ℹ️</span>
+</label>
+  <input id="expireDate" formControlName="expireDate" type="date">
+
+  <label for="contact">Kontakt *</label>
+  <input id="contact" formControlName="contact" type="text">
+
+  <label for="attachment">Slika</label>
+  <input id="attachment" type="file" (change)="onFileSelected($event)">
+  <div *ngIf="previewUrl" class="image-preview">
+    <img [src]="previewUrl" alt="Preview slike">
+  </div>
+
+  <div class="form-buttons">
+    <button type="submit" class="btn-submit">Dodajte</button>
+    <button type="button" class="btn-cancel" (click)="cancel()">Otkažite</button>
+  </div>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+</form>
+  </main>
+</div>

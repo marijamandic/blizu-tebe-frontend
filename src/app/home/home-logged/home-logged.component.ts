@@ -63,7 +63,7 @@ toggleModalRequest() {
 this.isModalRequestOpen = !this.isModalRequestOpen;
 } 
 
-toggleModal3() {
+toggleModalGift() {
 this.isModal3Open = !this.isModal3Open;
 } 
 
@@ -136,5 +136,16 @@ goToHelpRequests(){
   this.router.navigate(['/helpRequests']);
 }
 
+goToGifts(){
+  this.router.navigate(['/gifts']);
+}
+
+goToMyGifts(){
+  this.router.navigate(['/myGifts']);
+}
+
+goToAddGift(){
+  this.router.navigate(['/gift/add']);
+}
 }
 

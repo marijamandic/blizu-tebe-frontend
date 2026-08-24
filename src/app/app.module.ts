@@ -44,6 +44,9 @@ import { ViewUsersForMembersComponent } from './profile/view-users-for-members/v
 import { HelpRequestComponent } from './help-requests/help-request/help-request.component';
 import { HelpRequestAddComponent } from './help-requests/help-request-add/help-request-add.component';
 import { HelpRequestViewComponent } from './help-requests/help-request-view/help-request-view.component';
+import { GiftComponent } from './gifts/gift/gift.component';
+import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
+import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
 
 
 registerLocaleData(localeDe);
@@ -79,7 +82,10 @@ registerLocaleData(localeDe);
      ViewUsersForMembersComponent,
      HelpRequestComponent,
      HelpRequestAddComponent,
-     HelpRequestViewComponent
+     HelpRequestViewComponent,
+     GiftComponent,
+     GiftViewComponent,
+     GiftAddComponent
   ],
   imports: [
     BrowserModule,
