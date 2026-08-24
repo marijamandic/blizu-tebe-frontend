@@ -47,6 +47,8 @@ import { HelpRequestViewComponent } from './help-requests/help-request-view/help
 import { GiftComponent } from './gifts/gift/gift.component';
 import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
 import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
+import { ReportComponent } from './reports/report/report.component';
+import { ReportViewComponent } from './reports/report-view/report-view.component';
 
 
 registerLocaleData(localeDe);
@@ -85,7 +87,9 @@ registerLocaleData(localeDe);
      HelpRequestViewComponent,
      GiftComponent,
      GiftViewComponent,
-     GiftAddComponent
+     GiftAddComponent,
+     ReportComponent,
+     ReportViewComponent
   ],
   imports: [
     BrowserModule,

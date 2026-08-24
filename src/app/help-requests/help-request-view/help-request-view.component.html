@@ -39,6 +39,13 @@
 
         <p class="announcement-description">{{ helpRequest.description }}</p>
 
+        <button
+          *ngIf="!isAdminOrOwner"
+          (click)="openReportDialog()">
+          <mat-icon>flag</mat-icon>
+          Prijavi objavu
+        </button>
+        
         <div *ngIf="isAdminOrOwner" class="admin-buttons">
     <button class="btn-edit" (click)="editRequest(helpRequest.id)">Izmenite</button>
     <button class="btn-delete" (click)="deleteRequest(helpRequest.id)">Obrišite</button>

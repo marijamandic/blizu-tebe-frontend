@@ -33,6 +33,8 @@ import { HelpRequestViewComponent } from './help-requests/help-request-view/help
 import { GiftComponent } from './gifts/gift/gift.component';
 import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
 import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
+import { ReportComponent } from './reports/report/report.component';
+import { ReportViewComponent } from './reports/report-view/report-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -76,8 +78,10 @@ const routes: Routes = [
   { path: 'myGifts', component: GiftComponent, canActivate: [AuthGuard], data: {mode: 'mine'}},
   { path: 'gift/add',  component: GiftAddComponent, canActivate: [AuthGuard]},
   { path: 'gift/edit/:id',  component: GiftAddComponent, canActivate: [AuthGuard]},
-  { path: 'gift/:id',  component: GiftViewComponent, canActivate: [AuthGuard]}
+  { path: 'gift/:id',  component: GiftViewComponent, canActivate: [AuthGuard]},
 
+  { path: 'reports', component: ReportComponent, canActivate: [AuthGuard]},
+  { path: 'report/:id', component: ReportViewComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

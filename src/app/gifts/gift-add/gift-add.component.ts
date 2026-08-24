@@ -79,8 +79,6 @@ export class GiftAddComponent implements OnInit {
   }
 
   submit(): void {
-
-    // Ukloni prethodne error klase
     Object.keys(this.giftForm.controls).forEach(field => {
       const element = document.getElementById(field);
 
@@ -89,7 +87,6 @@ export class GiftAddComponent implements OnInit {
       }
     });
 
-    // Validacija
     if (this.giftForm.invalid) {
 
       Object.keys(this.giftForm.controls).forEach(field => {
@@ -248,7 +245,6 @@ export class GiftAddComponent implements OnInit {
 
         this.selectedCategory = gift.giftCategory;
 
-        // Ako postoji slika, prikaži je
         if (gift.attachment) {
           this.previewUrl =
             'https://localhost:44375/images/Gifts/' + gift.attachment;

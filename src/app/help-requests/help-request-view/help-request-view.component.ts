@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { HelpRequestService } from 'src/app/services/help-request.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { ReportService } from 'src/app/services/report.service';
+import { Report, PostType, ReportStatus } from 'src/app/model/report.model';
 
 @Component({
   selector: 'app-help-request-view',
@@ -25,7 +27,8 @@ export class HelpRequestViewComponent implements OnInit{
     private helpRequestService: HelpRequestService,
     private router: Router,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private reportService: ReportService
   ){}
 
   ngOnInit(): void {
@@ -135,4 +138,56 @@ export class HelpRequestViewComponent implements OnInit{
       }
     });
   }
+
+  
+    openReportDialog(): void {
+      Swal.fire({
+        title: 'Prijavi objavu',
+        input: 'textarea',
+        inputLabel: 'Razlog prijave',
+        inputPlaceholder: 'Opišite razlog prijave...',
+        inputAttributes: {
+          'aria-label': 'Opišite razlog prijave'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Prijavi',
+        cancelButtonText: 'Otkaži',
+        inputValidator: (value) => {
+          if (!value || !value.trim()) {
+            return 'Morate uneti razlog prijave.';
+          }
+          return null;
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const report: Report = {
+            description: result.value,
+            postType: PostType.Gift,
+            postId: this.helpRequest.id,
+            id: 0,
+            timestamp: new Date(),
+            status: ReportStatus.Pending,
+            reporterId: 0
+          };
+          this.reportService.create(report).subscribe({
+            next: () => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Uspešno!',
+                text: 'Objava je uspešno prijavljena.'
+              });
+            },
+            error: (error) => {
+              console.error(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Greška',
+                text: 'Došlo je do greške pri prijavljivanju objave.',
+                confirmButtonText: 'U redu'
+              });
+            }
+          });
+        }
+      });
+    }
 }
