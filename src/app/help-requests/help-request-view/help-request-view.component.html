@@ -1,0 +1,49 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+    <div class="announcement-details" *ngIf="helpRequest">
+      <div class="request-header">
+  <button class="btn-back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <h1 class="announcement-title">{{ helpRequest.title }}</h1>
+</div>
+      
+
+      <img
+        [src]="'https://localhost:44375/images/helpRequests/' + helpRequest.attachment"
+        alt="Help request image"
+        class="announcement-image"
+        (error)="onImageError($event)"
+      />
+
+      <div class="announcement-info">
+        <p class="announcement-dates">
+          <mat-icon>event</mat-icon>
+        <strong>  Početak: </strong>{{ helpRequest.postDate | date:'shortDate' }} |
+        <strong>  Ističe: </strong>{{ helpRequest.expireDate | date:'shortDate' }}
+        </p>
+
+        <p class="announcement-description">{{ owner?.name }} {{ owner?.surname }}</p>
+
+        <p class="announcement-description">{{ helpRequest.description }}</p>
+
+        <div *ngIf="isAdminOrOwner" class="admin-buttons">
+    <button class="btn-edit" (click)="editRequest(helpRequest.id)">Izmenite</button>
+    <button class="btn-delete" (click)="deleteRequest(helpRequest.id)">Obrišite</button>
+  </div>
+      </div>
+    </div>
+  </main>
+</div>

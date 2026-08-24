@@ -15,6 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private userService: UserService) { }
 
   login(credentials: Credentials): Observable<LoginResponse>{
+    console.log("saljem na: " + environment.apiHost + `auth/login`, credentials);
     return this.http.post<LoginResponse>(environment.apiHost + `auth/login`, credentials).pipe(
       tap(response => {
         localStorage.setItem('jwt', response.accessToken);
@@ -93,8 +94,3 @@ getUsername(): string | null {
 }
 
 }
-
-function jwt_decode(token: string): any {
-  throw new Error('Function not implemented.');
-}
-

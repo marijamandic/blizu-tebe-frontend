@@ -27,6 +27,12 @@ import { ChatComponent } from './discussions/chat.component/chat.component';
 import { ViewUsersForMembersComponent } from './profile/view-users-for-members/view-users-for-members';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { HelpRequestComponent } from './help-requests/help-request/help-request.component';
+import { HelpRequestAddComponent } from './help-requests/help-request-add/help-request-add.component';
+import { HelpRequestViewComponent } from './help-requests/help-request-view/help-request-view.component';
+import { GiftComponent } from './gifts/gift/gift.component';
+import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
+import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -49,11 +55,29 @@ const routes: Routes = [
   { path: 'community-request', component: CommunityRequestComponent, canActivate: [AuthGuard]},
   { path: 'community-request/add', component: CommunityRequestAddComponent , canActivate: [AdminGuard]},
   { path: 'community-request/edit/:id', component: CommunityRequestUpdateComponent , canActivate: [AdminGuard]},
-   { path: 'community-request/:id', component: CommunityRequestViewComponent , canActivate: [AuthGuard]},
-   { path: 'community-request-participants/:id', component: ParticipantsComponent, canActivate: [AuthGuard] },
-   { path: 'rate/:userId', component: RateComponent , canActivate: [AdminGuard]},
-   { path: 'discussion', component: DiscussionComponent, canActivate: [AuthGuard]},
-   { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard]}
+  { path: 'community-request/:id', component: CommunityRequestViewComponent , canActivate: [AuthGuard]},
+  { path: 'community-request-participants/:id', component: ParticipantsComponent, canActivate: [AuthGuard] },
+  { path: 'rate/:userId', component: RateComponent , canActivate: [AdminGuard]},
+  { path: 'discussion', component: DiscussionComponent, canActivate: [AuthGuard]},
+  { path: 'chat/:id', component: ChatComponent, canActivate: [AuthGuard]},
+  { path: 'helpRequests', component: HelpRequestComponent, canActivate: [AuthGuard],  data: { mode: 'all' }},
+  { path: 'myHelpRequests', component: HelpRequestComponent, canActivate: [AuthGuard],  data: { mode: 'mine' }},
+  { path: 'helpRequest/add', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
+  { path: 'helpRequest/edit/:id', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
+  { path: 'helpRequest/:id', component: HelpRequestViewComponent, canActivate: [AuthGuard]},
+  
+  { path: 'helpOffers', component: HelpRequestComponent, canActivate: [AuthGuard],  data: { mode: 'all' }},
+  { path: 'myHelpOffers', component: HelpRequestComponent, canActivate: [AuthGuard],  data: { mode: 'mine' }},
+  { path: 'helpOffer/add', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
+  { path: 'helpOffer/edit/:id', component: HelpRequestAddComponent, canActivate: [AuthGuard]},
+  { path: 'helpOffer/:id', component: HelpRequestViewComponent, canActivate: [AuthGuard]},
+
+  { path: 'gifts', component: GiftComponent, canActivate: [AuthGuard], data: {mode: 'all'}},
+  { path: 'myGifts', component: GiftComponent, canActivate: [AuthGuard], data: {mode: 'mine'}},
+  { path: 'gift/add',  component: GiftAddComponent, canActivate: [AuthGuard]},
+  { path: 'gift/edit/:id',  component: GiftAddComponent, canActivate: [AuthGuard]},
+  { path: 'gift/:id',  component: GiftViewComponent, canActivate: [AuthGuard]}
+
 ];
 
 @NgModule({
