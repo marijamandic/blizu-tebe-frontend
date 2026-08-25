@@ -1,0 +1,94 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    
+    <div class="report-header">
+      <h1>Prijave</h1>
+    </div>
+
+    <div *ngIf="reports.length === 0" class="empty-reports">
+      <mat-icon>check_circle</mat-icon>
+      <p>There are no pending reports.</p>
+    </div>
+
+    <div *ngIf="reports.length > 0" class="report-list">
+
+      <div
+        class="report-card"
+        *ngFor="let report of reports">
+
+        <div class="report-info">
+
+          <h3 class="report-title">
+            Prijava #{{ report.id }}
+          </h3>
+
+          <div class="report-meta">
+
+            <div class="report-meta-item">
+              <mat-icon>schedule</mat-icon>
+              {{ report.timestamp | date:'dd.MM.yyyy HH:mm' }}
+            </div>
+
+          </div>
+
+          <div class="report-description">
+            {{ report.description }}
+          </div>
+
+        </div>
+
+        <div class="report-actions">
+
+          <button
+            class="btn-more"
+            (click)="openReport(report)">
+            Otvori
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      *ngIf="reports.length > 0"
+      class="pagination">
+
+      <button
+        [disabled]="page === 1"
+        (click)="previousPage()">
+
+        <mat-icon>chevron_left</mat-icon>
+        Prethodna
+
+      </button>
+
+      <span class="pagination-info">
+        Stranica {{ page }} od {{ totalPages }}
+      </span>
+
+      <button
+        [disabled]="page >= totalPages"
+        (click)="nextPage()">
+
+        Sledeća
+        <mat-icon>chevron_right</mat-icon>
+
+      </button>
+
+    </div>
+  </main>
+</div>

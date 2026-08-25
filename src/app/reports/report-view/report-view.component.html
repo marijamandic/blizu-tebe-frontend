@@ -1,0 +1,79 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content" [class.sidebar-open]="isSidebarOpen">
+
+    <div class="announcement-details" *ngIf="report">
+
+      <div class="request-header">
+
+        <button class="btn-back" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <h1 class="announcement-title">
+          Prijava #{{ report.id }}
+        </h1>
+
+      </div>
+
+      <div class="announcement-info">
+
+        <p class="announcement-dates">
+          <mat-icon>event</mat-icon>
+
+          <strong>Datum prijave:</strong>
+          {{ report.timestamp | date:'short' }}
+        </p>
+
+        <button
+            class="post-link"
+            (click)="openPost(report)">
+            <mat-icon>description</mat-icon>
+            Otvori objavu
+        </button>
+
+        <p class="announcement-description">
+          <strong>Razlog prijave:</strong>
+        </p>
+
+        <p class="announcement-description">
+          {{ report.description }}
+        </p>
+
+        <div
+          *ngIf="report.status === ReportStatus.Pending"
+          class="admin-buttons">
+
+          <button
+            class="btn-edit"
+            (click)="acceptReport()">
+            Prihvati
+          </button>
+
+          <button
+            class="btn-delete"
+            (click)="rejectReport()">
+            Odbij
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
