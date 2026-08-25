@@ -35,6 +35,8 @@ import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
 import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
 import { ReportComponent } from './reports/report/report.component';
 import { ReportViewComponent } from './reports/report-view/report-view.component';
+import { MessagingComponent } from './chat/messaging/messaging.component';
+import { MessagingViewComponent } from './chat/messaging-view/messaging-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -81,7 +83,10 @@ const routes: Routes = [
   { path: 'gift/:id',  component: GiftViewComponent, canActivate: [AuthGuard]},
 
   { path: 'reports', component: ReportComponent, canActivate: [AuthGuard]},
-  { path: 'report/:id', component: ReportViewComponent, canActivate: [AuthGuard]}
+  { path: 'report/:id', component: ReportViewComponent, canActivate: [AuthGuard]},
+
+  { path: 'messaging', component: MessagingComponent, canActivate: [AuthGuard]},
+  { path: 'messaging/:id', component: MessagingViewComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

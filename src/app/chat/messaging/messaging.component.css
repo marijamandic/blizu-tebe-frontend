@@ -1,0 +1,133 @@
+.layout-container {
+  display: flex;
+  height: 100vh;
+}
+
+.desktop-sidebar {
+  display: block;
+  flex-shrink: 0;
+  width: 20vw;
+  min-width: 250px;
+  height: 100vh;
+  background-color: #fcfaff;
+  border-right: 1.7px solid var(--color-dark);
+  transition: all 0.3s ease;
+}
+.mobile-navbar {
+  display: none;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: var(--color-lightest);
+  padding: 3rem;
+  overflow-y: auto;
+}
+
+.chat-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chat-page h2 {
+  color: var(--color-dark);
+  margin-bottom: 2rem;
+}
+
+.chat-item {
+  background-color: #fcfaff;
+  border: 1.7px solid var(--color-dark);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.chat-user {
+  color: var(--color-dark);
+  margin-bottom: 0.4rem;
+}
+
+.chat-post {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.no-chats {
+  text-align: center;
+  color: #777;
+  margin-top: 4rem;
+}
+
+@media (max-width: 599px) {
+  .mobile-navbar {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    background-color: #fcfaff;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    z-index: 1100;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  
+
+  .desktop-sidebar {
+    position: fixed;
+    top: 60px; /* ispod navbar-a */
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: calc(100vh - 60px);
+    background-color: #fcfaff;
+    border-right: 1.7px solid var(--color-dark);
+    transform: translateX(-200%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .layout-container {
+    flex-direction: column;
+  }
+
+
+  /* Sidebar otvoren */
+  .desktop-sidebar.mobile-open {
+    display: block;
+    transform: translateX(0);
+  }
+
+  .main-content.sidebar-open {
+    display: none;
+  }
+
+  .main-content {
+    padding-top: 70px; 
+  }
+
+  .request-header h1 {
+    font-size: 8vw; 
+    margin-bottom: 1rem;
+  }
+
+  .request-title{
+    font-size: 5vw;
+  }
+
+  .request-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content {
+    padding: 1.5rem;
+    padding-top: 70px; 
+  }
+}

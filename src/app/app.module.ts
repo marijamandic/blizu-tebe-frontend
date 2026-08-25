@@ -49,6 +49,8 @@ import { GiftViewComponent } from './gifts/gift-view/gift-view.component';
 import { GiftAddComponent } from './gifts/gift-add/gift-add.component';
 import { ReportComponent } from './reports/report/report.component';
 import { ReportViewComponent } from './reports/report-view/report-view.component';
+import { MessagingComponent } from './chat/messaging/messaging.component';
+import { MessagingViewComponent } from './chat/messaging-view/messaging-view.component';
 
 
 registerLocaleData(localeDe);
@@ -89,7 +91,9 @@ registerLocaleData(localeDe);
      GiftViewComponent,
      GiftAddComponent,
      ReportComponent,
-     ReportViewComponent
+     ReportViewComponent,
+     MessagingComponent,
+     MessagingViewComponent
   ],
   imports: [
     BrowserModule,

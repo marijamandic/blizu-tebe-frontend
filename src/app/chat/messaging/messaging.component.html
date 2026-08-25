@@ -1,0 +1,51 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+
+    <div class="chat-page">
+
+      <h2>Moji razgovori</h2>
+
+      <div *ngIf="chats.length === 0" class="no-chats">
+        Još uvek nemate razgovora.
+      </div>
+
+      <div
+        *ngFor="let chat of chats"
+        class="chat-item"
+      >
+
+        <div class="chat-info">
+
+          <div class="chat-user">
+            <strong>
+              Korisnik:
+              {{ chat.user1Id === userId ? chat.user2Id : chat.user1Id }}
+            </strong>
+          </div>
+
+          <div class="chat-post">
+            Objava: {{ chat.postId }}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
