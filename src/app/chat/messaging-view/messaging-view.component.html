@@ -1,0 +1,71 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+
+    <div class="chat-window">
+
+<div class="chat-header">
+
+  <button
+    class="back-button"
+    (click)="goBack()">
+    ←
+  </button>
+
+  <div class="chat-header-info" *ngIf="chat">
+    <h2>{{ userName }}</h2>
+    <a class="post-link" (click)="goToPost()"> {{ postTitle }} </a>
+  </div>
+
+</div>
+
+      <div class="messages">
+
+        <div
+          *ngFor="let message of messages"
+          class="message"
+          [class.my-message]="message.senderId === userId"
+          [class.other-message]="message.senderId !== userId">
+
+          <div class="message-content">
+            {{ message.content }}
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="message-input">
+
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          placeholder="Napišite poruku..."
+          (keyup.enter)="sendMessage()">
+
+        <button
+          type="button"
+          (click)="sendMessage()"
+          [disabled]="!newMessage.trim()">
+          Pošalji
+        </button>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

@@ -52,6 +52,10 @@
       <p>Uredite svoj profil i saznajte o korisnicima aplikacije.</p>
     </div>
 
+    <div class="card1" (click)="handleMessagingClick()">
+      <h3><mat-icon>chat</mat-icon> Razgovori </h3>
+      <p>Pogledajte svoje razgovore i razmenjujte poruke sa komšijama.</p>
+    </div>
   </div>
 
   <div class="modal-overlay" *ngIf="isModal1Open" (click)="toggleModal1()">

@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 import { ReportService } from 'src/app/services/report.service';
 import { Report, PostType, ReportStatus } from 'src/app/model/report.model';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-help-request-view',
@@ -28,7 +29,8 @@ export class HelpRequestViewComponent implements OnInit{
     private router: Router,
     private authService: AuthService,
     private userService: UserService,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private chatService: ChatService
   ){}
 
   ngOnInit(): void {
@@ -190,4 +192,26 @@ export class HelpRequestViewComponent implements OnInit{
         }
       });
     }
+
+  openChat(): void {
+    const userId = this.authService.getId();
+    if (!userId) {
+      return;
+    }
+
+    const currentUserId = Number(userId);
+    if (currentUserId === this.helpRequest.userId) {
+      return;
+    }
+
+    this.chatService.getOrCreate(currentUserId, this.helpRequest.userId, this.helpRequest.id, PostType.HelpRequest)
+      .subscribe({
+        next: (chat) => {
+          this.router.navigate(['/messaging', chat.id]);
+        },
+        error: (error) => {
+          console.error('Error opening chat:', error);
+        }
+      });
+  }
 }

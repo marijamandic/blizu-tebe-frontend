@@ -4,6 +4,7 @@
   background-repeat: no-repeat;
   background-position: center;
   min-height: 100vh;
+  padding-bottom: 8vh;
 }
 
 .home-header {

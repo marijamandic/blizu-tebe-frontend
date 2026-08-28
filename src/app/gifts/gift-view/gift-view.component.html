@@ -39,12 +39,17 @@
 
         <p class="announcement-description">{{ gift.description }}</p>
 
-        <button
-          *ngIf="!isAdminOrOwner"
-          (click)="openReportDialog()">
-          <mat-icon>flag</mat-icon>
-          Prijavi objavu
-        </button>
+        <div class="post-actions" *ngIf="!isAdminOrOwner">
+          <button (click)="openChat()">
+            <mat-icon>chat</mat-icon>
+            Kontaktiraj oglasavaca
+          </button>
+
+          <button (click)="openReportDialog()">
+            <mat-icon>flag</mat-icon>
+            Prijavi objavu
+          </button>
+        </div>
 
         <div *ngIf="isAdminOrOwner" class="admin-buttons">
     <button class="btn-edit" (click)="editGift(gift.id)">Izmenite</button>
