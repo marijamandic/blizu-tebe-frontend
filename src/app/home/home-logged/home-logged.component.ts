@@ -147,5 +147,9 @@ goToMyGifts(){
 goToAddGift(){
   this.router.navigate(['/gift/add']);
 }
+
+handleMessagingClick(){
+  this.router.navigate(['/messaging']);
+}
 }
 

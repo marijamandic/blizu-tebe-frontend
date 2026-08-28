@@ -7,6 +7,10 @@ import { Message } from 'src/app/model/message.model';
 import { ChatService } from 'src/app/services/chat.service';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { PostType } from 'src/app/model/report.model';
+import { GiftService } from 'src/app/services/gift.service';
+import { HelpRequestService } from 'src/app/services/help-request.service';
 
 @Component({
   selector: 'app-messaging-view',
@@ -23,13 +27,19 @@ export class MessagingViewComponent implements OnInit {
   newMessage: string = '';
 
   isSidebarOpen = false;
+  userName: string = '';
+  postTitle: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private chatService: ChatService,
     private messageService: MessageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService,
+    private giftService: GiftService,
+    private helpRequestService: HelpRequestService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +78,49 @@ export class MessagingViewComponent implements OnInit {
         console.error('Error loading messages:', error);
       }
     });
+
+    this.chatService.getById(this.chatId).subscribe({
+      next: (chat) => {
+
+        const otherUserId = chat.user1Id === this.userId ? chat.user2Id : chat.user1Id;
+
+        this.userService.getById(otherUserId).subscribe({
+          next: (user) => {
+            this.userName = user.name;
+          },
+          error: (error) => {
+            console.error('Error loading user:', error);
+          }
+        });
+
+        if (chat.postType === PostType.Gift) {
+          this.giftService.getById(chat.postId).subscribe({
+            next: (gift) => {
+              this.postTitle = gift.title;
+            }
+          });
+        } else if (chat.postType === PostType.HelpRequest) {
+          this.helpRequestService.getById(chat.postId).subscribe({
+            next: (request) => {
+              this.postTitle = request.title;
+            }
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Error loading chat:', error);
+      }
+    });
+  }
+
+  goToPost(): void {
+    if (!this.chat) return;
+
+    if (this.chat.postType === PostType.Gift) {
+      this.router.navigate(['/gift', this.chat.postId]);
+    } else if (this.chat.postType === PostType.HelpRequest) {
+      this.router.navigate(['/helpRequest', this.chat.postId]);
+    }
   }
 
   sendMessage(): void {

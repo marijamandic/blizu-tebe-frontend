@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/env/environment';
 import { Chat } from '../model/chat.mode';
+import { PostType } from '../model/report.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,9 +40,9 @@ export class ChatService {
         );
     }
 
-    getOrCreate(user1Id: number, user2Id: number, postId: number): Observable<Chat> {
+    getOrCreate(user1Id: number, user2Id: number, postId: number, postType: PostType): Observable<Chat> {
         return this.http.post<Chat>(
-            `${this.apiUrl}/get-or-create?user1Id=${user1Id}&user2Id=${user2Id}&postId=${postId}`,
+            `${this.apiUrl}/get-or-create?user1Id=${user1Id}&user2Id=${user2Id}&postId=${postId}&postType=${postType}`,
             {}
         );
     }

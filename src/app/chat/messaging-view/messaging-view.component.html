@@ -16,22 +16,20 @@
 
     <div class="chat-window">
 
-      <div class="chat-header">
+<div class="chat-header">
 
-        <button
-          class="back-button"
-          (click)="goBack()">
-          ←
-        </button>
+  <button
+    class="back-button"
+    (click)="goBack()">
+    ←
+  </button>
 
-        <h2 *ngIf="chat">
-          Korisnik:
-          {{ chat.user1Id === userId
-              ? chat.user2Id
-              : chat.user1Id }}
-        </h2>
+  <div class="chat-header-info" *ngIf="chat">
+    <h2>{{ userName }}</h2>
+    <a class="post-link" (click)="goToPost()"> {{ postTitle }} </a>
+  </div>
 
-      </div>
+</div>
 
       <div class="messages">
 

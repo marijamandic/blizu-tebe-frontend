@@ -150,6 +150,20 @@
   color: #555;
 }
 
+.post-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.post-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
 
 @media (max-width: 599px) {
   .mobile-navbar {
@@ -205,5 +219,13 @@
 
   .announcement-description {
     font-size: 4vw;
+  }
+
+  .post-actions {
+    flex-direction: column;
+  }
+
+  .post-actions button {
+    width: 100%;
   }
 }
