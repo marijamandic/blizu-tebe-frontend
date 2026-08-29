@@ -20,4 +20,8 @@ export class MessageService {
     getAllFromChat(id: number): Observable<Message[]> {
         return this.http.get<Message[]>(`${this.apiUrl}/chat/${id}`);
     }
+
+    getById(id: number): Observable<Message> {
+        return this.http.get<Message>(`${this.apiUrl}/message/${id}`);
+    }
 }

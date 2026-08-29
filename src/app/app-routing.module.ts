@@ -37,6 +37,7 @@ import { ReportComponent } from './reports/report/report.component';
 import { ReportViewComponent } from './reports/report-view/report-view.component';
 import { MessagingComponent } from './chat/messaging/messaging.component';
 import { MessagingViewComponent } from './chat/messaging-view/messaging-view.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -86,7 +87,9 @@ const routes: Routes = [
   { path: 'report/:id', component: ReportViewComponent, canActivate: [AuthGuard]},
 
   { path: 'messaging', component: MessagingComponent, canActivate: [AuthGuard]},
-  { path: 'messaging/:id', component: MessagingViewComponent, canActivate: [AuthGuard]}
+  { path: 'messaging/:id', component: MessagingViewComponent, canActivate: [AuthGuard]},
+
+  { path: 'notifications/:id', component: NotificationComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

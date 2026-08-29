@@ -164,12 +164,12 @@ export class HelpRequestViewComponent implements OnInit{
         if (result.isConfirmed) {
           const report: Report = {
             description: result.value,
-            postType: PostType.Gift,
+            postType: PostType.HelpRequest,
             postId: this.helpRequest.id,
             id: 0,
             timestamp: new Date(),
             status: ReportStatus.Pending,
-            reporterId: 0
+            reporterId: Number(this.authService.getId())
           };
           this.reportService.create(report).subscribe({
             next: () => {
