@@ -151,5 +151,9 @@ goToAddGift(){
 handleMessagingClick(){
   this.router.navigate(['/messaging']);
 }
+
+handleNotificationsClick(){
+  this.router.navigate(['/notifications/' + this.authService.getId()]);
+}
 }
 

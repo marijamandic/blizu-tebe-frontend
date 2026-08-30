@@ -1,0 +1,109 @@
+<app-navbar
+  class="mobile-navbar"
+  [isSidebarOpen]="isSidebarOpen"
+  (menuClick)="toggleSidebar()">
+</app-navbar>
+
+<div class="layout-container">
+
+  <app-sidebar
+    [isOpen]="isSidebarOpen"
+    class="desktop-sidebar"
+    [class.mobile-open]="isSidebarOpen">
+  </app-sidebar>
+
+  <main class="main-content">
+    <div class="notifications-container">
+      <div class="notifications-header">
+        <h2>Novosti</h2>
+      </div>
+
+      <div class="notification-card" *ngFor="let notification of notifications" [class.unread]="!notification.isRead" (click)="openNotification(notification)">
+        <div class="notification-icon">
+          <span *ngIf="notification.notificationType === notificationType.NewMessage">
+            💬
+          </span>
+
+          <span *ngIf="notification.notificationType === notificationType.NewReport">
+            ⚠️
+          </span>
+
+          <span *ngIf="notification.notificationType === notificationType.ReportAccepted">
+            ✅
+          </span>
+
+          <span *ngIf="notification.notificationType === notificationType.ReportRejected">
+            ❌
+          </span>
+
+          <span *ngIf="notification.notificationType === notificationType.HelpRequestMatched">
+            🤝
+          </span>
+
+        </div>
+
+        <div class="notification-content">
+
+          <div class="notification-description">
+            {{ notification.description }}
+          </div>
+
+          <div class="notification-time">
+            {{ notification.timestamp | date:'dd.MM.yyyy. HH:mm' }}
+          </div>
+        </div>
+
+        <div
+          class="unread-dot"
+          *ngIf="!notification.isRead">
+        </div>
+      </div>
+
+      <div class="no-notifications" *ngIf="notifications.length === 0">
+        <p>Nemate novosti.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="notification-modal" *ngIf="selectedNotification" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeModal()"> × </button>
+
+    <div class="modal-icon">
+      <span *ngIf="selectedNotification.notificationType === notificationType.NewMessage">
+        💬
+      </span>
+
+      <span *ngIf="selectedNotification.notificationType === notificationType.NewReport">
+        ⚠️
+      </span>
+
+      <span *ngIf="selectedNotification.notificationType === notificationType.ReportAccepted">
+        ✅
+      </span>
+
+      <span *ngIf="selectedNotification.notificationType === notificationType.ReportRejected">
+        ❌
+      </span>
+
+      <span *ngIf="selectedNotification.notificationType === notificationType.HelpRequestMatched">
+        🤝
+      </span>
+
+    </div>
+    <h3>
+      {{ getTypeName(selectedNotification.notificationType) }}
+    </h3>
+
+    <p class="modal-description">
+      {{ selectedNotification.description }}
+    </p>
+
+    <p class="modal-time">
+      {{ selectedNotification.timestamp | date:'dd.MM.yyyy. HH:mm' }}
+    </p>
+
+    <button class="related-object-button" (click)="openRelatedObject(selectedNotification)"> Pogledaj </button>
+  </div>
+</div>
