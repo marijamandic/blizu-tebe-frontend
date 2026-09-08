@@ -113,6 +113,33 @@ export class MessagingViewComponent implements OnInit {
     });
   }
 
+  isNewDay(index: number): boolean{
+    if(index === 0){
+      return true;
+    }
+
+    const currentDate = new Date(this.messages[index].timestamp);
+    const previousDate = new Date(this.messages[index - 1].timestamp);
+
+    return currentDate.toDateString() != previousDate.toDateString();
+  }
+
+  formatDate(date: Date): string{
+    const messageDate = new Date(date);
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    if(messageDate.toDateString() === today.toDateString()){
+      return 'Danas';
+    }
+    return messageDate.toLocaleDateString('sr-RS', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
   goToPost(): void {
     if (!this.chat) return;
 

@@ -158,14 +158,21 @@ export class HelpRequestAddComponent implements OnInit{
       })
     } else{
     this.helpRequestService.create(formData).subscribe({
-      next: () => {
+      next: (created) => {
         Swal.fire({
           icon: 'success',
           title: 'Uspešno!',
           text: 'Objava uspešno dodata.'
         });
 
-        this.goBack();
+        this.router.navigate([this.isRequest ? '/helpRequests' : '/helpOffers'],
+          {
+            state: {
+              showMatches: true,
+              helpId: created.id
+            }
+          }
+        );
       },
       error: (err) => {
         console.log(err.error);

@@ -94,6 +94,18 @@ this.router.navigate(['/announcement']);
 
   }
 
+  goToHelpOffers(){
+  this.router.navigate(['/helpOffers']);
+  }
+
+  goToMyHelpOffers(){
+    this.router.navigate(['/myHelpOffers']);
+  }
+
+  goToAddHelpOffer(){
+  this.router.navigate(['/helpOffer/add']);
+  }
+
 goToMyCommunity(): void {
     const userId = this.authService.getId();
     if (!userId) {
@@ -135,6 +147,16 @@ goToAllUsersForUsers() {
 goToHelpRequests(){
   this.router.navigate(['/helpRequests']);
 }
+
+goToMyHelpRequests(){
+  this.router.navigate(['/myHelpRequests']);
+}
+
+goToAddHelpRequest(){
+  this.router.navigate(['/helpRequest/add']);
+}
+
+
 
 goToGifts(){
   this.router.navigate(['/gifts']);

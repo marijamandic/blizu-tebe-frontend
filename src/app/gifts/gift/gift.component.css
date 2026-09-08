@@ -1,6 +1,8 @@
 .layout-container {
   display: flex;
   height: 100vh;
+  overflow: hidden;
+
 }
 
 .desktop-sidebar {
@@ -19,15 +21,17 @@
   background-color: var(--color-lightest);
   padding: 3rem;
   overflow-y: auto;
+  min-width: 0;
 }
 
 .request-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .request-header h1 {
-  font-size: 2.5vw;
+  font-size: 2.2vw;
+  margin: 0;
 }
 
 .request-grid {
@@ -101,12 +105,12 @@
 }
 
 .btn-add {
-  margin-top: 1.5rem;
-  margin-right:1.5rem;
-  padding: 0.6rem 1.8rem;
+  margin-top: 0.8rem;
+  padding: 0.5rem 1.2rem;
   border: none;
   border-radius: 8px;
   font-weight: 500;
+  font-size: 0.9rem;
 }
 
 .request-card.important {
@@ -245,8 +249,12 @@
 }
 
 @media (max-width: 599px) {
+
   .mobile-navbar {
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 60px;
     background-color: #fcfaff;
@@ -257,11 +265,15 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
 
-  
+  .layout-container {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
 
   .desktop-sidebar {
     position: fixed;
-    top: 60px; /* ispod navbar-a */
+    top: 60px;
     left: 0;
     width: 80%;
     max-width: 300px;
@@ -273,41 +285,32 @@
     z-index: 1000;
   }
 
-  .layout-container {
-    flex-direction: column;
-  }
-
-
-  /* Sidebar otvoren */
   .desktop-sidebar.mobile-open {
     display: block;
     transform: translateX(0);
   }
 
-  .main-content.sidebar-open {
-    display: none;
-  }
-
   .main-content {
-    padding-top: 70px; 
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 1.5rem;
+    padding-top: 70px;
   }
 
   .request-header h1 {
-    font-size: 8vw; 
+    font-size: 8vw;
     margin-bottom: 1rem;
   }
 
-  .request-title{
+  .request-title {
     font-size: 5vw;
   }
 
   .request-grid {
     grid-template-columns: 1fr;
   }
-
-  .main-content {
-    padding: 1.5rem;
-    padding-top: 70px; 
-  }
 }
-
