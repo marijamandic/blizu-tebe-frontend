@@ -30,22 +30,30 @@
   </div>
 
 </div>
-
       <div class="messages">
 
+        <ng-container *ngFor="let message of messages; let i = index">
+
+          <div *ngIf="isNewDay(i)" class="message-date">
+            {{ formatDate(message.timestamp) }}
+          </div>
+        
         <div
-          *ngFor="let message of messages"
           class="message"
           [class.my-message]="message.senderId === userId"
           [class.other-message]="message.senderId !== userId">
 
           <div class="message-content">
             {{ message.content }}
+
+            <div class="message-time">
+              {{ message.timestamp | date:'HH:mm' }}
+            </div>
           </div>
-
         </div>
-
+        </ng-container>
       </div>
+    
 
       <div class="message-input">
 

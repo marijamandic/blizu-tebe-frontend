@@ -1,6 +1,7 @@
 .layout-container {
   display: flex;
   height: 100vh;
+  overflow: hidden;
 }
 
 
@@ -20,6 +21,7 @@
   background-color: var(--color-lightest);
   padding: 3rem;
   overflow-y: auto;
+  min-width: 0;
 }
 
 .form-header {
@@ -194,6 +196,12 @@ select[disabled] {
 }
 
 
+label {
+  color: var(--color-dark);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
 @media (max-width: 599px) {
   .mobile-navbar {
     display: flex;
@@ -212,6 +220,8 @@ select[disabled] {
 
   .layout-container {
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .desktop-sidebar {
@@ -235,7 +245,7 @@ select[disabled] {
   }
 
   label {
-    font-size: 4vw;
+    font-size: 3.5vw;
   }
 
   p {
@@ -243,8 +253,11 @@ select[disabled] {
   }
 
   .main-content {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
     padding: 1.5rem;
-    padding-top: 70px; 
+    padding-top: 70px;
   }
 }
 .dropdown {

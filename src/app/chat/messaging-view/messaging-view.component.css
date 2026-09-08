@@ -113,6 +113,20 @@
   cursor: pointer;
 }
 
+.message-date {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #777;
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.message-time {
+  font-size: 0.65rem;
+  color: #888;
+  text-align: right;
+  margin-top: 0.25rem;
+}
 
 @media (max-width: 599px) {
   .mobile-navbar {

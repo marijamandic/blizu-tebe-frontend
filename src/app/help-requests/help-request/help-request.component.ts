@@ -23,6 +23,8 @@ export class HelpRequestComponent implements OnInit {
   selectedCategory: HelpCategory | null = null;
 
   HelpStatus = HelpStatus;
+  matches: HelpRequest[] = [];
+  showMatchesModal = false;
 
   constructor(
     private helpRequestService: HelpRequestService,
@@ -36,6 +38,12 @@ export class HelpRequestComponent implements OnInit {
   ngOnInit(): void {
     this.isRequest = !this.router.url.toLowerCase().includes('helpoffer');
     this.mode = this.route.snapshot.data['mode'];
+
+    const state = history.state;
+
+    if (state.showMatches && state.helpId) {
+      this.loadMatches(state.helpId);
+    }
 
     console.log('is request: ', this.isRequest);
     console.log('mode: ', this.mode);
@@ -181,6 +189,21 @@ export class HelpRequestComponent implements OnInit {
     } else {
       this.loadOffers();
     }
+  }
+
+  private loadMatches(helpId: number): void {
+    this.helpRequestService.match(helpId).subscribe({
+      next: (matches) => {
+        if (matches && matches.length > 0) {
+          this.matches = matches;
+          this.showMatchesModal = true;
+        }
+      }
+    });
+  }
+
+  closeMatchesModal(): void{
+    this.showMatchesModal = false;
   }
 
   categories = [

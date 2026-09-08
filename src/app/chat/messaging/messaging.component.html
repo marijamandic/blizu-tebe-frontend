@@ -16,26 +16,30 @@
 
     <div class="chat-page">
 
-      <h2>Moji razgovori</h2>
+  <h1 class="page-title">Moji razgovori</h1>
 
-      <div *ngIf="chats.length === 0" class="no-chats">
-        Još uvek nemate razgovora.
+  <div *ngIf="chats.length === 0" class="no-chats">
+    Još uvek nemate razgovora.
+  </div>
+
+  <div class="chat-list">
+    <div
+      *ngFor="let chat of chats"
+      class="chat-item"
+      (click)="openChat(chat)"
+    >
+      <div class="chat-user">
+        <strong>
+          {{ userNames[chat.user1Id === userId ? chat.user2Id : chat.user1Id] }}
+        </strong>
       </div>
 
-      <div
-        *ngFor="let chat of chats"
-        class="chat-item" (click)="openChat(chat)">
-        <div class="chat-info">
-          <div class="chat-user">
-            <strong>
-              {{ userNames[chat.user1Id === userId ? chat.user2Id : chat.user1Id] }}
-            </strong>
-          </div>
-          <div class="chat-post">
-           Oglas: {{ postTitles[chat.postId] }}
-          </div>
-        </div>
+      <div class="chat-post">
+        Oglas: {{ postTitles[chat.postId] }}
       </div>
     </div>
-  </main>
+  </div>
+
+</div>
+</main>
 </div>

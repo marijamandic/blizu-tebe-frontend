@@ -26,14 +26,14 @@
         <div
           *ngFor="let comment of comments"
           [ngClass]="{
-            'message-own': comment.userId === currentUser?.id,
-            'message-other': comment.userId !== currentUser?.id
+            'message-own': comment.userId === currentUser.id,
+            'message-other': comment.userId !== currentUser.id
           }"
           class="message-bubble"
         >
         <div class="message-header">
     <span class="message-author">
-      {{ comment.userId === currentUser?.id ? '' : (comment.user?.name + ' ' + comment.user?.surname) }}
+      {{ comment.userId === currentUser.id ? '' : (comment.user?.name + ' ' + comment.user?.surname) }}
     </span>
   </div>
         

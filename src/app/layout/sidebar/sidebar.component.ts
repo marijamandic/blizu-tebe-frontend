@@ -108,5 +108,8 @@ logOut() {
  this.authService.logout();
 }
 
+openNotifications(){
+  this.router.navigate(['/notifications/' + this.authService.getId()]);
+}
 
 }

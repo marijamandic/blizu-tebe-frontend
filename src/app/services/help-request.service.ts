@@ -52,4 +52,8 @@ export class HelpRequestService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
+  match(helpId: number): Observable<HelpRequest[]>{
+    return this.http.get<HelpRequest[]>(`${this.apiUrl}/match/${helpId}`);
+  }
+
 }

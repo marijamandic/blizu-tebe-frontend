@@ -108,5 +108,41 @@
         </div>
       </div>
     </div>
+
+    <div class="modal-overlay" *ngIf="showMatchesModal" (click)="closeMatchesModal()">
+      <div class="matches-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <div>
+                <h2>Predloženi spojevi</h2>
+                <p>Pronašli smo nekoliko objava koje bi mogle odgovarati vašem zahtevu.</p>
+            </div>
+            <button class="close-button" (click)="closeMatchesModal()">
+                &times;
+            </button>
+        </div>
+        <div class="matches-list">
+            <div class="match-card" *ngFor="let match of matches">
+                <div class="match-content">
+                    <h3>{{ match.title }}</h3>
+                    <p class="match-description">
+                        {{ match.description }}
+                    </p>
+                    <div class="match-info">
+                        <span>{{ categoryLabels[match.category] }}</span>
+                    </div>
+                </div>
+                <button class="view-button" (click)="goToRequest(match.id)">
+                    View
+                </button>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="close-modal-button" (click)="closeMatchesModal()">
+                Close
+            </button>
+        </div>
+      </div>
+    </div>
   </main>
 </div>

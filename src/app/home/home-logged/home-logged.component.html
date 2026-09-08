@@ -60,7 +60,7 @@
 
     <!-- Notifikacije -->
     <div class="card1" (click)="handleNotificationsClick()">
-      <h3><mat-icon>chat</mat-icon> Novosti </h3>
+      <h3><mat-icon>notifications</mat-icon> Novosti </h3>
       <p>Poregledajte novosti da ne biste nista propustili.</p>
     </div>
   </div>
@@ -70,9 +70,9 @@
       <h2 class="title">Izaberite šta želite da vidite</h2>
       <button class="closeModal" (click)="toggleModal1()">x</button>
 
-      <button class="modalButton">Sve usluge</button>
-      <button class="modalButton">Moje usluge</button>
-      <button class="modalButton">Dodajte uslugu</button>
+      <button class="modalButton" (click)="goToHelpOffers()">Sve usluge</button>
+      <button class="modalButton" (click)="goToMyHelpOffers()">Moje usluge</button>
+      <button class="modalButton" (click)="goToAddHelpOffer()">Dodajte uslugu</button>
 
     </div>
   </div>
@@ -83,8 +83,8 @@
       <button class="closeModal" (click)="toggleModalRequest()">x</button>
 
       <button class="modalButton" (click)="goToHelpRequests()">Svi zahtevi</button>
-      <button class="modalButton">Moji zahtevi</button>
-      <button class="modalButton">Dodajte zahtev</button>
+      <button class="modalButton" (click)="goToMyHelpRequests()">Moji zahtevi</button>
+      <button class="modalButton" (click)="goToAddHelpRequest()">Dodajte zahtev</button>
 
     </div>
   </div>
