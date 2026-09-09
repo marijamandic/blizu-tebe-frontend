@@ -40,4 +40,8 @@ export class RatingService {
   getRatingsByRatedId(ratedId: number): Observable<Rating[]> {
     return this.http.get<Rating[]>(`${this.apiUrl}/getByRatedId/${ratedId}`);
   }
+
+  canRateUser(chatId: number): Observable<boolean>{
+    return this.http.get<boolean>(`${this.apiUrl}/canRate/${chatId}`);
+  }
 }
