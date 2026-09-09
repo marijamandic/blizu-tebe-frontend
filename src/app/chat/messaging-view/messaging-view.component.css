@@ -55,6 +55,7 @@
   background: transparent;
   font-size: 1.5rem;
   cursor: pointer;
+  color: var(--color-dark);
 }
 
 .messages {
@@ -98,6 +99,15 @@
   border-top: 1.7px solid var(--color-dark);
 }
 
+.chat-header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.rate-button {
+  margin-left: auto;
+}
+
 .message-input input {
   flex: 1;
   padding: 0.7rem 1rem;
@@ -126,6 +136,99 @@
   color: #888;
   text-align: right;
   margin-top: 0.25rem;
+}
+
+.rating-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.rating-modal {
+  position: relative;
+  width: 420px;
+  max-width: 90%;
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.rating-modal h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.rating-modal p {
+  margin-bottom: 20px;
+}
+
+.close-rating {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 20px 0;
+}
+
+.star {
+  border: none;
+  background: none;
+  font-size: 38px;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0;
+}
+
+.star.selected {
+  color: #f5b301;
+}
+
+.rating-modal textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: inherit;
+  margin-bottom: 20px;
+}
+
+.rating-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-button,
+.submit-rating-button {
+  padding: 10px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  border: none;
+}
+
+.submit-rating-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @media (max-width: 599px) {

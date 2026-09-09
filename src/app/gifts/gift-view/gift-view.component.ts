@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Gift } from 'src/app/model/gift.model';
+import { Gift, GiftStatus } from 'src/app/model/gift.model';
 import { User } from 'src/app/model/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { GiftService } from 'src/app/services/gift.service';
@@ -206,5 +206,45 @@ export class GiftViewComponent implements OnInit{
           console.error('Error opening chat:', error);
         }
       });
+  }
+
+  closeGift(): void {
+    if (!this.gift) {
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('id', this.gift.id.toString());
+    formData.append('title', this.gift.title);
+    formData.append('description', this.gift.description);
+    formData.append('userId', this.gift.userId.toString());
+    formData.append('category', this.gift.giftCategory.toString());
+    formData.append('status', GiftStatus.Completed.toString());
+
+    if (this.gift.contact) {
+      formData.append('contact', this.gift.contact);
+    }
+
+    this.giftService.update(formData).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Oglas je uspešno zatvoren.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/myGifts']);
+      },
+      error: (error) => {
+        console.error('Error closing help request:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška!',
+          text: 'Došlo je do greške prilikom zatvaranja oglasa.'
+        });
+      }
+    });
   }
 }

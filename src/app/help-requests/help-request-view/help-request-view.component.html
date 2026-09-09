@@ -52,9 +52,12 @@
         </div>
         
         <div *ngIf="isAdminOrOwner" class="admin-buttons">
-    <button class="btn-edit" (click)="editRequest(helpRequest.id)">Izmenite</button>
-    <button class="btn-delete" (click)="deleteRequest(helpRequest.id)">Obrišite</button>
-  </div>
+          <button class="btn-edit" (click)="editRequest(helpRequest.id)">Izmenite</button>
+          <!-- <button class="btn-delete" (click)="deleteRequest(helpRequest.id)">Obrišite</button> -->
+          <button type="button" class="btn-delete" (click)="closeHelpRequest()">
+            Zatvori oglas
+          </button>
+        </div>
       </div>
     </div>
   </main>

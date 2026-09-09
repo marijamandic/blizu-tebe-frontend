@@ -29,6 +29,10 @@
     <a class="post-link" (click)="goToPost()"> {{ postTitle }} </a>
   </div>
 
+  <button *ngIf="canRate" class="rate-button" type="button" (click)="openRating()">
+    ⭐ Oceni korisnika
+  </button>
+
 </div>
       <div class="messages">
 
@@ -69,6 +73,43 @@
           [disabled]="!newMessage.trim()">
           Pošalji
         </button>
+
+      </div>
+
+    </div>
+
+    <div class="rating-overlay" *ngIf="showRatingModal">
+
+      <div class="rating-modal">
+
+        <button type="button" class="close-rating" (click)="closeRating()">
+          ×
+        </button>
+
+        <h2>Oceni korisnika</h2>
+
+        <p>Kako ocenjuješ svoju interakciju sa {{ userName }}?</p>
+
+        <div class="stars">
+          <button *ngFor="let star of [1, 2, 3, 4, 5]" type="button" class="star" [class.selected]="star <= selectedScore" (click)="selectScore(star)">
+            ★
+          </button>
+        </div>
+
+        <textarea [(ngModel)]="ratingComment" placeholder="Napišite komentar (opciono)..." rows="4">
+        </textarea>
+
+        <div class="rating-actions">
+
+          <button type="button" class="cancel-button" (click)="closeRating()">
+            Otkaži
+          </button>
+
+          <button type="button" class="submit-rating-button" [disabled]="selectedScore === 0" (click)="submitRating()">
+            Pošalji ocenu
+          </button>
+
+        </div>
 
       </div>
 

@@ -11,6 +11,9 @@ import { UserService } from 'src/app/services/user.service';
 import { PostType } from 'src/app/model/report.model';
 import { GiftService } from 'src/app/services/gift.service';
 import { HelpRequestService } from 'src/app/services/help-request.service';
+import { RatingService } from 'src/app/services/rating.service';
+import { Rating } from 'src/app/model/rating.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-messaging-view',
@@ -30,6 +33,11 @@ export class MessagingViewComponent implements OnInit {
   userName: string = '';
   postTitle: string = '';
 
+  canRate = false;
+  showRatingModal = false;
+  selectedScore = 0;
+  ratingComment = '';
+  otherUserId = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +47,8 @@ export class MessagingViewComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private giftService: GiftService,
-    private helpRequestService: HelpRequestService
+    private helpRequestService: HelpRequestService,
+    private rateService: RatingService
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +71,16 @@ export class MessagingViewComponent implements OnInit {
     this.chatService.getById(this.chatId).subscribe({
       next: (chat) => {
         this.chat = chat;
+
+        this.otherUserId = chat.user1Id === this.userId ? chat.user2Id : chat.user1Id;
+        this.rateService.canRateUser(this.chatId).subscribe({
+          next: (canRate) => {
+            this.canRate = canRate;
+          },
+          error: (error) => {
+            console.error('Error checking rating: ', error);
+          }
+        });
       },
       error: (error) => {
         console.error('Error loading chat:', error);
@@ -181,5 +200,58 @@ export class MessagingViewComponent implements OnInit {
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  openRating(): void {
+    this.showRatingModal = true;
+    this.selectedScore = 0;
+    this.ratingComment = '';
+  }
+
+  closeRating(): void {
+    this.showRatingModal = false;
+  }
+
+  selectScore(score: number): void {
+    this.selectedScore = score;
+  }
+
+  submitRating(): void {
+    if (this.selectedScore === 0) {
+      return;
+    }
+
+    const rating: Rating = {
+      id: 0,
+      score: this.selectedScore,
+      comment: this.ratingComment.trim() || undefined,
+      timeStamp: new Date(),
+      raterId: this.userId,
+      ratedId: this.otherUserId
+    };
+
+    this.rateService.createRating(rating).subscribe({
+      next: () => {
+        this.showRatingModal = false;
+        this.canRate = false;
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Ocena je uspešno poslata.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      },
+      error: (error) => {
+        console.error('Error creating rating:', error);
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška!',
+          text: 'Došlo je do greške prilikom slanja ocene.'
+        });
+      }
+    });
   }
 }

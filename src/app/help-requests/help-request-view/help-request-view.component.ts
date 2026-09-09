@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HelpRequest } from 'src/app/model/help-request.model';
+import { HelpRequest, HelpStatus } from 'src/app/model/help-request.model';
 import { User } from 'src/app/model/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { HelpRequestService } from 'src/app/services/help-request.service';
@@ -22,6 +22,7 @@ export class HelpRequestViewComponent implements OnInit{
   user: User | null = null;
   owner: User | null = null;
   isRequest = false;
+  HelpStatus = HelpStatus;
 
   constructor(
     private route: ActivatedRoute,
@@ -213,5 +214,45 @@ export class HelpRequestViewComponent implements OnInit{
           console.error('Error opening chat:', error);
         }
       });
+  }
+
+  closeHelpRequest(): void {
+    if (!this.helpRequest) {
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('title', this.helpRequest.title);
+    formData.append('description', this.helpRequest.description);
+    formData.append('userId', this.helpRequest.userId.toString());
+    formData.append('category', this.helpRequest.category.toString());
+    formData.append('helpType', this.helpRequest.helpType.toString());
+    formData.append('status', HelpStatus.Completed.toString());
+
+    if (this.helpRequest.contact) {
+      formData.append('contact', this.helpRequest.contact);
+    }
+
+    this.helpRequestService.update(this.helpRequest.id, formData).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Oglas je uspešno zatvoren.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.router.navigate(['/myHelpRequests']);
+      },
+      error: (error) => {
+        console.error('Error closing help request:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška!',
+          text: 'Došlo je do greške prilikom zatvaranja oglasa.'
+        });
+      }
+    });
   }
 }
