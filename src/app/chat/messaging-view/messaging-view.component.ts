@@ -33,11 +33,7 @@ export class MessagingViewComponent implements OnInit {
   userName: string = '';
   postTitle: string = '';
 
-  canRate = false;
-  showRatingModal = false;
-  selectedScore = 0;
-  ratingComment = '';
-  otherUserId = 0;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -72,15 +68,7 @@ export class MessagingViewComponent implements OnInit {
       next: (chat) => {
         this.chat = chat;
 
-        this.otherUserId = chat.user1Id === this.userId ? chat.user2Id : chat.user1Id;
-        this.rateService.canRateUser(this.chatId).subscribe({
-          next: (canRate) => {
-            this.canRate = canRate;
-          },
-          error: (error) => {
-            console.error('Error checking rating: ', error);
-          }
-        });
+        
       },
       error: (error) => {
         console.error('Error loading chat:', error);
@@ -202,56 +190,4 @@ export class MessagingViewComponent implements OnInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  openRating(): void {
-    this.showRatingModal = true;
-    this.selectedScore = 0;
-    this.ratingComment = '';
-  }
-
-  closeRating(): void {
-    this.showRatingModal = false;
-  }
-
-  selectScore(score: number): void {
-    this.selectedScore = score;
-  }
-
-  submitRating(): void {
-    if (this.selectedScore === 0) {
-      return;
-    }
-
-    const rating: Rating = {
-      id: 0,
-      score: this.selectedScore,
-      comment: this.ratingComment.trim() || undefined,
-      timeStamp: new Date(),
-      raterId: this.userId,
-      ratedId: this.otherUserId
-    };
-
-    this.rateService.createRating(rating).subscribe({
-      next: () => {
-        this.showRatingModal = false;
-        this.canRate = false;
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Uspešno!',
-          text: 'Ocena je uspešno poslata.',
-          timer: 2000,
-          showConfirmButton: false
-        });
-      },
-      error: (error) => {
-        console.error('Error creating rating:', error);
-        
-        Swal.fire({
-          icon: 'error',
-          title: 'Greška!',
-          text: 'Došlo je do greške prilikom slanja ocene.'
-        });
-      }
-    });
-  }
 }

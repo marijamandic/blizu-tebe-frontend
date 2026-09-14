@@ -52,7 +52,7 @@
         </div>
 
         <div *ngIf="isAdminOrOwner" class="admin-buttons">
-    <button class="btn-edit" (click)="editGift(gift.id)">Izmenite</button>
+    <button class="btn-edit" (click)="editGift(gift!.id)">Izmenite</button>
     <button type="button" class="btn-delete" (click)="closeGift()">
       Zatvori oglas
     </button>

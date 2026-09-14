@@ -17,7 +17,7 @@ export class GiftComponent implements OnInit {
   gifts: Gift[] = [];
 
   isSidebarOpen = false;
-  defaultImage = 'assets/pictures/help-placeholder.png';
+  defaultImage = 'assets/pictures/logo_placeholder.png';
 
   selectedStatus: GiftStatus = GiftStatus.Pending;
   selectedCategory: GiftCategory | null = null;
@@ -40,6 +40,7 @@ export class GiftComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.mode = this.route.snapshot.data['mode'];
     this.loadGifts();
   }
 
@@ -67,7 +68,7 @@ export class GiftComponent implements OnInit {
 
         this.gifts = response.results.filter(x =>
           this.mode === 'all'
-            ? true
+            ? x.userId !== currentUserId
             : x.userId === currentUserId
         );
       },

@@ -16,7 +16,7 @@ export class HelpRequestComponent implements OnInit {
   requests: HelpRequest[] = [];
 
   isSidebarOpen = false;
-  defaultImage = 'assets/pictures/help-placeholder.png';
+  defaultImage = 'assets/pictures/logo_placeholder.png';
   mode: 'all' | 'mine' = 'all';
   isRequest = false;
   selectedStatus: HelpStatus = HelpStatus.Pending;
@@ -73,8 +73,8 @@ export class HelpRequestComponent implements OnInit {
 
         let filtered = response.filter(x =>
           this.mode === 'all'
-            ? true
-            : currentUserId !== null && x.userId === currentUserId
+            ? x.userId !== currentUserId
+            : x.userId === currentUserId
         );
         this.requests = this.applyCategoryFilter(filtered);
 

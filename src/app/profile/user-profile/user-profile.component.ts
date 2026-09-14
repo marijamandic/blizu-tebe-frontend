@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LocalCommunityService } from 'src/app/services/localcommunity.service';
 import { RatingService } from 'src/app/services/rating.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-profile',
@@ -22,6 +23,15 @@ export class UserProfileComponent implements OnInit {
   ratings: { rating: Rating, raterUser: User }[] = [];
   showRatings = false;
   fullInfo: boolean = false;
+
+  canRate = false;
+  showRatingModal = false;
+  selectedScore = 0;
+  ratingComment = '';
+  otherUserId = 0;
+  commentError = false;
+  scoreError = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +68,16 @@ export class UserProfileComponent implements OnInit {
           this.localCommunityService.getById(u.localCommunityId).subscribe({
             next: (lc) => this.localCommunityName = lc.name,
             error: (err) => console.error('Greška pri učitavanju mesne zajednice', err)
+          });
+        }
+        if (!this.isOwnProfile && !this.isAdmin) {
+          this.ratingService.canRateUser(this.user.id).subscribe({
+            next: (canRate) => {
+              this.canRate = canRate;
+            },
+            error: (error) => {
+              console.error('Error checking rating:', error);
+            }
           });
         }
       },
@@ -128,5 +148,77 @@ getAge(dateOfBirth: string | Date): number {
 
   return age;
 }
+
+
+  openRating(): void {
+    this.showRatingModal = true;
+    this.selectedScore = 0;
+    this.ratingComment = '';
+  }
+
+  closeRating(): void {
+    this.showRatingModal = false;
+  }
+
+  selectScore(score: number): void {
+  this.selectedScore = score;
+  this.scoreError = false;
+}
+
+  submitRating(): void {
+    let hasError = false;
+
+    if (this.selectedScore === 0) {
+      this.scoreError = true;
+      hasError = true;
+    } else {
+      this.scoreError = false;
+    }
+
+    if (!this.ratingComment.trim()) {
+      this.commentError = true;
+      hasError = true;
+    } else {
+      this.commentError = false;
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    const rating: Rating = {
+      score: this.selectedScore,
+      comment: this.ratingComment.trim() || undefined,
+      timeStamp: new Date(),
+      raterId: Number(this.authService.getId()),
+      ratedId: this.user.id
+    };
+
+    this.ratingService.createRating(rating).subscribe({
+      next: () => {
+        this.showRatingModal = false;
+        this.canRate = false;
+
+        this.loadRatings(this.user.id);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Uspešno!',
+          text: 'Ocena je uspešno poslata.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      },
+      error: (error) => {
+        console.error('Error creating rating:', error);
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Greška!',
+          text: 'Došlo je do greške prilikom slanja ocene.'
+        });
+      }
+    });
+  }
 
 }

@@ -124,6 +124,8 @@ export class GiftAddComponent implements OnInit {
     formData.append('GiftCategory', formValues.giftCategory.toString());
     formData.append('Contact', formValues.contact);
     formData.append('UserId', userId.toString());
+    formData.append('PostDate', formValues.postDate);
+    formData.append('ExpireDate', formValues.expireDate);
 
     if (this.isEditMode) {
 

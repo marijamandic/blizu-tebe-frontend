@@ -80,7 +80,7 @@ export class HelpRequestViewComponent implements OnInit{
   }
 
   onImageError(event: any): void {
-    event.target.src = 'assets/pictures/help-placeholder.png';
+    event.target.src = 'assets/pictures/logo_placeholder.png';
   }
 
   get isAdminOrOwner(): boolean {
