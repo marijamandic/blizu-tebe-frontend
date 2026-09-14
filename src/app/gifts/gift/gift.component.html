@@ -14,7 +14,7 @@
   <main class="main-content">
     <header class="request-header">
 
-      <h1> Pokloni </h1>
+      <h1>{{ mode === 'mine' ? 'Moji pokloni' : 'Pokloni' }}</h1>
       <button class="btn-add" (click)="goToAddGift()"> Dodajte poklon </button>
     </header>
 
@@ -23,13 +23,13 @@
       <button
           [class.active]="selectedStatus === GiftStatus.Pending"
           (click)="changeStatus(GiftStatus.Pending)">
-          Active
+          Aktivni
       </button>
 
       <button
           [class.active]="selectedStatus === GiftStatus.Completed"
           (click)="changeStatus(GiftStatus.Completed)">
-          Completed
+          Zatvoreni
       </button>
 
       <!-- <button

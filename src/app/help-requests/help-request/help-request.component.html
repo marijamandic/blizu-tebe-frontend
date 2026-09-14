@@ -14,7 +14,9 @@
   <main class="main-content">
     <header class="request-header">
       <h1>
-        {{ isRequest ? 'Zahtevi za pomoć' : 'Ponude za pomoć' }}
+        {{ mode === 'mine'
+            ? (isRequest ? 'Moji zahtevi za pomoć' : 'Moje ponude za pomoć')
+            : (isRequest ? 'Zahtevi za pomoć' : 'Ponude za pomoć') }}
       </h1>
 
       <button class="btn-add" (click)="goToAddRequest()">
@@ -27,13 +29,13 @@
       <button
           [class.active]="selectedStatus === HelpStatus.Pending"
           (click)="changeStatus(HelpStatus.Pending)">
-          Active
+          Aktivni
       </button>
 
       <button
           [class.active]="selectedStatus === HelpStatus.Completed"
           (click)="changeStatus(HelpStatus.Completed)">
-          Completed
+          Zatvoreni
       </button>
 
       <!-- <button

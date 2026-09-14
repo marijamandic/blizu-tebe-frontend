@@ -1,6 +1,8 @@
 
 .layout-container {
-  height: 100vh; 
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .main-content {
@@ -12,7 +14,7 @@
 
 
 .sidebar {
-  width: 20vw; 
+  /* width: 20vw; 
   min-height: 100vh;
   background-color: #fcfaff; 
   border-right: 1.7px solid var(--color-dark);
@@ -21,7 +23,26 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden; */
+  width: 20vw;
+  min-width: 250px;
+  height: 100vh;
+  background-color: #fcfaff;
+  border-right: 1.7px solid var(--color-dark);
+  padding: 0.5rem 0.5rem;
+  transition: width 0.3s ease;
+  overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar__header {

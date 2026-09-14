@@ -1,5 +1,5 @@
 export interface Rating {
-  id: number;
+  id?: number;
   score: number;
   comment?: string;
   timeStamp: Date;

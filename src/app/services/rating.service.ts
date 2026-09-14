@@ -41,7 +41,7 @@ export class RatingService {
     return this.http.get<Rating[]>(`${this.apiUrl}/getByRatedId/${ratedId}`);
   }
 
-  canRateUser(chatId: number): Observable<boolean>{
-    return this.http.get<boolean>(`${this.apiUrl}/canRate/${chatId}`);
+  canRateUser(userId: number): Observable<boolean>{
+    return this.http.get<boolean>(`${this.apiUrl}/canRate/${userId}`);
   }
 }
